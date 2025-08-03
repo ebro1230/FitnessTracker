@@ -10,14 +10,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User"; // Custom User model (optional)
 import bcrypt from "bcrypt";
 
-let adapter;
-try {
-  adapter = MongoDBAdapter(clientPromise);
-} catch (e) {
-  console.error("MongoDB Adapter init failed", e);
-}
-
-export const authOptions = {
+const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
