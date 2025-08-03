@@ -43,7 +43,7 @@
   },
   "overrides": {
   "mongoose": {
-    "mongodb": "^5.9.2"
+    "mongodb": "^5.7.0"
   }
 }
 }

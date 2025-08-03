@@ -115,14 +115,7 @@ export const authOptions = {
   // },
 };
 
-const handler = (req, res) => {
-  try {
-    return NextAuth(req, res, authOptions);
-  } catch (error) {
-    console.error("Auth handler crashed:", error);
-    throw error;
-  }
-};
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
 
 // import NextAuth from "next-auth";
