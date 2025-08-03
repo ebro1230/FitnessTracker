@@ -4,11 +4,18 @@ import clientPromise from "@/lib/mongo";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User"; // Custom User model (optional)
 import bcrypt from "bcrypt";
+
+let adapter;
+try {
+  adapter = MongoDBAdapter(clientPromise);
+} catch (e) {
+  console.error("MongoDB Adapter init failed", e);
+}
 
 export const authOptions = {
   providers: [
@@ -52,9 +59,6 @@ export const authOptions = {
   ],
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
-  // pages: {
-  //   signIn: "/auth/signin",
-  // },
   session: { strategy: "jwt" },
   callbacks: {
     async signIn({ user, account, profile }) {
@@ -97,39 +101,7 @@ export const authOptions = {
       return token;
     },
   },
-  // events: {
-  //   async createUser({ user }) {
-  //     try {
-  //       const db = (await clientPromise).db();
-  //       await db.collection("users").updateOne(
-  //         { _id: user.id },
-  //         {
-  //           $set: {
-  //             given_name: user.given_name || "test",
-  //             family_name: user.family_name || "test",
-  //           },
-  //         }
-  //       );
-  //     } catch (error) {
-  //       console.error("Error updating user:", error);
-  //     }
-  //   },
-  // },
 };
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
-
-// import NextAuth from "next-auth";
-// import GoogleProvider from "next-auth/providers/google";
-
-// export const authOptions = {
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//     }),
-//   ],
-//   secret: process.env.NEXTAUTH_SECRET,
-//   session: { strategy: "jwt" },
-// };
