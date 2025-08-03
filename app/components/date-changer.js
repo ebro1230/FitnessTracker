@@ -1,5 +1,5 @@
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Import default styles
+import "@/app/react-datepicker.css"; // Import default styles; // Import default styles
 import { addDays, format } from "date-fns";
 import Button from "react-bootstrap/Button";
 

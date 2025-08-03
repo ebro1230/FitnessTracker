@@ -16,7 +16,7 @@ import MealStack from "@/app/components/meal-stack";
 import SearchModal from "@/app/components/search-modal";
 import FoodDetailsModal from "@/app/components/food-details-modal";
 import ProfileChangeButtons from "@/app/components/profile-change-buttons";
-import "react-datepicker/dist/react-datepicker.css"; // Import default styles
+import "@/app/react-datepicker.css"; // Import default styles
 import { addDays } from "date-fns";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Router } from "lucide-react";
