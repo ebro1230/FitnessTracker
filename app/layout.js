@@ -1,18 +1,20 @@
 "use client"; // Required for context providers in App Router
 import { SessionProvider } from "next-auth/react";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
+
 import "./globals.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AppWrapper from "@/app/components/app-wrapper";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const robotoMono = Roboto_Mono({
   subsets: ["latin"],
+  variable: "--font-roboto-mono",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 // export const metadata = {
@@ -23,7 +25,7 @@ const geistMono = Geist_Mono({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${inter.variable} ${robotoMono.variable}`}>
         <SessionProvider>
           <AppWrapper children={children} />
         </SessionProvider>
