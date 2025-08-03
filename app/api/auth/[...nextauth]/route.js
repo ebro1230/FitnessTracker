@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import clientPromise from "@/lib/mongo";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
@@ -7,8 +9,6 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User"; // Custom User model (optional)
 import bcrypt from "bcrypt";
-
-export const runtime = "nodejs";
 
 export const authOptions = {
   providers: [
