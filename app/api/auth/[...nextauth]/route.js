@@ -96,5 +96,14 @@ const authOptions = {
   },
 };
 
-const handler = NextAuth(authOptions);
+let handler;
+
+try {
+  handler = NextAuth(authOptions);
+} catch (e) {
+  console.error("❌ NextAuth init failed", e);
+  throw e;
+}
+
+//const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
