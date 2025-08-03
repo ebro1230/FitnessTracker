@@ -40,5 +40,10 @@
     "@eslint/eslintrc": "^3",
     "eslint": "^9.32.0",
     "eslint-config-next": "15.2.0"
+  },
+  "overrides": {
+  "mongoose": {
+    "mongodb": "^5.9.2"
   }
+}
 }
