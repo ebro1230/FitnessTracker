@@ -48,7 +48,7 @@ export const authOptions = {
       },
     }),
   ],
-  //adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
   // pages: {
   //   signIn: "/auth/signin",
