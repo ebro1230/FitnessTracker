@@ -12,13 +12,13 @@ import bcrypt from "bcrypt";
 
 const authOptions = {
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: { scope: "openid email profile" }, // Default scope includes first & last name
-      },
-    }),
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //   authorization: {
+    //     params: { scope: "openid email profile" }, // Default scope includes first & last name
+    //   },
+    // }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
