@@ -1,20 +1,15 @@
 "use client"; // Required for context providers in App Router
 import { SessionProvider } from "next-auth/react";
-import { Inter, Roboto_Mono } from "next/font/google";
+//import { Inter, Roboto_Mono } from "next/font/google";
 
 import "./globals.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import AppWrapper from "@/app/components/app-wrapper";
+import localFont from "next/font/local";
 
-const robotoMono = Roboto_Mono({
-  subsets: ["latin"],
+const robotoMono = localFont({
+  src: "../fonts/RobotoMono-Regular.woff2",
   variable: "--font-roboto-mono",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
 });
 
 // export const metadata = {
@@ -25,7 +20,7 @@ const inter = Inter({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${robotoMono.variable}`}>
+      <body className={`${robotoMono.variable} ${robotoMono.variable}`}>
         <SessionProvider>
           <AppWrapper children={children} />
         </SessionProvider>
