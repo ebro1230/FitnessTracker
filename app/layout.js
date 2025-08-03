@@ -7,10 +7,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import AppWrapper from "@/app/components/app-wrapper";
 import localFont from "next/font/local";
 
-const robotoMono = localFont({
-  src: "../fonts/RobotoMono-Regular.woff2",
-  variable: "--font-roboto-mono",
-});
+// const robotoMono = localFont({
+//   src: "../fonts/RobotoMono-Regular.woff2",
+//   variable: "--font-roboto-mono",
+// });
 
 // export const metadata = {
 //   title: "Create Next App",
@@ -20,7 +20,9 @@ const robotoMono = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${robotoMono.variable} ${robotoMono.variable}`}>
+      <body
+      //  className={`${robotoMono.variable} ${robotoMono.variable}`}
+      >
         <SessionProvider>
           <AppWrapper children={children} />
         </SessionProvider>
