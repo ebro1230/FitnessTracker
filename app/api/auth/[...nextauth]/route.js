@@ -8,6 +8,8 @@ import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User"; // Custom User model (optional)
 import bcrypt from "bcrypt";
 
+export const runtime = "nodejs";
+
 export const authOptions = {
   providers: [
     GoogleProvider({
