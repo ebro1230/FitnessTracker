@@ -509,6 +509,8 @@ export default function AppWrapper({ children }) {
     heightImperial[1],
     `"`
   );
+  console.log(heightImperial[0] === "");
+  console.log(heightImperial[1] === "");
   const handleCancelUserChanges = () => {
     setUserChanged(false);
     setUpdatedUser(initialUser);
