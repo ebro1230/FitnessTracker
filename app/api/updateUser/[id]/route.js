@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 import { uploadFileToS3 } from "@/lib/s3";
+const NextResponseDefault = NextResponse.default;
 
 export async function PUT(req, { params }) {
   try {
@@ -59,7 +60,7 @@ export async function PUT(req, { params }) {
         }
       } catch (error) {
         console.error("Error Updating Password, Please Try Again", error);
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        return NextResponseDefault.json({ error: error.message }, { status: 400 });
       }
     }
     if (profilePicture) {
@@ -73,7 +74,7 @@ export async function PUT(req, { params }) {
           "Error Uploading Profile Picture, Please Restart the Application and Try Again",
           error
         );
-        return NextResponse.json({ error: error.message }, { status: 400 });
+        return NextResponseDefault.json({ error: error.message }, { status: 400 });
       }
     }
     family_name ? (otherFields.family_name = family_name) : null;
@@ -101,8 +102,8 @@ export async function PUT(req, { params }) {
       { $set: otherFields }, // Update all fields, including the hashed password if present
       { new: true, runValidators: true } // Options: return updated document, run validation
     );
-    return NextResponse.json(updatedUser, { status: 201 });
+    return NextResponseDefault.json(updatedUser, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponseDefault.json({ error: error.message }, { status: 400 });
   }
 }
