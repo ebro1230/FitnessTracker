@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 
-const NextResponse = NextResponse.default
+NextResponse = NextResponse.default
 console.log("Next Response:", typeof NextResponse)
 
 export async function GET(req, { params }) {
