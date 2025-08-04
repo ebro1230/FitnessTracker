@@ -2,13 +2,15 @@ export const runtime = "nodejs";
 
 import clientPromise from "@/lib/mongo";
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User"; // Custom User model (optional)
 import bcrypt from "bcrypt";
+
+import googleProviderModule from "next-auth/providers/google";
+const GoogleProvider = googleProviderModule.default;
 
 console.log("GoogleProvider:", typeof GoogleProvider);
 
