@@ -13,8 +13,7 @@ export async function GET(req, { params }) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const response = NextResponse.json(user, { status: 200 });
-    return response;
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
   }
