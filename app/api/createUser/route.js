@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
+const NextResponseDefault = NextResponse.default
 
 export async function POST(req) {
   try {
@@ -12,7 +13,7 @@ export async function POST(req) {
     const existingUser = await User.findOne({ email: body.email });
     if (existingUser) {
       console.log("USER EXISTS");
-      return NextResponse.json(
+      return NextResponseDefault.json(
         { error: "User Already Exists" },
         { status: 400 }
       );
@@ -27,9 +28,9 @@ export async function POST(req) {
         given_name: body.given_name,
         age: body.age,
       });
-      return NextResponse.json(newUser, { status: 201 });
+      return NextResponseDefault.json(newUser, { status: 201 });
     }
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponseDefault.json({ error: error.message }, { status: 400 });
   }
 }
