@@ -64,30 +64,30 @@ export default function SignIn() {
   };
 
   const handleSignUp = async () => {
+    let errorText = "";
     if (!textCheck.test(given_name) || !textCheck.test(family_name)) {
-      setError("Please only use characters when entering your name\n");
+      errorText = "Please only use characters when entering your name\n";
     }
     if (!ageCheck.test(age)) {
-      setError(
-        error +
-          "Please enter whole numbers between 18 & 99 when entering your age\n"
-      );
+      errorText =
+        errorText +
+        "Please enter whole numbers between 18 & 99 when entering your age\n";
     }
     if (gender != "Male" || gender != "Female") {
-      setError(error + "Please choose a gender\n");
+      errorText = errorText + "Please choose a gender\n";
     }
     if (!emailCheck.test(email)) {
-      setError(error + "Please Enter A Valid Email\n");
+      errorText = errorText + "Please Enter A Valid Email\n";
     }
     if (!passwordCheck.test(password)) {
-      setError(
-        error +
-          "Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number\n"
-      );
+      errorText =
+        errorText +
+        "Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number\n";
     }
     if (password != confirmPassword) {
-      setError(error + "Passwords do not match");
+      errorText = errorText + "Passwords do not match";
     }
+    setError(errorText);
     if (
       textCheck.test(given_name) &&
       textCheck.test(family_name) &&
