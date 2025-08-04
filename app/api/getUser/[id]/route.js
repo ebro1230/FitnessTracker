@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { default as NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 
-NextResponse = NextResponse.default
+//const NextResponseDefault = NextResponse.default
 console.log("Next Response:", typeof NextResponse)
 
 export async function GET(req, { params }) {
