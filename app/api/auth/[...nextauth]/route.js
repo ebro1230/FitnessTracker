@@ -1,7 +1,9 @@
 export const runtime = "nodejs";
 
 import clientPromise from "@/lib/mongo";
-import NextAuth from "next-auth";
+import NextAuthModule from "next-auth";
+const NextAuth = NextAuthModule.default || NextAuthModule;
+
 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
@@ -15,6 +17,8 @@ const GoogleProvider = googleProviderModule.default;
 const CredentialsProvider = credentialsProviderModule.default;
 
 console.log("GoogleProvider:", typeof GoogleProvider);
+console.log("CredentialsProvider:", typeof CredentialsProvider);
+console.log("NextAuth:", typeof NextAuth);
 
 const authOptions = {
   providers: [
