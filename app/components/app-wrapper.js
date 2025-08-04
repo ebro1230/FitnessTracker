@@ -501,16 +501,7 @@ export default function AppWrapper({ children }) {
         console.error("Error:", error);
       }); // Handle errors
   };
-  console.log("Height Metric: ", heightMetric);
-  console.log(
-    "Height Imperial: ",
-    heightImperial[0],
-    "'",
-    heightImperial[1],
-    `"`
-  );
-  console.log(heightImperial[0] === "");
-  console.log(heightImperial[1] === "");
+
   const handleCancelUserChanges = () => {
     setUserChanged(false);
     setUpdatedUser(initialUser);
@@ -1325,16 +1316,16 @@ export default function AppWrapper({ children }) {
       ) {
         formData.append("profilePicture", profilePicture);
       } // File upload
-      if (family_name != initialUser.family_name) {
+      if (family_name != initialUser.family_name && family_name !== "") {
         formData.append("family_name", family_name);
       }
-      if (given_name != initialUser.given_name) {
+      if (given_name != initialUser.given_name && given_name !== "") {
         formData.append("given_name", given_name);
       }
       if (preference != initialUser.preference) {
         formData.append("preference", preference);
       }
-      if (email != initialUser.email) {
+      if (email != initialUser.email && email !== "") {
         formData.append("email", email);
       }
       if (password && newPassword === confirmNewPassword) {
@@ -1342,21 +1333,37 @@ export default function AppWrapper({ children }) {
         formData.append("newPassword", newPassword);
         formData.append("confirmNewPassword", confirmNewPassword);
       }
-      if (Number(age) != initialUser.age) {
+      if (Number(age) != initialUser.age && age !== "" && age !== 0) {
         formData.append("age", Number(age));
       }
-      if (Number(currentWeightKG) != initialUser.currentWeightKG) {
+      if (
+        Number(currentWeightKG) != initialUser.currentWeightKG &&
+        currentWeightKG !== "" &&
+        currentWeightKG !== 0
+      ) {
         formData.append("currentWeightKG", Number(currentWeightKG));
         handleBMIUpdate();
       }
-      if (Number(currentWeightLBS) != initialUser.currentWeightLBS) {
+      if (
+        Number(currentWeightLBS) != initialUser.currentWeightLBS &&
+        currentWeightLBS !== "" &&
+        currentWeightLBS !== 0
+      ) {
         formData.append("currentWeightLBS", Number(currentWeightLBS));
         handleBMIUpdate();
       }
-      if (Number(goalWeightKG) != initialUser.goalWeightKG) {
+      if (
+        Number(goalWeightKG) != initialUser.goalWeightKG &&
+        goalWeightKG !== "" &&
+        goalWeightKG !== 0
+      ) {
         formData.append("goalWeightKG", Number(goalWeightKG));
       }
-      if (Number(goalWeightLBS) != initialUser.goalWeightLBS) {
+      if (
+        Number(goalWeightLBS) != initialUser.goalWeightLBS &&
+        goalWeightLBS !== "" &&
+        goalWeightLBS !== 0
+      ) {
         formData.append("goalWeightLBS", Number(goalWeightLBS));
       }
       if (
@@ -1378,7 +1385,11 @@ export default function AppWrapper({ children }) {
           formData.append("heightImperialInches", 0);
         }
       }
-      if (Number(heightMetric) != initialUser.heightMetric) {
+      if (
+        Number(heightMetric) != initialUser.heightMetric &&
+        heightMetric !== "" &&
+        heightMetric !== 0
+      ) {
         formData.append("heightMetric", Number(heightMetric));
       }
       if (gender != initialUser.gender) {
@@ -1474,8 +1485,16 @@ export default function AppWrapper({ children }) {
         // setPreviousData(true);
         // setIndexOfPreviousData(index);
       }
-      formData.append("bmiKG", Number(bmiKG));
-      formData.append("bmiLBS", Number(bmiLBS));
+      if (Number(bmiKG) != initialUser.bmiKG && bmiKG !== "" && bmiKG !== 0) {
+        formData.append("bmiKG", Number(bmiKG));
+      }
+      if (
+        Number(bmiLBS) != initialUser.bmiLBS &&
+        bmiLBS !== "" &&
+        bmiLBS !== 0
+      ) {
+        formData.append("bmiLBS", Number(bmiLBS));
+      }
       fetch(`/api/updateUser/${session.user.id}`, {
         method: "PUT",
         // headers: {
