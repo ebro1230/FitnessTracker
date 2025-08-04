@@ -2001,7 +2001,7 @@ export default function AppWrapper({ children }) {
         setHeightImperial(
           data.heightImperial[0]
             ? [data.heightImperial[0], data.heightImperial[1]]
-            : ""
+            : ["", ""]
         );
         setHeightMetric(data.heightMetric ? data.heightMetric : "");
         if (
