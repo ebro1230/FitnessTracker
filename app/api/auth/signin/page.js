@@ -75,7 +75,7 @@ export default function SignIn() {
       setGenderError("Please choose a gender");
     } else {
       setIsWorking(true);
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/createUser`, {
+      fetch(`/api/createUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
