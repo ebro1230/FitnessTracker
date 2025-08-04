@@ -73,7 +73,7 @@ export default function SignIn() {
         errorText +
         "Please enter whole numbers between 18 & 99 when entering your age\n";
     }
-    if (gender != "Male" || gender != "Female") {
+    if (gender != "Male" && gender != "Female") {
       errorText = errorText + "Please choose a gender\n";
     }
     if (!emailCheck.test(email)) {
