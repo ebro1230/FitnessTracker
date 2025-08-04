@@ -501,7 +501,14 @@ export default function AppWrapper({ children }) {
         console.error("Error:", error);
       }); // Handle errors
   };
-
+  console.log("Height Metric: ", heightMetric);
+  console.log(
+    "Height Imperial: ",
+    heightImperial[0],
+    "'",
+    heightImperial[1],
+    `"`
+  );
   const handleCancelUserChanges = () => {
     setUserChanged(false);
     setUpdatedUser(initialUser);
@@ -1354,6 +1361,7 @@ export default function AppWrapper({ children }) {
         Number(heightImperial[0]) != initialUser.heightImperial[0] &&
         heightImperial[0] !== ""
       ) {
+        console.log("Height Imperial Feet Appended");
         formData.append("heightImperialFeet", Number(heightImperial[0]));
       }
       if (
@@ -1361,8 +1369,10 @@ export default function AppWrapper({ children }) {
         heightImperial[0] !== ""
       ) {
         if (heightImperial[1] !== "") {
+          console.log("Height Imperial Inches Appended as Filled in Number");
           formData.append("heightImperialInches", Number(heightImperial[1]));
         } else {
+          console.log("Height Imperial Inches Appended as 0");
           formData.append("heightImperialInches", 0);
         }
       }
