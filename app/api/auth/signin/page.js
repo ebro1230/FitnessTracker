@@ -22,7 +22,6 @@ export default function SignIn() {
   const [isWorking, setIsWorking] = useState(false);
   const [isGoogleWorking, setIsGoogleWorking] = useState(false);
   const [gender, setGender] = useState("");
-  const [genderError, setGenderError] = useState("Male");
   const emailCheck = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordCheck =
     /^(?=(.*[A-Z]))(?=(.*\d))(?=(.*[!@#$%^&*(),.?":{}|<>]))[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
@@ -62,7 +61,6 @@ export default function SignIn() {
   };
 
   const handleSignUp = async () => {
-    console.log("CLICKED");
     if (password != confirmPassword) {
       setError("Passwords do not match");
     } else if (!textCheck.test(given_name) || !textCheck.test(family_name)) {
@@ -71,8 +69,8 @@ export default function SignIn() {
       setError(
         "Please enter whole numbers between 18 & 99 when entering your age"
       );
-    } else if (!gender) {
-      setGenderError("Please choose a gender");
+    } else if (gender != "Male" || gender != "Female") {
+      setError("Please choose a gender");
     } else {
       setIsWorking(true);
       fetch(`/api/createUser`, {
@@ -315,14 +313,13 @@ export default function SignIn() {
                   <Form.Label style={{ color: "white" }}>Gender:</Form.Label>
                   <Form.Select
                     name="gender"
-                    // value={"Metric (kg, cm, etc.)" || preference}
                     onChange={(e) => {
                       setGender(e.target.value);
                       setError("");
                     }}
                     value={gender}
                   >
-                    {/* <option value="">Select...</option> */}
+                    <option value="">{"Select..."}</option>
                     <option value="Male">{"Male"}</option>
                     <option value="Female">{"Female"}</option>
                   </Form.Select>
@@ -397,18 +394,28 @@ export default function SignIn() {
               </>
             )}
             <Form.Group style={{ display: "flex", justifyContent: "center" }}>
-              <Button
-                variant="success"
-                onClick={(e) => handleSignIn(e)}
-                disabled={userNotFound}
-              >
-                Sign In
-              </Button>
+              {!userNotFound ? (
+                <Button
+                  variant="success"
+                  onClick={(e) => handleSignIn(e)}
+                  disabled={userNotFound}
+                >
+                  Sign In
+                </Button>
+              ) : null}
 
               {userNotFound ? (
-                <Button variant="primary" onClick={() => handleSignUp()}>
-                  Sign Up
-                </Button>
+                <>
+                  <Button
+                    variant="danger"
+                    onClick={() => setUserNotFound(false)}
+                  >
+                    Back to Sign In
+                  </Button>
+                  <Button variant="primary" onClick={() => handleSignUp()}>
+                    Sign Up
+                  </Button>
+                </>
               ) : null}
               {isWorking ? (
                 <Spinner animation="border" role="status" variant="light">

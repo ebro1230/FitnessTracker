@@ -107,28 +107,25 @@ export default function Home() {
     ) {
       //checks if the date already exists in the user object
       if (updatedUser.days.some((day) => day.date === selectedDateFormatted)) {
-        fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...initialUser,
-              given_name: given_name,
-              family_name: family_name,
-              age: Number(age),
-              currentWeightKG: Number(currentWeight),
-              goalWeightKG: Number(goalWeight),
-              days: initialUser.days.map((day) => {
-                return day.date === selectedDateFormatted
-                  ? { ...day, weight: currentWeight, goalWeight: goalWeight }
-                  : day;
-              }),
+        fetch(`/api/getUser/${session.user.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...initialUser,
+            given_name: given_name,
+            family_name: family_name,
+            age: Number(age),
+            currentWeightKG: Number(currentWeight),
+            goalWeightKG: Number(goalWeight),
+            days: initialUser.days.map((day) => {
+              return day.date === selectedDateFormatted
+                ? { ...day, weight: currentWeight, goalWeight: goalWeight }
+                : day;
             }),
-          }
-        )
+          }),
+        })
           .then((response) => {
             if (response.status === 201) {
               return response.json(); // Parse response if status is 201
@@ -176,80 +173,77 @@ export default function Home() {
         // }));
       } else {
         //creates a new day and adds the current weight and goal weight to the day then sorts the array to make sure they are in date order
-        fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              ...initialUser,
-              given_name: given_name,
-              family_name: family_name,
-              age: Number(age),
-              currentWeightKG: Number(currentWeight),
-              goalWeightKG: Number(goalWeight),
-              days: [
-                ...initialUser.days,
-                {
-                  date: selectedDateFormatted,
-                  weight: Number(currentWeight),
-                  goalWeight: Number(goalWeight),
-                  breakfast: {
-                    foodItems: [],
-                    calories: 0,
-                    carbohydrates: 0,
-                    protein: 0,
-                    fat: 0,
-                    proteinPercentage: 0,
-                    fatPercentage: 0,
-                    carbohydratePercentage: 0,
-                  },
-                  lunch: {
-                    foodItems: [],
-                    calories: 0,
-                    carbohydrates: 0,
-                    protein: 0,
-                    fat: 0,
-                    proteinPercentage: 0,
-                    fatPercentage: 0,
-                    carbohydratePercentage: 0,
-                  },
-                  dinner: {
-                    foodItems: [],
-                    calories: 0,
-                    carbohydrates: 0,
-                    protein: 0,
-                    fat: 0,
-                    proteinPercentage: 0,
-                    fatPercentage: 0,
-                    carbohydratePercentage: 0,
-                  },
-                  snacks: {
-                    foodItems: [],
-                    calories: 0,
-                    carbohydrates: 0,
-                    protein: 0,
-                    fat: 0,
-                    proteinPercentage: 0,
-                    fatPercentage: 0,
-                    carbohydratePercentage: 0,
-                  },
-                  totals: {
-                    calories: 0,
-                    carbohydrates: 0,
-                    protein: 0,
-                    fat: 0,
-                    proteinPercentage: 0,
-                    fatPercentage: 0,
-                    carbohydratePercentage: 0,
-                  },
+        fetch(`/api/getUser/${session.user.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...initialUser,
+            given_name: given_name,
+            family_name: family_name,
+            age: Number(age),
+            currentWeightKG: Number(currentWeight),
+            goalWeightKG: Number(goalWeight),
+            days: [
+              ...initialUser.days,
+              {
+                date: selectedDateFormatted,
+                weight: Number(currentWeight),
+                goalWeight: Number(goalWeight),
+                breakfast: {
+                  foodItems: [],
+                  calories: 0,
+                  carbohydrates: 0,
+                  protein: 0,
+                  fat: 0,
+                  proteinPercentage: 0,
+                  fatPercentage: 0,
+                  carbohydratePercentage: 0,
                 },
-              ].sort((a, b) => a.date.localeCompare(b.date)),
-            }),
-          }
-        )
+                lunch: {
+                  foodItems: [],
+                  calories: 0,
+                  carbohydrates: 0,
+                  protein: 0,
+                  fat: 0,
+                  proteinPercentage: 0,
+                  fatPercentage: 0,
+                  carbohydratePercentage: 0,
+                },
+                dinner: {
+                  foodItems: [],
+                  calories: 0,
+                  carbohydrates: 0,
+                  protein: 0,
+                  fat: 0,
+                  proteinPercentage: 0,
+                  fatPercentage: 0,
+                  carbohydratePercentage: 0,
+                },
+                snacks: {
+                  foodItems: [],
+                  calories: 0,
+                  carbohydrates: 0,
+                  protein: 0,
+                  fat: 0,
+                  proteinPercentage: 0,
+                  fatPercentage: 0,
+                  carbohydratePercentage: 0,
+                },
+                totals: {
+                  calories: 0,
+                  carbohydrates: 0,
+                  protein: 0,
+                  fat: 0,
+                  proteinPercentage: 0,
+                  fatPercentage: 0,
+                  carbohydratePercentage: 0,
+                },
+              },
+            ].sort((a, b) => a.date.localeCompare(b.date)),
+          }),
+        })
           .then((response) => {
             if (response.status === 201) {
               return response.json(); // Parse response if status is 201
@@ -452,16 +446,13 @@ export default function Home() {
   };
 
   const handleSaveChanges = () => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedUser),
-      }
-    )
+    fetch(`/api/getUser/${session.user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedUser),
+    })
       .then((response) => {
         if (response.status === 201) {
           return response.json(); // Parse response if status is 201
@@ -1073,18 +1064,15 @@ export default function Home() {
     setSearchModal(false);
     setIsModalOpen(true);
     setFoodDetailsLoading(true);
-    fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/usdaDatabase/food-details`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fdcId: e.target.accessKey,
-        }),
-      }
-    )
+    fetch(`/api/usdaDatabase/food-details`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fdcId: e.target.accessKey,
+      }),
+    })
       .then((response) => response.json())
       .then((foodDetails) => {
         setFoodDetails(foodDetails);
@@ -1106,19 +1094,16 @@ export default function Home() {
   const handleSearch = (search, page) => {
     setSearchLoading(true);
     setCurrentSearch(search);
-    fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/usdaDatabase/food-search`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          search: search,
-          page: page ? page : 1,
-        }),
-      }
-    )
+    fetch(`/api/usdaDatabase/food-search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        search: search,
+        page: page ? page : 1,
+      }),
+    })
       .then((response) => response.json())
       .then((foodData) => {
         setResults(foodData);
