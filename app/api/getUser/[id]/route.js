@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 
-console.log("Next Response:", typeof NextResponse);
-console.log("Next Resposne Default:", typeof NextResponse.default)
+const NextResponse = NextResponse.default
+console.log("Next Response:", typeof NextResponse)
 
 export async function GET(req, { params }) {
   await connectToDatabase();
