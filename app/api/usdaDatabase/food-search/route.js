@@ -2,6 +2,7 @@ import { createRouter } from "next-connect";
 import { NextResponse } from "next/server";
 import bodyParser from "body-parser";
 import cors from "cors";
+const NextResponseDefault = NextResponse.default
 
 const handler = createRouter();
 
@@ -56,7 +57,7 @@ handler.post(async (req) => {
             };
           }),
         };
-        return NextResponse.json(foodData, { status: 200 });
+        return NextResponseDefault.json(foodData, { status: 200 });
       });
   });
 });
