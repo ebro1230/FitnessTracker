@@ -26,7 +26,7 @@ export default function AppWrapper({ children }) {
   const [currentWeightLBS, setCurrentWeightLBS] = useState("");
   const [goalWeightLBS, setGoalWeightLBS] = useState("");
   const [heightMetric, setHeightMetric] = useState("");
-  const [heightImperial, setHeightImperial] = useState([]);
+  const [heightImperial, setHeightImperial] = useState(["", ""]);
   const [userChanged, setUserChanged] = useState(false);
   const [updating, setUpdating] = useState(false);
 
@@ -1691,7 +1691,7 @@ export default function AppWrapper({ children }) {
     } else {
       setUserChanged(false);
     }
-    if (heightImperial.length === 0) {
+    if (heightImperial[0] === "" && heightImperial[1] === "") {
       setHeightImperial([e.target.value, ""]);
       setHeightMetric(Math.round(Number(e.target.value * 12 * 2.54)));
       setBMIKG(
