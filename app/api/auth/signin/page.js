@@ -32,12 +32,15 @@ export default function SignIn() {
   const handleSignIn = async (e) => {
     e.preventDefault();
     if (!emailCheck.test(email)) {
-      setError("Please Enter A Valid Email");
-    } else if (!passwordCheck.test(password)) {
+      setError("Please Enter A Valid Email\n");
+    }
+    if (!passwordCheck.test(password)) {
       setError(
-        "Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number"
+        error +
+          "Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number"
       );
-    } else {
+    }
+    if (emailCheck.test(email) && passwordCheck.test(password)) {
       setIsWorking(true);
       const result = await signIn("credentials", {
         redirect: false, // Prevent automatic redirect
@@ -61,17 +64,39 @@ export default function SignIn() {
   };
 
   const handleSignUp = async () => {
-    if (password != confirmPassword) {
-      setError("Passwords do not match");
-    } else if (!textCheck.test(given_name) || !textCheck.test(family_name)) {
-      setError("Please only use characters when entering your name");
-    } else if (!ageCheck.test(age)) {
+    if (!textCheck.test(given_name) || !textCheck.test(family_name)) {
+      setError("Please only use characters when entering your name\n");
+    }
+    if (!ageCheck.test(age)) {
       setError(
-        "Please enter whole numbers between 18 & 99 when entering your age"
+        error +
+          "Please enter whole numbers between 18 & 99 when entering your age\n"
       );
-    } else if (gender != "Male" || gender != "Female") {
-      setError("Please choose a gender");
-    } else {
+    }
+    if (gender != "Male" || gender != "Female") {
+      setError(error + "Please choose a gender\n");
+    }
+    if (!emailCheck.test(email)) {
+      setError(error + "Please Enter A Valid Email\n");
+    }
+    if (!passwordCheck.test(password)) {
+      setError(
+        error +
+          "Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number\n"
+      );
+    }
+    if (password != confirmPassword) {
+      setError(error + "Passwords do not match");
+    }
+    if (
+      textCheck.test(given_name) &&
+      textCheck.test(family_name) &&
+      ageCheck.test(age) &&
+      (gender === "Male" || gender === "Female") &&
+      emailCheck.test(email) &&
+      passwordCheck.test(password) &&
+      password === confirmPassword
+    ) {
       setIsWorking(true);
       fetch(`/api/createUser`, {
         method: "POST",
@@ -408,7 +433,10 @@ export default function SignIn() {
                 <>
                   <Button
                     variant="danger"
-                    onClick={() => setUserNotFound(false)}
+                    onClick={() => {
+                      setUserNotFound(false);
+                      setError("");
+                    }}
                   >
                     Back to Sign In
                   </Button>
