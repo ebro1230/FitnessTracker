@@ -31,15 +31,16 @@ export default function SignIn() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+    let errorText = "";
     if (!emailCheck.test(email)) {
-      setError("Please Enter A Valid Email\n");
+      errorText = "- Please enter a valid email\n";
     }
     if (!passwordCheck.test(password)) {
-      setError(
-        error +
-          "Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number"
-      );
+      errorText =
+        errorText +
+        "- Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number";
     }
+    setError(errorText);
     if (emailCheck.test(email) && passwordCheck.test(password)) {
       setIsWorking(true);
       const result = await signIn("credentials", {
@@ -66,26 +67,26 @@ export default function SignIn() {
   const handleSignUp = async () => {
     let errorText = "";
     if (!textCheck.test(given_name) || !textCheck.test(family_name)) {
-      errorText = "Please only use characters when entering your name\n";
+      errorText = "- Please only use characters when entering your name\n";
     }
     if (!ageCheck.test(age)) {
       errorText =
         errorText +
-        "Please enter whole numbers between 18 & 99 when entering your age\n";
+        "- Please enter whole numbers between 18 & 99 when entering your age\n";
     }
     if (gender != "Male" && gender != "Female") {
-      errorText = errorText + "Please choose a gender\n";
+      errorText = errorText + "- Please choose a gender\n";
     }
     if (!emailCheck.test(email)) {
-      errorText = errorText + "Please Enter A Valid Email\n";
+      errorText = errorText + "- Please enter a valid email\n";
     }
     if (!passwordCheck.test(password)) {
       errorText =
         errorText +
-        "Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number\n";
+        "- Password must contain:\n- 8 characters,\n- at least 1 capital letter,\n- at least 1 special character, &\n- at least 1 number\n";
     }
     if (password != confirmPassword) {
-      errorText = errorText + "Passwords do not match";
+      errorText = errorText + "- Passwords do not match";
     }
     setError(errorText);
     if (

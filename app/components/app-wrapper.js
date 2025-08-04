@@ -477,16 +477,13 @@ export default function AppWrapper({ children }) {
   };
 
   const handleSaveChanges = () => {
-    fetch(
-      `/api/getUser/${session.user.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedUser),
-      }
-    )
+    fetch(`/api/getUser/${session.user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedUser),
+    })
       .then((response) => {
         if (response.status === 201) {
           return response.json(); // Parse response if status is 201
@@ -1109,18 +1106,15 @@ export default function AppWrapper({ children }) {
     setSearchModal(false);
     setIsModalOpen(true);
     setFoodDetailsLoading(true);
-    fetch(
-      `/api/usdaDatabase/food-details`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fdcId: e.target.accessKey,
-        }),
-      }
-    )
+    fetch(`/api/usdaDatabase/food-details`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fdcId: e.target.accessKey,
+      }),
+    })
       .then((response) => response.json())
       .then((foodDetails) => {
         setFoodDetails(foodDetails);
@@ -1142,19 +1136,16 @@ export default function AppWrapper({ children }) {
   const handleSearch = (search, page) => {
     setSearchLoading(true);
     setCurrentSearch(search);
-    fetch(
-      `/api/usdaDatabase/food-search`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          search: search,
-          page: page ? page : 1,
-        }),
-      }
-    )
+    fetch(`/api/usdaDatabase/food-search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        search: search,
+        page: page ? page : 1,
+      }),
+    })
       .then((response) => response.json())
       .then((foodData) => {
         setResults(foodData);
@@ -1273,7 +1264,7 @@ export default function AppWrapper({ children }) {
       (heightImperial[1] && !inchesCheck.test(Number(heightImperial[1]))) ||
       Number(heightImperial[0]) < 2
     ) {
-      if (initialUser.preference === "Metric") {
+      if (preference === "Metric") {
         setHeightError("Please enter a height between 61cm & 274cm");
       } else {
         setHeightError("Please enter a height between 2ft & 9ft");
@@ -1359,11 +1350,21 @@ export default function AppWrapper({ children }) {
       if (Number(goalWeightLBS) != initialUser.goalWeightLBS) {
         formData.append("goalWeightLBS", Number(goalWeightLBS));
       }
-      if (Number(heightImperial[0]) != initialUser.heightImperial[0]) {
+      if (
+        Number(heightImperial[0]) != initialUser.heightImperial[0] &&
+        heightImperial[0] !== ""
+      ) {
         formData.append("heightImperialFeet", Number(heightImperial[0]));
       }
-      if (Number(heightImperial[1]) != initialUser.heightImperial[1]) {
-        formData.append("heightImperialInches", Number(heightImperial[1]));
+      if (
+        Number(heightImperial[1]) != initialUser.heightImperial[1] &&
+        heightImperial[0] !== ""
+      ) {
+        if (heightImperial[1] !== "") {
+          formData.append("heightImperialInches", Number(heightImperial[1]));
+        } else {
+          formData.append("heightImperialInches", 0);
+        }
       }
       if (Number(heightMetric) != initialUser.heightMetric) {
         formData.append("heightMetric", Number(heightMetric));
@@ -1463,17 +1464,14 @@ export default function AppWrapper({ children }) {
       }
       formData.append("bmiKG", Number(bmiKG));
       formData.append("bmiLBS", Number(bmiLBS));
-      fetch(
-        `/api/updateUser/${session.user.id}`,
-        {
-          method: "PUT",
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
-          //body: JSON.stringify(body),
-          body: formData,
-        }
-      )
+      fetch(`/api/updateUser/${session.user.id}`, {
+        method: "PUT",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        //body: JSON.stringify(body),
+        body: formData,
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:");
@@ -1827,20 +1825,17 @@ export default function AppWrapper({ children }) {
 
   const handleActivityLevelSave = () => {
     setUpdating(true);
-    fetch(
-      `/api/getUser/${session.user.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...initialUser,
-          activityLevel: activityLevel,
-          dailyCalorieGoal: dailyCalorieGoal,
-        }),
-      }
-    )
+    fetch(`/api/getUser/${session.user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...initialUser,
+        activityLevel: activityLevel,
+        dailyCalorieGoal: dailyCalorieGoal,
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:");
@@ -1928,21 +1923,18 @@ export default function AppWrapper({ children }) {
 
   const handleWeightLossPerWeekSave = () => {
     setUpdating(true);
-    fetch(
-      `/api/getUser/${session.user.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...initialUser,
-          weightLossPerWeekKG: weightLossPerWeekKG,
-          weightLossPerWeekLBS: weightLossPerWeekLBS,
-          dailyCalorieGoal: dailyCalorieGoal,
-        }),
-      }
-    )
+    fetch(`/api/getUser/${session.user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...initialUser,
+        weightLossPerWeekKG: weightLossPerWeekKG,
+        weightLossPerWeekLBS: weightLossPerWeekLBS,
+        dailyCalorieGoal: dailyCalorieGoal,
+      }),
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:");
