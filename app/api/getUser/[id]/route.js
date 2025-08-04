@@ -1,9 +1,9 @@
-import { default as NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 
-//const NextResponseDefault = NextResponse.default
-console.log("Next Response:", typeof NextResponse)
+const NextResponseDefault = NextResponse.default
+console.log("Next Response:", typeof NextResponseDefault)
 
 export async function GET(req, { params }) {
   await connectToDatabase();
@@ -13,12 +13,12 @@ export async function GET(req, { params }) {
     const user = await User.findById(id); // Find user by ID
 
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponseDefault.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user, { status: 200 });
+    return NextResponseDefault.json(user, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
+    return NextResponseDefault.json({ error: "Invalid user ID" }, { status: 400 });
   }
 }
 
@@ -31,8 +31,8 @@ export async function PUT(req) {
       body, // The data to update
       { new: true, runValidators: true } // Options: return updated document, run validation
     );
-    return NextResponse.json(user, { status: 201 });
+    return NextResponseDefault.json(user, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponseDefault.json({ error: error.message }, { status: 400 });
   }
 }
