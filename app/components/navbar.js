@@ -402,7 +402,7 @@ export default function NavBar() {
   return (
     <Navbar bg="light" expand="lg" sticky="top" fixed="top">
       <Container>
-        <Navbar.Brand>Food Tracker</Navbar.Brand>
+        <Navbar.Brand>Fitness Tracker</Navbar.Brand>
 
         {/* Toggle Button for Mobile */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
