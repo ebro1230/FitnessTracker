@@ -10,15 +10,17 @@ import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User"; // Custom User model (optional)
 import bcrypt from "bcrypt";
 
+console.log("GoogleProvider:", typeof GoogleProvider);
+
 const authOptions = {
   providers: [
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    //   authorization: {
-    //     params: { scope: "openid email profile" }, // Default scope includes first & last name
-    //   },
-    // }),
+     GoogleProvider({
+       clientId: process.env.GOOGLE_CLIENT_ID,
+       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+       authorization: {
+         params: { scope: "openid email profile" }, // Default scope includes first & last name
+       },
+     }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
