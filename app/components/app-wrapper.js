@@ -137,7 +137,7 @@ export default function AppWrapper({ children }) {
   //       //checks if the date already exists in the user object
   //       if (updatedUser.days.some((day) => day.date === selectedDateFormatted)) {
   //         fetch(
-  //           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
+  //           `/api/getUser/${session.user.id}`,
   //           {
   //             method: "PUT",
   //             headers: {
@@ -206,7 +206,7 @@ export default function AppWrapper({ children }) {
   //       } else {
   //         //creates a new day and adds the current weight and goal weight to the day then sorts the array to make sure they are in date order
   //         fetch(
-  //           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
+  //           `/api/getUser/${session.user.id}`,
   //           {
   //             method: "PUT",
   //             headers: {
@@ -478,7 +478,7 @@ export default function AppWrapper({ children }) {
 
   const handleSaveChanges = () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
+      `/api/getUser/${session.user.id}`,
       {
         method: "PUT",
         headers: {
@@ -1110,7 +1110,7 @@ export default function AppWrapper({ children }) {
     setIsModalOpen(true);
     setFoodDetailsLoading(true);
     fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/usdaDatabase/food-details`,
+      `/api/usdaDatabase/food-details`,
       {
         method: "POST",
         headers: {
@@ -1143,7 +1143,7 @@ export default function AppWrapper({ children }) {
     setSearchLoading(true);
     setCurrentSearch(search);
     fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/usdaDatabase/food-search`,
+      `/api/usdaDatabase/food-search`,
       {
         method: "POST",
         headers: {
@@ -1464,7 +1464,7 @@ export default function AppWrapper({ children }) {
       formData.append("bmiKG", Number(bmiKG));
       formData.append("bmiLBS", Number(bmiLBS));
       fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/updateUser/${session.user.id}`,
+        `/api/updateUser/${session.user.id}`,
         {
           method: "PUT",
           // headers: {
@@ -1828,7 +1828,7 @@ export default function AppWrapper({ children }) {
   const handleActivityLevelSave = () => {
     setUpdating(true);
     fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
+      `/api/getUser/${session.user.id}`,
       {
         method: "PUT",
         headers: {
@@ -1929,7 +1929,7 @@ export default function AppWrapper({ children }) {
   const handleWeightLossPerWeekSave = () => {
     setUpdating(true);
     fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getUser/${session.user.id}`,
+      `/api/getUser/${session.user.id}`,
       {
         method: "PUT",
         headers: {
