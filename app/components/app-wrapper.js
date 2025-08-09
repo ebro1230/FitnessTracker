@@ -1533,8 +1533,6 @@ export default function AppWrapper({ children }) {
     setNameError("");
     if (e.target.value != initialUser.family_name) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
   };
 
@@ -1543,8 +1541,6 @@ export default function AppWrapper({ children }) {
     setNameError("");
     if (e.target.value != initialUser.given_name) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
   };
 
@@ -1553,8 +1549,6 @@ export default function AppWrapper({ children }) {
     setAgeError("");
     if (e.target.value != initialUser.age) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
   };
 
@@ -1562,8 +1556,6 @@ export default function AppWrapper({ children }) {
     setPreference(e.target.value);
     if (e.target.value != initialUser.preference) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
     if (e.target.value === "Metric" && heightError) {
       setHeightError("Please enter a height between 61cm & 274cm");
@@ -1589,8 +1581,6 @@ export default function AppWrapper({ children }) {
     setGender(e.target.value);
     if (e.target.value != initialUser.gender) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
   };
 
@@ -1613,7 +1603,6 @@ export default function AppWrapper({ children }) {
     if (e.target.value != "") {
       setUserChanged(true);
     } else {
-      setUserChanged(false);
       setConfirmNewPassword("");
       setPassword("");
     }
@@ -1629,8 +1618,6 @@ export default function AppWrapper({ children }) {
       setCurrentWeightKG(e.target.value);
       if (e.target.value != initialUser.currentWeightKG) {
         setUserChanged(true);
-      } else {
-        setUserChanged(false);
       }
       setCurrentWeightLBS(Number((e.target.value * 2.2).toFixed(2)));
       setBMIKG(Number(e.target.value) / (Number(heightMetric) / 100) ** 2);
@@ -1645,8 +1632,6 @@ export default function AppWrapper({ children }) {
       setCurrentWeightLBS(e.target.value);
       if (e.target.value != initialUser.currentWeightLBS) {
         setUserChanged(true);
-      } else {
-        setUserChanged(false);
       }
       setCurrentWeightKG(Number((e.target.value / 2.2).toFixed(2)));
       setBMIKG(
@@ -1668,16 +1653,12 @@ export default function AppWrapper({ children }) {
       setGoalWeightKG(e.target.value);
       if (e.target.value != initialUser.goalWeightKG) {
         setUserChanged(true);
-      } else {
-        setUserChanged(false);
       }
       setGoalWeightLBS(Number((e.target.value * 2.2).toFixed(2)));
     } else {
       setGoalWeightLBS(e.target.value);
       if (e.target.value != initialUser.goalWeightLBS) {
         setUserChanged(true);
-      } else {
-        setUserChanged(false);
       }
       setGoalWeightKG(Number((e.target.value / 2.2).toFixed(2)));
     }
@@ -1688,8 +1669,6 @@ export default function AppWrapper({ children }) {
     setHeightMetric(e.target.value ? Number(e.target.value) : "");
     if (e.target.value != initialUser.heightMetric) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
     setHeightImperial(
       e.target.value
@@ -1727,8 +1706,6 @@ export default function AppWrapper({ children }) {
       Number(e.target.value) != initialUser.heightImperial[0]
     ) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
     if (heightImperial[0] === "" && heightImperial[1] === "") {
       setHeightImperial([e.target.value, ""]);
@@ -1776,8 +1753,6 @@ export default function AppWrapper({ children }) {
       initialUser.heightImperial[0] != heightImperial[0]
     ) {
       setUserChanged(true);
-    } else {
-      setUserChanged(false);
     }
     if (heightImperial.length === 0) {
       setHeightImperial(["", Number(e.target.value)]);
@@ -1826,7 +1801,6 @@ export default function AppWrapper({ children }) {
       } else {
         setProfilePictureError("Only image files are allowed!");
         event.target.value = ""; // Reset file input
-        setUserChanged(false);
       }
     }
   };

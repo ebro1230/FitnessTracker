@@ -160,6 +160,7 @@ export default function UserSettings({
               <Form.Label style={{ color: "white" }}>Email address:</Form.Label>
               <Form.Control
                 type="email"
+                autoComplete="username"
                 placeholder="JohnDoe@example.com"
                 value={email}
                 onChange={(e) => onEmailChange(e)}
@@ -174,11 +175,26 @@ export default function UserSettings({
             <Form.Group
               className="mb-3"
               controlId="formNewPassword"
+              style={{ display: "none" }}
+            >
+              <Form.Label style={{ color: "white" }}>Fake Password:</Form.Label>
+              <Form.Control
+                type="password"
+                name="fakePassword"
+                autoComplete="new-password"
+                placeholder="Fake Password"
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="formNewPassword"
               style={{ display: "flex", flexDirection: "column" }}
             >
               <Form.Label style={{ color: "white" }}>New Password:</Form.Label>
               <Form.Control
                 type="password"
+                name="newPassword"
+                autoComplete="new-password"
                 placeholder="New Password"
                 value={newPassword}
                 onChange={(e) => onNewPasswordChange(e)}
@@ -203,6 +219,8 @@ export default function UserSettings({
               </Form.Label>
               <Form.Control
                 type="password"
+                name="confirmNewPassword"
+                autoComplete="new-password"
                 placeholder="Confirm New Password"
                 value={confirmNewPassword}
                 onChange={(e) => onConfirmNewPasswordChange(e)}
@@ -223,6 +241,8 @@ export default function UserSettings({
               </Form.Label>
               <Form.Control
                 type="password"
+                autoComplete="new-password"
+                name="confirmCurrentPassword"
                 placeholder="Confirm Current Password"
                 value={currentPassword}
                 onChange={(e) => onCurrentPasswordChange(e)}
@@ -334,32 +354,36 @@ export default function UserSettings({
               ) : null}
             </>
           ) : (
-            <div style={{ display: "flex" }}>
-              <Form.Control
-                type="text"
-                placeholder="Feet"
-                value={heightImperial[0]}
-                onChange={(e) => onImperialFeetHeightChange(e)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    onUpdateUser();
-                  }
-                }}
-              />
-              <Form.Control
-                type="text"
-                placeholder="Inches"
-                value={heightImperial[1]}
-                onChange={(e) => onImperialInchesHeightChange(e)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    onUpdateUser();
-                  }
-                }}
-              />
-              {heightError ? (
-                <p style={{ color: "red" }}>{heightError}</p>
-              ) : null}
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex" }}>
+                <Form.Control
+                  type="text"
+                  placeholder="Feet"
+                  value={heightImperial[0]}
+                  onChange={(e) => onImperialFeetHeightChange(e)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      onUpdateUser();
+                    }
+                  }}
+                />
+                <Form.Control
+                  type="text"
+                  placeholder="Inches"
+                  value={heightImperial[1]}
+                  onChange={(e) => onImperialInchesHeightChange(e)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      onUpdateUser();
+                    }
+                  }}
+                />
+              </div>
+              <div>
+                {heightError ? (
+                  <p style={{ color: "red" }}>{heightError}</p>
+                ) : null}
+              </div>
             </div>
           )}
         </Form.Group>

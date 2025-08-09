@@ -1435,7 +1435,7 @@ export default function Home() {
                         />
                       </div>
                     ) : null} */}
-                      (
+
                       <div
                         className="flex justify-center"
                         style={{
@@ -1456,7 +1456,6 @@ export default function Home() {
                           screenWidth={screenWidth}
                         />
                       </div>
-                      )
                     </Col>
                   ) : null}
                 </Row>
