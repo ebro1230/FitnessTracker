@@ -464,39 +464,7 @@ export default function AppWrapper({ children }) {
   //   };
 
   const handleUserComparison = (user, newUser) => {
-    console.log("Family Name: ", user.family_name, newUser.family_name);
-    console.log("Given Name: ", user.given_name, newUser.given_name);
-    console.log("Preference: ", user.preference, newUser.preference);
-    console.log("Age: ", user.age, newUser.age);
-    console.log("Email", user.email, newUser.email);
-    console.log("Gender", user.gender, newUser.gender);
-    console.log(
-      "Current Weight KG: ",
-      user.currentWeightKG,
-      newUser.currentWeightKG
-    );
-    console.log(
-      "Current Weight LBS: ",
-      user.currentWeightLBS,
-      newUser.currentWeightLBS
-    );
-    console.log("Goal Weight KG: ", user.goalWeightKG, newUser.goalWeightKG);
-    console.log("Goal Weight LBS: ", user.goalWeightLBS, newUser.goalWeightLBS);
-    console.log("Height Metric: ", user.heightMetric, newUser.heightMetric);
-    console.log(
-      "Height Imperial: ",
-      user.heightImperial,
-      newUser.heightImperial
-    );
-    console.log("New Password: ", newPassword);
-
     if (
-      // (newUser.family_name && !user.family_name) ||
-      // (newUser.given_name && !user.given_name) ||
-      // (newUser.preference && !user.preference) ||
-      // (newUser.age && !user.age) ||
-      // (newUser.gender && !user.gender) ||
-      // (newUser.email && !user.email) ||
       (newUser.currentWeightKG && !user.currentWeightKG) ||
       (newUser.currentWeightLBS && !user.currentWeightLBS) ||
       (newUser.goalWeightKG && !user.goalWeightKG) ||
@@ -532,7 +500,6 @@ export default function AppWrapper({ children }) {
       user.heightImperial.length === 0 &&
       !newPassword
     ) {
-      console.log("undefined things");
       setUserChanged(false);
     } else if (
       newUser.family_name != user.family_name ||
@@ -549,10 +516,8 @@ export default function AppWrapper({ children }) {
       newUser.heightImperial != user.heightImperial ||
       newPassword
     ) {
-      console.log("user filled in but different");
       setUserChanged(true);
     } else {
-      console.log("catchall false");
       setUserChanged(false);
     }
   };
@@ -1250,8 +1215,8 @@ export default function AppWrapper({ children }) {
   const handleCancelChanges = () => {
     setFamily_name(initialUser.family_name);
     setGiven_name(initialUser.given_name);
-    setAge(initialUser.age ? initialUser.age : "");
-    setEmail(initialUser.email ? initialUser.email : "");
+    setAge(initialUser.age);
+    setEmail(initialUser.email);
     setGoalWeightKG(initialUser.goalWeightKG ? initialUser.goalWeightKG : "");
     setCurrentWeightKG(
       initialUser.currentWeightKG ? initialUser.currentWeightKG : ""
@@ -1648,24 +1613,60 @@ export default function AppWrapper({ children }) {
   const handleGivenNameChange = (e) => {
     setGiven_name(e.target.value);
     setNameError("");
-    if (e.target.value != initialUser.given_name) {
-      setUserChanged(true);
-    }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = e.target.value;
+    newUser.preference = preference;
+    newUser.age = age;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    newUser.heightImperial = heightImperial;
+
+    handleUserComparison(initialUser, newUser);
   };
 
   const handleAgeChange = (e) => {
     setAge(e.target.value);
     setAgeError("");
-    if (e.target.value != initialUser.age) {
-      setUserChanged(true);
-    }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = e.target.value;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    newUser.heightImperial = heightImperial;
+
+    handleUserComparison(initialUser, newUser);
   };
 
   const handlePreferenceChange = (e) => {
     setPreference(e.target.value);
-    if (e.target.value != initialUser.preference) {
-      setUserChanged(true);
-    }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = e.target.value;
+    newUser.age = age;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    newUser.heightImperial = heightImperial;
+
+    handleUserComparison(initialUser, newUser);
     if (e.target.value === "Metric" && heightError) {
       setHeightError("Please enter a height between 61cm & 274cm");
     }
@@ -1688,17 +1689,41 @@ export default function AppWrapper({ children }) {
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
-    if (e.target.value != initialUser.gender) {
-      setUserChanged(true);
-    }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = age;
+    newUser.gender = e.target.value;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    newUser.heightImperial = heightImperial;
+
+    handleUserComparison(initialUser, newUser);
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setEmailError("");
-    if (e.target.value != initialUser.email) {
-      setUserChanged(true);
-    }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = age;
+    newUser.gender = gender;
+    newUser.email = e.target.value;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    newUser.heightImperial = heightImperial;
+
+    handleUserComparison(initialUser, newUser);
   };
 
   const handleCurrentPasswordChange = (e) => {
@@ -1715,6 +1740,21 @@ export default function AppWrapper({ children }) {
       setConfirmNewPassword("");
       setPassword("");
     }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = age;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    newUser.heightImperial = heightImperial;
+
+    handleUserComparison(initialUser, newUser);
   };
 
   const handleConfirmNewPasswordChange = (e) => {
@@ -1725,9 +1765,21 @@ export default function AppWrapper({ children }) {
   const handleCurrentWeightChange = (e) => {
     if (preference === "Metric") {
       setCurrentWeightKG(e.target.value);
-      if (e.target.value != initialUser.currentWeightKG) {
-        setUserChanged(true);
-      }
+      let newUser = structuredClone(initialUser);
+      newUser.family_name = family_name;
+      newUser.given_name = given_name;
+      newUser.preference = preference;
+      newUser.age = age;
+      newUser.gender = gender;
+      newUser.email = email;
+      newUser.currentWeightKG = e.target.value;
+      newUser.currentWeightLBS = currentWeightLBS;
+      newUser.goalWeightKG = goalWeightKG;
+      newUser.goalWeightLBS = goalWeightLBS;
+      newUser.heightMetric = heightMetric;
+      newUser.heightImperial = heightImperial;
+
+      handleUserComparison(initialUser, newUser);
       setCurrentWeightLBS(Number((e.target.value * 2.2).toFixed(2)));
       setBMIKG(Number(e.target.value) / (Number(heightMetric) / 100) ** 2);
       setBMILBS(
@@ -1739,9 +1791,21 @@ export default function AppWrapper({ children }) {
       );
     } else {
       setCurrentWeightLBS(e.target.value);
-      if (e.target.value != initialUser.currentWeightLBS) {
-        setUserChanged(true);
-      }
+      let newUser = structuredClone(initialUser);
+      newUser.family_name = family_name;
+      newUser.given_name = given_name;
+      newUser.preference = preference;
+      newUser.age = age;
+      newUser.gender = gender;
+      newUser.email = email;
+      newUser.currentWeightKG = currentWeightKG;
+      newUser.currentWeightLBS = e.target.value;
+      newUser.goalWeightKG = goalWeightKG;
+      newUser.goalWeightLBS = goalWeightLBS;
+      newUser.heightMetric = heightMetric;
+      newUser.heightImperial = heightImperial;
+
+      handleUserComparison(initialUser, newUser);
       setCurrentWeightKG(Number((e.target.value / 2.2).toFixed(2)));
       setBMIKG(
         Number(e.target.value / 2.2) / (Number(heightMetric) / 100) ** 2
@@ -1760,15 +1824,39 @@ export default function AppWrapper({ children }) {
   const handleGoalWeightChange = (e) => {
     if (preference === "Metric") {
       setGoalWeightKG(e.target.value);
-      if (e.target.value != initialUser.goalWeightKG) {
-        setUserChanged(true);
-      }
+      let newUser = structuredClone(initialUser);
+      newUser.family_name = family_name;
+      newUser.given_name = given_name;
+      newUser.preference = preference;
+      newUser.age = age;
+      newUser.gender = gender;
+      newUser.email = email;
+      newUser.currentWeightKG = currentWeightKG;
+      newUser.currentWeightLBS = currentWeightLBS;
+      newUser.goalWeightKG = e.target.value;
+      newUser.goalWeightLBS = goalWeightLBS;
+      newUser.heightMetric = heightMetric;
+      newUser.heightImperial = heightImperial;
+
+      handleUserComparison(initialUser, newUser);
       setGoalWeightLBS(Number((e.target.value * 2.2).toFixed(2)));
     } else {
       setGoalWeightLBS(e.target.value);
-      if (e.target.value != initialUser.goalWeightLBS) {
-        setUserChanged(true);
-      }
+      let newUser = structuredClone(initialUser);
+      newUser.family_name = family_name;
+      newUser.given_name = given_name;
+      newUser.preference = preference;
+      newUser.age = age;
+      newUser.gender = gender;
+      newUser.email = email;
+      newUser.currentWeightKG = currentWeightKG;
+      newUser.currentWeightLBS = currentWeightLBS;
+      newUser.goalWeightKG = goalWeightKG;
+      newUser.goalWeightLBS = e.target.value;
+      newUser.heightMetric = heightMetric;
+      newUser.heightImperial = heightImperial;
+
+      handleUserComparison(initialUser, newUser);
       setGoalWeightKG(Number((e.target.value / 2.2).toFixed(2)));
     }
     setGoalWeightError("");
@@ -1776,9 +1864,21 @@ export default function AppWrapper({ children }) {
 
   const handleMetricHeightChange = (e) => {
     setHeightMetric(e.target.value ? Number(e.target.value) : "");
-    if (e.target.value != initialUser.heightMetric) {
-      setUserChanged(true);
-    }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = e.target.value;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = e.target.value;
+    newUser.heightImperial = heightImperial;
+
+    handleUserComparison(initialUser, newUser);
     setHeightImperial(
       e.target.value
         ? [
@@ -1810,12 +1910,24 @@ export default function AppWrapper({ children }) {
   };
 
   const handleImperialFeetHeightChange = (e) => {
-    if (
-      !initialUser.heightImperial[0] ||
-      Number(e.target.value) != initialUser.heightImperial[0]
-    ) {
-      setUserChanged(true);
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = e.target.value;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    if (heightImperial[1] || Number(heightImperial[1]) === 0) {
+      newUser.heightImperial = [e.target.value, heightImperial[1]];
+    } else {
+      newUser.heightImperial = [e.target.value, ""];
     }
+    handleUserComparison(initialUser, newUser);
     if (heightImperial[0] === "" && heightImperial[1] === "") {
       setHeightImperial([e.target.value, ""]);
       setHeightMetric(Math.round(Number(e.target.value * 12 * 2.54)));
@@ -1856,13 +1968,27 @@ export default function AppWrapper({ children }) {
   };
 
   const handleImperialInchesHeightChange = (e) => {
-    if (
-      !initialUser.heightImperial[1] ||
-      e.target.value != initialUser.heightImperial[1] ||
-      initialUser.heightImperial[0] != heightImperial[0]
-    ) {
-      setUserChanged(true);
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = family_name;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = e.target.value;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    if (heightImperial[0] || Number(heightImperial[0]) === 0) {
+      newUser.heightImperial = [
+        Number(heightImperial[0]),
+        Number(e.target.value),
+      ];
+    } else {
+      newUser.heightImperial = ["", e.target.value];
     }
+    handleUserComparison(initialUser, newUser);
     if (heightImperial.length === 0) {
       setHeightImperial(["", Number(e.target.value)]);
       setHeightMetric(Math.round(Number(e.target.value * 2.54)));
