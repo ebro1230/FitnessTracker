@@ -492,15 +492,15 @@ export default function AppWrapper({ children }) {
       newUser.age === user.age &&
       newUser.gender === user.gender &&
       newUser.email === user.email &&
-      newUser.currentWeightKG === "" &&
+      !newUser.currentWeightKG &&
       typeof user.currentWeightKG === "undefined" &&
-      newUser.currentWeightLBS === "" &&
+      !newUser.currentWeightLBS &&
       typeof user.currentWeightLBS === "undefined" &&
-      newUser.goalWeightKG === "" &&
+      !newUser.goalWeightKG &&
       typeof user.goalWeightKG === "undefined" &&
-      newUser.goalWeightLBS === "" &&
+      !newUser.goalWeightLBS &&
       typeof user.goalWeightLBS === "undefined" &&
-      newUser.heightMetric === "" &&
+      !newUser.heightMetric &&
       typeof user.heightMetric === "undefined" &&
       Array.isArray(newUser.heightImperial) &&
       newUser.heightImperial.length === 2 &&
