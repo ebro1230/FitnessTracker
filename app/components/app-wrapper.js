@@ -464,6 +464,11 @@ export default function AppWrapper({ children }) {
   //   };
 
   const handleUserComparison = (user, newUser) => {
+    console.log(
+      "Current Weight (KG):",
+      user.currentWeightKG,
+      newUser.currentWeightKG
+    );
     if (
       (newUser.currentWeightKG && !user.currentWeightKG) ||
       (newUser.currentWeightLBS && !user.currentWeightLBS) ||
@@ -500,6 +505,7 @@ export default function AppWrapper({ children }) {
       user.heightImperial.length === 0 &&
       !newPassword
     ) {
+      console.log("New User undefined");
       setUserChanged(false);
     } else if (
       newUser.family_name != user.family_name ||
@@ -516,8 +522,10 @@ export default function AppWrapper({ children }) {
       newUser.heightImperial != user.heightImperial ||
       newPassword
     ) {
+      console.log("Changes");
       setUserChanged(true);
     } else {
+      console.log("catchall");
       setUserChanged(false);
     }
   };
