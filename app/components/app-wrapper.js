@@ -1262,7 +1262,7 @@ export default function AppWrapper({ children }) {
       (heightImperial[0] && !feetCheck.test(Number(heightImperial[0]))) ||
       (Number(heightImperial[0]) === 9 && Number(heightImperial[1]) !== 0) ||
       (heightImperial[1] && !inchesCheck.test(Number(heightImperial[1]))) ||
-      Number(heightImperial[0]) < 2
+      (Number(heightImperial[0]) < 2 && Number(heightImperial[0] > 0))
     ) {
       if (preference === "Metric") {
         setHeightError("Please enter a height between 61cm & 274cm");
@@ -1564,6 +1564,24 @@ export default function AppWrapper({ children }) {
       setUserChanged(true);
     } else {
       setUserChanged(false);
+    }
+    if (e.target.value === "Metric" && heightError) {
+      setHeightError("Please enter a height between 61cm & 274cm");
+    }
+    if (e.target.value === "Imperial" && heightError) {
+      setHeightError("Please enter a height between 2ft & 9ft");
+    }
+    if (e.target.value === "Metric" && currentWeightError) {
+      setCurrentWeightError("Please enter a weight between 32kg & 181kg");
+    }
+    if (e.target.value === "Imperial" && currentWeightError) {
+      setCurrentWeightError("Please enter a weight between 70lbs & 400lbs");
+    }
+    if (e.target.value === "Metric" && goalWeightErro) {
+      setGoalWeightError("Please enter a weight between 32kg & 181kg");
+    }
+    if (e.target.value === "Imperial" && goalWeightError) {
+      setGoalWeightError("Please enter a weight between 70lbs & 400lbs");
     }
   };
 
