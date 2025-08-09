@@ -1786,7 +1786,7 @@ export default function AppWrapper({ children }) {
       newUser.gender = gender;
       newUser.email = email;
       newUser.currentWeightKG = e.target.value;
-      newUser.currentWeightLBS = currentWeightLBS;
+      newUser.currentWeightLBS = Number((e.target.value * 2.2).toFixed(2));
       newUser.goalWeightKG = goalWeightKG;
       newUser.goalWeightLBS = goalWeightLBS;
       newUser.heightMetric = heightMetric;
@@ -1811,7 +1811,7 @@ export default function AppWrapper({ children }) {
       newUser.age = age;
       newUser.gender = gender;
       newUser.email = email;
-      newUser.currentWeightKG = currentWeightKG;
+      newUser.currentWeightKG = Number((e.target.value / 2.2).toFixed(2));
       newUser.currentWeightLBS = e.target.value;
       newUser.goalWeightKG = goalWeightKG;
       newUser.goalWeightLBS = goalWeightLBS;
@@ -1847,7 +1847,7 @@ export default function AppWrapper({ children }) {
       newUser.currentWeightKG = currentWeightKG;
       newUser.currentWeightLBS = currentWeightLBS;
       newUser.goalWeightKG = e.target.value;
-      newUser.goalWeightLBS = goalWeightLBS;
+      newUser.goalWeightLBS = Number((e.target.value * 2.2).toFixed(2));
       newUser.heightMetric = heightMetric;
       newUser.heightImperial = heightImperial;
 
@@ -1864,7 +1864,7 @@ export default function AppWrapper({ children }) {
       newUser.email = email;
       newUser.currentWeightKG = currentWeightKG;
       newUser.currentWeightLBS = currentWeightLBS;
-      newUser.goalWeightKG = goalWeightKG;
+      newUser.goalWeightKG = Number((e.target.value / 2.2).toFixed(2));
       newUser.goalWeightLBS = e.target.value;
       newUser.heightMetric = heightMetric;
       newUser.heightImperial = heightImperial;
@@ -1881,15 +1881,24 @@ export default function AppWrapper({ children }) {
     newUser.family_name = family_name;
     newUser.given_name = given_name;
     newUser.preference = preference;
-    newUser.age = e.target.value;
+    newUser.age = age;
     newUser.gender = gender;
     newUser.email = email;
     newUser.currentWeightKG = currentWeightKG;
     newUser.currentWeightLBS = currentWeightLBS;
     newUser.goalWeightKG = goalWeightKG;
     newUser.goalWeightLBS = goalWeightLBS;
-    newUser.heightMetric = e.target.value;
-    newUser.heightImperial = heightImperial;
+    newUser.heightMetric = e.target.value ? Number(e.target.value) : "";
+    newUser.heightImperial = e.target.value
+      ? [
+          Math.floor(Number(e.target.value) / 30.48),
+          Math.floor(
+            12 *
+              (Number(e.target.value) / 30.48 -
+                Math.floor(Number(e.target.value) / 30.48))
+          ),
+        ]
+      : ["", ""];
 
     handleUserComparison(initialUser, newUser);
     setHeightImperial(
@@ -1934,11 +1943,14 @@ export default function AppWrapper({ children }) {
     newUser.currentWeightLBS = currentWeightLBS;
     newUser.goalWeightKG = goalWeightKG;
     newUser.goalWeightLBS = goalWeightLBS;
-    newUser.heightMetric = heightMetric;
     if (heightImperial[1] || Number(heightImperial[1]) === 0) {
       newUser.heightImperial = [e.target.value, heightImperial[1]];
+      newUser.heightMetric = Number(
+        (e.target.value * 12 + heightImperial[1]) * 2.54
+      );
     } else {
       newUser.heightImperial = [e.target.value, ""];
+      newUser.heightMetric = Math.round(Number(e.target.value * 12 * 2.54));
     }
     handleUserComparison(initialUser, newUser);
     if (heightImperial[0] === "" && heightImperial[1] === "") {
@@ -1998,8 +2010,12 @@ export default function AppWrapper({ children }) {
         Number(heightImperial[0]),
         Number(e.target.value),
       ];
+      newUser.heightMetric = Math.round(
+        Number((e.target.value + heightImperial[0] * 12) * 2.54)
+      );
     } else {
       newUser.heightImperial = ["", e.target.value];
+      newUser.heightMetric = Math.round(Number(e.target.value * 2.54));
     }
     handleUserComparison(initialUser, newUser);
     if (heightImperial.length === 0) {
