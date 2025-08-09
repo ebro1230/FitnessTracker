@@ -464,6 +464,30 @@ export default function AppWrapper({ children }) {
   //   };
 
   const handleUserComparison = (user, newUser) => {
+    console.log("Family Name: ", user.family_name, newUser.family_name);
+    console.log("Given Name: ", user.given_name, newUser.given_name);
+    console.log("Preference: ", user.preference, newUser.preference);
+    console.log("Age: ", user.age, newUser.age);
+    console.log(
+      "Current Weight KG: ",
+      user.currentWeightKG,
+      newUser.currentWeightKG
+    );
+    console.log(
+      "Current Weight LBS: ",
+      user.currentWeightLBS,
+      newUser.currentWeightLBS
+    );
+    console.log("Goal Weight KG: ", user.goalWeightKG, newUser.goalWeightKG);
+    console.log("Goal Weight LBS: ", user.goalWeightLBS, newUser.goalWeightLBS);
+    console.log("Height Metric: ", user.heightMetric, newUser.heightMetric);
+    console.log(
+      "Height Imperial: ",
+      user.heightImperial,
+      newUser.heightImperial
+    );
+    console.log("New Password: ", newPassword);
+
     if (
       newUser.family_name != user.family_name ||
       newUser.given_name != user.given_name ||
