@@ -463,6 +463,14 @@ export default function AppWrapper({ children }) {
   //     setAgeError("");
   //   };
 
+  const handleUserComparison = (user, newUser) => {
+    if (user !== newUser) {
+      setUserChanged(true);
+    } else {
+      setUserChanged(false);
+    }
+  };
+
   const handleServingsInput = (e) => {
     setUpdateServings(e.target.value);
   };
@@ -1531,9 +1539,12 @@ export default function AppWrapper({ children }) {
   const handleFamilyNameChange = (e) => {
     setFamily_name(e.target.value);
     setNameError("");
-    if (e.target.value != initialUser.family_name) {
-      setUserChanged(true);
-    }
+    let newUser = structuredClone(initialUser);
+    newUser.family_name = e.target.value;
+    handleUserComparison(initialUser, newUser);
+    // if (e.target.value != initialUser.family_name) {
+    //   setUserChanged(true);
+    // }
   };
 
   const handleGivenNameChange = (e) => {
