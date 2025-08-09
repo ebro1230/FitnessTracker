@@ -510,10 +510,10 @@ export default function AppWrapper({ children }) {
     } else if (
       newUser.family_name === user.family_name &&
       newUser.given_name === user.given_name &&
-      newUser.preference != user.preference &&
-      newUser.age != user.age &&
-      newUser.gender != user.gender &&
-      newUser.email != user.email &&
+      newUser.preference === user.preference &&
+      newUser.age === user.age &&
+      newUser.gender === user.gender &&
+      newUser.email === user.email &&
       newUser.currentWeightKG === "" &&
       typeof user.currentWeightKG === "undefined" &&
       newUser.currentWeightLBS === "" &&
