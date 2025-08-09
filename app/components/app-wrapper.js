@@ -468,6 +468,8 @@ export default function AppWrapper({ children }) {
     console.log("Given Name: ", user.given_name, newUser.given_name);
     console.log("Preference: ", user.preference, newUser.preference);
     console.log("Age: ", user.age, newUser.age);
+    console.log("Email", user.email, newUser.email);
+    console.log("Gender", user.gender, newUser.gender);
     console.log(
       "Current Weight KG: ",
       user.currentWeightKG,
@@ -489,12 +491,12 @@ export default function AppWrapper({ children }) {
     console.log("New Password: ", newPassword);
 
     if (
-      (newUser.family_name && !user.family_name) ||
-      (newUser.given_name && !user.given_name) ||
-      (newUser.preference && !user.preference) ||
-      (newUser.age && !user.age) ||
-      (newUser.gender && !user.gender) ||
-      (newUser.email && !user.email) ||
+      // (newUser.family_name && !user.family_name) ||
+      // (newUser.given_name && !user.given_name) ||
+      // (newUser.preference && !user.preference) ||
+      // (newUser.age && !user.age) ||
+      // (newUser.gender && !user.gender) ||
+      // (newUser.email && !user.email) ||
       (newUser.currentWeightKG && !user.currentWeightKG) ||
       (newUser.currentWeightLBS && !user.currentWeightLBS) ||
       (newUser.goalWeightKG && !user.goalWeightKG) ||
@@ -503,6 +505,7 @@ export default function AppWrapper({ children }) {
       (newUser.heightImperial && !user.heightImperial) ||
       newPassword
     ) {
+      console.log("New User True, Old User false");
       setUserChanged(true);
     } else if (
       newUser.family_name === user.family_name &&
@@ -529,6 +532,7 @@ export default function AppWrapper({ children }) {
       user.heightImperial.length === 0 &&
       !newPassword
     ) {
+      console.log("undefined things");
       setUserChanged(false);
     } else if (
       newUser.family_name != user.family_name ||
@@ -545,8 +549,10 @@ export default function AppWrapper({ children }) {
       newUser.heightImperial != user.heightImperial ||
       newPassword
     ) {
+      console.log("user filled in but different");
       setUserChanged(true);
     } else {
+      console.log("catchall false");
       setUserChanged(false);
     }
   };
