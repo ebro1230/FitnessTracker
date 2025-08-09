@@ -489,6 +489,48 @@ export default function AppWrapper({ children }) {
     console.log("New Password: ", newPassword);
 
     if (
+      (newUser.family_name && !user.family_name) ||
+      (newUser.given_name && !user.given_name) ||
+      (newUser.preference && !user.preference) ||
+      (newUser.age && !user.age) ||
+      (newUser.gender && !user.gender) ||
+      (newUser.email && !user.email) ||
+      (newUser.currentWeightKG && !user.currentWeightKG) ||
+      (newUser.currentWeightLBS && !user.currentWeightLBS) ||
+      (newUser.goalWeightKG && !user.goalWeightKG) ||
+      (newUser.goalWeightLBS && !user.goalWeightLBS) ||
+      (newUser.heightMetric && !user.heightMetric) ||
+      (newUser.heightImperial && !user.heightImperial) ||
+      newPassword
+    ) {
+      setUserChanged(true);
+    } else if (
+      newUser.family_name === user.family_name &&
+      newUser.given_name === user.given_name &&
+      newUser.preference != user.preference &&
+      newUser.age != user.age &&
+      newUser.gender != user.gender &&
+      newUser.email != user.email &&
+      newUser.currentWeightKG === "" &&
+      typeof user.currentWeightKG === "undefined" &&
+      newUser.currentWeightLBS === "" &&
+      typeof user.currentWeightLBS === "undefined" &&
+      newUser.goalWeightKG === "" &&
+      typeof user.goalWeightKG === "undefined" &&
+      newUser.goalWeightLBS === "" &&
+      typeof user.goalWeightLBS === "undefined" &&
+      newUser.heightMetric === "" &&
+      typeof user.heightMetric === "undefined" &&
+      Array.isArray(newUser.heightImperial) &&
+      newUser.heightImperial.length === 2 &&
+      newUser.heightImperial[0] === "" &&
+      newUser.heightImperial[1] === "" &&
+      Array.isArray(user.heightImperial) &&
+      user.heightImperial.length === 0 &&
+      !newPassword
+    ) {
+      setUserChanged(false);
+    } else if (
       newUser.family_name != user.family_name ||
       newUser.given_name != user.given_name ||
       newUser.preference != user.preference ||
@@ -1235,7 +1277,7 @@ export default function AppWrapper({ children }) {
     setHeightError("");
     setPasswordError("");
     setEmailError("");
-    setGender(initialUser.gender);
+    setGender(initialUser.gender ? initialUser.gender : "Male");
     setBMIKG(
       initialUser.bmiKG
         ? initialUser.bmiKG
