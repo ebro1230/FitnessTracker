@@ -464,7 +464,7 @@ export default function AppWrapper({ children }) {
   //   };
 
   const handleUserComparison = (user, newUser) => {
-    if (user !== newUser) {
+    if (user != newUser) {
       setUserChanged(true);
     } else {
       setUserChanged(false);
@@ -1178,7 +1178,7 @@ export default function AppWrapper({ children }) {
     );
     setPreference(initialUser.preference ? initialUser.preference : "Metric");
     setHeightImperial(
-      initialUser.heightImperial ? initialUser.heightImperial : ""
+      initialUser.heightImperial ? initialUser.heightImperial : ["", ""]
     );
     setHeightMetric(initialUser.heightMetric ? initialUser.heightMetric : "");
     setPreview(null);
@@ -1541,6 +1541,18 @@ export default function AppWrapper({ children }) {
     setNameError("");
     let newUser = structuredClone(initialUser);
     newUser.family_name = e.target.value;
+    newUser.given_name = given_name;
+    newUser.preference = preference;
+    newUser.age = age;
+    newUser.gender = gender;
+    newUser.email = email;
+    newUser.currentWeightKG = currentWeightKG;
+    newUser.currentWeightLBS = currentWeightLBS;
+    newUser.goalWeightKG = goalWeightKG;
+    newUser.goalWeightLBS = goalWeightLBS;
+    newUser.heightMetric = heightMetric;
+    newUser.heightImperial = heightImperial;
+
     handleUserComparison(initialUser, newUser);
     // if (e.target.value != initialUser.family_name) {
     //   setUserChanged(true);
