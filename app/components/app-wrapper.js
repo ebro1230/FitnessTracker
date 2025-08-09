@@ -469,6 +469,11 @@ export default function AppWrapper({ children }) {
       user.currentWeightKG,
       newUser.currentWeightKG
     );
+    console.log(
+      "Current Weight (LBS):",
+      user.currentWeightLBS,
+      newUser.currentWeightLBS
+    );
     if (
       (newUser.currentWeightKG && !user.currentWeightKG) ||
       (newUser.currentWeightLBS && !user.currentWeightLBS) ||
