@@ -464,7 +464,21 @@ export default function AppWrapper({ children }) {
   //   };
 
   const handleUserComparison = (user, newUser) => {
-    if (user != newUser) {
+    if (
+      newUser.family_name !== user.family_name ||
+      newUser.given_name !== user.given_name ||
+      newUser.preference !== user.preference ||
+      newUser.age !== user.age ||
+      newUser.gender !== user.gender ||
+      newUser.email !== user.email ||
+      newUser.currentWeightKG !== user.currentWeightKG ||
+      newUser.currentWeightLBS !== user.currentWeightLBS ||
+      newUser.goalWeightKG !== user.goalWeightKG ||
+      newUser.goalWeightLBS !== user.goalWeightLBS ||
+      newUser.heightMetric !== user.heightMetric ||
+      newUser.heightImperial !== user.heightImperial ||
+      newPassword
+    ) {
       setUserChanged(true);
     } else {
       setUserChanged(false);
