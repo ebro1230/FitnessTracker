@@ -354,6 +354,7 @@ export default function Home() {
               isModalOpen={isModalOpen}
               onCloseModal={handleCloseModal}
               onCloseSearchModal={handleCloseSearchModal}
+              onCloseFoodEntryModal={handleCloseFoodEntryModal}
               foodDetailsLoading={foodDetailsLoading}
               foodDetails={foodDetails}
               updateServings={updateServings}

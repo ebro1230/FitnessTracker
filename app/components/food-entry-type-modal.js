@@ -11,7 +11,7 @@ export default function FoodEntryTypeModal({
     <Modal
       show={foodEntry}
       onHide={() => onCloseFoodEntryModal()}
-      size="sm"
+      style={{ width: "fit-content" }}
       centered
     >
       <Modal.Header closeButton>

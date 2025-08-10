@@ -539,6 +539,7 @@ export default function AppWrapper({ children }) {
 
   const handleFoodLookUp = () => {
     setSearchModal(true);
+    setFoodEntry(false);
   };
 
   const handleSaveChanges = () => {
@@ -1177,6 +1178,7 @@ export default function AppWrapper({ children }) {
 
   const handleCloseSearchModal = () => {
     setSearchModal(false);
+    setFoodEntry(true);
     setResults({ foods: [] });
     setSearch("");
     setCurrentSearch("");

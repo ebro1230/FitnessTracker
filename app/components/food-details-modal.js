@@ -5,6 +5,7 @@ export default function FoodDetailsModal({
   isModalOpen,
   onCloseModal,
   onCloseSearchModal,
+  onCloseFoodEntryModal,
   foodDetailsLoading,
   foodDetails,
   updateServings,
@@ -172,6 +173,7 @@ export default function FoodDetailsModal({
                         onAddToMeal();
                         onCloseModal();
                         onCloseSearchModal();
+                        onCloseFoodEntryModal();
                       }}
                     >
                       Add to Meal & Close
