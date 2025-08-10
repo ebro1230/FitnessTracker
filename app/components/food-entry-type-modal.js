@@ -11,16 +11,16 @@ export default function FoodEntryTypeModal({
     <Modal
       show={foodEntry}
       onHide={() => onCloseFoodEntryModal()}
-      size="xl"
+      size="sm"
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title className="search-modal-title">
+        <Modal.Title className="food-entry-modal-title">
           Food Entry Type
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="modal-button-div">
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
             size="sm"
             className="modal-button"

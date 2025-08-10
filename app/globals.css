@@ -74,6 +74,9 @@ tr.food-row-table td.delete-button-table-row{
   width:25%;
   text-align: center;
 }
+.food-entry-modal-title{
+  text-align: center;
+}
 .search-buttons-div{
   display: flex;
   justify-content: center;
