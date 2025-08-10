@@ -86,7 +86,7 @@ const UserSchema = new mongoose.Schema(
     ],
     myFoods: [
       {
-        description: { type: String },
+        description: { type: String, unique: true, required: true },
         brandName: { type: String },
         brandOwner: { type: String },
         fdcId: {},

@@ -80,6 +80,13 @@ export default function AppWrapper({ children }) {
   const [fatPerServing, setFatPerServing] = useState("");
   const [carbohydratesPerServing, setCarbohydratesPerServing] = useState("");
   const [newFood, setNewFood] = useState(false);
+  const [newFoodDescription, setFoodDescription] = useState("");
+  const [newFoodBrandName, setFoodBrandName] = useState("");
+  const [newFoodBrandOwner, setFoodBrandOwner] = useState("");
+  const [newFoodID, setFoodID] = useState("");
+  const [newFoodIngredients, setNewFoodIngredients] = useState("");
+  const [newFoodServingSize, setFoodServingSize] = useState("");
+  const [newFoodServingSizeUnit, setFoodServingSizeUnit] = useState("");
 
   const numberCheck =
     /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/(?:\d+(?:\.\d*)?|\.\d+))?$/;
@@ -102,373 +109,6 @@ export default function AppWrapper({ children }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  //   const handleConfirmProfileEdit = () => {
-  //     //checks to make sure each name only contains characters
-  //     if (!textCheck.test(given_name) || !textCheck.test(family_name)) {
-  //       setNameError("Please only use characters when entering your name");
-  //     } else {
-  //       setNameError("");
-  //     }
-  //     //checks to make sure the age is a whole number between 1 & 99
-  //     if (!ageCheck.test(age)) {
-  //       setAgeError(
-  //         "Please enter whole numbers between 18 & 99 when entering your age"
-  //       );
-  //     } else {
-  //       setAgeError("");
-  //     }
-  //     //checks to make sure the current weight is a positive number with up to 1 decimal place
-  //     if (!weightCheck.test(currentWeight)) {
-  //       setCurrentWeightError(
-  //         "Please enter a number between 40 & 500 with up to 1 decimal place"
-  //       );
-  //     } else {
-  //       setCurrentWeightError("");
-  //     }
-  //     //checks to make sure the goal weight is a positive number with up to 1 decimal place
-  //     if (!weightCheck.test(goalWeight)) {
-  //       setGoalWeightError(
-  //         "Please enter a number between 0 & 500 with up to 1 decimal place"
-  //       );
-  //     } else {
-  //       setGoalWeightError("");
-  //     }
-  //     if (
-  //       textCheck.test(given_name) &&
-  //       textCheck.test(family_name) &&
-  //       ageCheck.test(age) &&
-  //       weightCheck.test(currentWeight) &&
-  //       weightCheck.test(goalWeight)
-  //     ) {
-  //       //checks if the date already exists in the user object
-  //       if (updatedUser.days.some((day) => day.date === selectedDateFormatted)) {
-  //         fetch(
-  //           `/api/getUser/${session.user.id}`,
-  //           {
-  //             method: "PUT",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //             body: JSON.stringify({
-  //               ...initialUser,
-  //               given_name: given_name,
-  //               family_name: family_name,
-  //               age: Number(age),
-  //               currentWeightKG: Number(currentWeight),
-  //               goalWeightKG: Number(goalWeight),
-  //               days: initialUser.days.map((day) => {
-  //                 return day.date === selectedDateFormatted
-  //                   ? { ...day, weight: currentWeight, goalWeight: goalWeight }
-  //                   : day;
-  //               }),
-  //             }),
-  //           }
-  //         )
-  //           .then((response) => {
-  //             if (response.status === 201) {
-  //               return response.json(); // Parse response if status is 201
-  //             } else if (response.status === 400) {
-  //               throw new Error("Editing User Data Failed, Please Try Again"); // Handle 400 error
-  //             } else {
-  //               throw new Error(`Unexpected status: ${response.status}`);
-  //             }
-  //           }) // Parse JSON response
-  //           .then((data) => {
-  //             setInitialUser(data);
-  //             setUpdatedUser(data);
-  //             setIsEditing(false);
-  //           }) // Handle data
-  //           .catch((error) => {
-  //             console.error("Error:", error);
-  //             setIsEditing(false);
-  //           }); // Handle errors
-  //         //adds the current weight and goalweight to the selected date
-  //         // setInitialUser((initialUser) => ({
-  //         //   ...initialUser,
-  //         //   given_name: given_name,
-  //         //   family_name: family_name,
-  //         //   age: Number(age),
-  //         //   currentWeightKG: Number(currentWeight),
-  //         //   goalWeightKG: Number(goalWeight),
-  //         //   days: initialUser.days.map((day) => {
-  //         //     return day.date === selectedDateFormatted
-  //         //       ? { ...day, weight: currentWeight, goalWeight: goalWeight }
-  //         //       : day;
-  //         //   }),
-  //         // }));
-  //         // setUpdatedUser((updatedUser) => ({
-  //         //   ...updatedUser,
-  //         //   given_name: given_name,
-  //         //   family_name: family_name,
-  //         //   age: Number(age),
-  //         //   currentWeightKG: Number(currentWeight),
-  //         //   goalWeightKG: Number(goalWeight),
-  //         //   days: updatedUser.days.map((day) => {
-  //         //     return day.date === selectedDateFormatted
-  //         //       ? { ...day, weight: currentWeight, goalWeight: goalWeight }
-  //         //       : day;
-  //         //   }),
-  //         // }));
-  //       } else {
-  //         //creates a new day and adds the current weight and goal weight to the day then sorts the array to make sure they are in date order
-  //         fetch(
-  //           `/api/getUser/${session.user.id}`,
-  //           {
-  //             method: "PUT",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //             body: JSON.stringify({
-  //               ...initialUser,
-  //               given_name: given_name,
-  //               family_name: family_name,
-  //               age: Number(age),
-  //               currentWeightKG: Number(currentWeight),
-  //               goalWeightKG: Number(goalWeight),
-  //               days: [
-  //                 ...initialUser.days,
-  //                 {
-  //                   date: selectedDateFormatted,
-  //                   weight: Number(currentWeight),
-  //                   goalWeight: Number(goalWeight),
-  //                   breakfast: {
-  //                     foodItems: [],
-  //                     calories: 0,
-  //                     carbohydrates: 0,
-  //                     protein: 0,
-  //                     fat: 0,
-  //                     proteinPercentage: 0,
-  //                     fatPercentage: 0,
-  //                     carbohydratePercentage: 0,
-  //                   },
-  //                   lunch: {
-  //                     foodItems: [],
-  //                     calories: 0,
-  //                     carbohydrates: 0,
-  //                     protein: 0,
-  //                     fat: 0,
-  //                     proteinPercentage: 0,
-  //                     fatPercentage: 0,
-  //                     carbohydratePercentage: 0,
-  //                   },
-  //                   dinner: {
-  //                     foodItems: [],
-  //                     calories: 0,
-  //                     carbohydrates: 0,
-  //                     protein: 0,
-  //                     fat: 0,
-  //                     proteinPercentage: 0,
-  //                     fatPercentage: 0,
-  //                     carbohydratePercentage: 0,
-  //                   },
-  //                   snacks: {
-  //                     foodItems: [],
-  //                     calories: 0,
-  //                     carbohydrates: 0,
-  //                     protein: 0,
-  //                     fat: 0,
-  //                     proteinPercentage: 0,
-  //                     fatPercentage: 0,
-  //                     carbohydratePercentage: 0,
-  //                   },
-  //                   totals: {
-  //                     calories: 0,
-  //                     carbohydrates: 0,
-  //                     protein: 0,
-  //                     fat: 0,
-  //                     proteinPercentage: 0,
-  //                     fatPercentage: 0,
-  //                     carbohydratePercentage: 0,
-  //                   },
-  //                 },
-  //               ].sort((a, b) => a.date.localeCompare(b.date)),
-  //             }),
-  //           }
-  //         )
-  //           .then((response) => {
-  //             if (response.status === 201) {
-  //               return response.json(); // Parse response if status is 201
-  //             } else if (response.status === 400) {
-  //               throw new Error("Editing User Data Failed, Please Try Again"); // Handle 400 error
-  //             } else {
-  //               throw new Error(`Unexpected status: ${response.status}`);
-  //             }
-  //           }) // Parse JSON response
-  //           .then((data) => {
-  //             setInitialUser(data);
-  //             setUpdatedUser(data);
-  //             setIsEditing(false);
-  //           }) // Handle data
-  //           .catch((error) => {
-  //             console.error("Error:", error);
-  //           }); // Handle errors
-
-  //         // setInitialUser((initialUser) => ({
-  //         //   ...initialUser,
-  //         //   given_name: given_name,
-  //         //   family_name: family_name,
-  //         //   age: Number(age),
-  //         //   currentWeightKG: Number(currentWeight),
-  //         //   goalWeightKG: Number(goalWeight),
-  //         //   days: [
-  //         //     ...initialUser.days,
-  //         //     {
-  //         //       date: selectedDateFormatted,
-  //         //       weight: Number(currentWeight),
-  //         //       goalWeight: Number(goalWeight),
-  //         //       breakfast: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       lunch: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       dinner: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       snacks: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       totals: {
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //     },
-  //         //   ].sort((a, b) => a.date.localeCompare(b.date)),
-  //         // }));
-  //         // setUpdatedUser((updatedUser) => ({
-  //         //   ...updatedUser,
-  //         //   given_name: given_name,
-  //         //   family_name: family_name,
-  //         //   age: Number(age),
-  //         //   currentWeightKG: Number(currentWeight),
-  //         //   goalWeightKG: Number(goalWeight),
-  //         //   days: [
-  //         //     ...updatedUser.days,
-  //         //     {
-  //         //       date: selectedDateFormatted,
-  //         //       weight: Number(currentWeight),
-  //         //       goalWeight: Number(goalWeight),
-  //         //       breakfast: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       lunch: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       dinner: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       snacks: {
-  //         //         foodItems: [],
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //       totals: {
-  //         //         calories: 0,
-  //         //         carbohydrates: 0,
-  //         //         protein: 0,
-  //         //         fat: 0,
-  //         //         proteinPercentage: 0,
-  //         //         fatPercentage: 0,
-  //         //         carbohydratePercentage: 0,
-  //         //       },
-  //         //     },
-  //         //   ].sort((a, b) => a.date.localeCompare(b.date)),
-  //         // }));
-  //       }
-  //       //setIsEditing(false);
-  //     }
-  //   };
-
-  //   const handleProfileEdit = (e) => {
-  //     if (e.target.id === "given_name") {
-  //       setGiven_name(e.target.value);
-  //     }
-  //     if (e.target.id === "family_name") {
-  //       setFamily_name(e.target.value);
-  //     }
-  //     if (e.target.id === "age") {
-  //       setAge(e.target.value);
-  //     }
-  //     if (e.target.id === "currentWeight") {
-  //       setCurrentWeight(e.target.value);
-  //     }
-  //     if (e.target.id === "goalWeight") {
-  //       setGoalWeight(e.target.value);
-  //     }
-  //   };
-
-  //   const handleCancelProfileChanges = () => {
-  //     setIsEditing(false);
-  //     setGiven_name(initialUser.given_name);
-  //     setFamily_name(initialUser.family_name);
-  //     setAge(initialUser.age);
-  //     setCurrentWeight(initialUser.currentWeightKG);
-  //     setGoalWeight(initialUser.goalWeightKG);
-  //     setNameError("");
-  //     setGoalWeightError("");
-  //     setCurrentWeightError("");
-  //     setAgeError("");
-  //   };
 
   const handleUserComparison = (user, newUser) => {
     if (
@@ -544,25 +184,161 @@ export default function AppWrapper({ children }) {
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
           setInputError("Please Enter A Valid Number");
-          setCaloriesPerServing(0);
+          setCaloriesPerServing("");
         } else {
           setCaloriesPerServing(Number((numerator / denominator).toFixed(2)));
+          setFoodDetails({
+            description: newFoodDescription,
+            brandName: newFoodBrandName,
+            brandOwner: newFoodBrandOwner,
+            fdcId: newFoodID,
+            ingredients: newFoodIngredients,
+            servingSize: newFoodServingSize,
+            servingSizeUnit: newFoodServingSizeUnit,
+            nutrients: [],
+            calories: {
+              name: "Energy",
+              id: 1008,
+              amount:
+                (Number((numerator / denominator).toFixed(2)) /
+                  newFoodServingSize) *
+                100,
+              amountPerServing: Number((numerator / denominator).toFixed(2)),
+              unit: "kcal",
+              number: 208,
+            },
+            protein: {
+              name: "Protein",
+              id: 1003,
+              amount: foodDetails.protein
+                ? foodDetails.protein.amount
+                  ? foodDetails.protein.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.protein
+                ? foodDetails.protein.amountPerServing
+                  ? foodDetails.protein.amountPerServing
+                  : 0
+                : 0,
+              unit: "g",
+              number: 203,
+            },
+            fat: {
+              name: "Total lipid (fat)",
+              id: 1004,
+              amount: foodDetails.fat
+                ? foodDetails.fat.amount
+                  ? foodDetails.fat.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.fat
+                ? foodDetails.fat.amountPerServing
+                  ? foodDetails.fat.amountPerServing
+                  : 0
+                : 0,
+              unit: "g",
+              number: 204,
+            },
+            carbohydrates: {
+              name: "Carbohydrate, by difference",
+              id: 1005,
+              amount: foodDetails.carbohydrates
+                ? foodDetails.carbohydrates.amount
+                  ? foodDetails.carbohydrates.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.carbohydrates
+                ? foodDetails.carbohydrates.amountPerServing
+                  ? foodDetails.carbohydrates.amountPerServing
+                  : 0
+                : 0,
+              unit: "g",
+              number: 205,
+            },
+          });
           setInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
         setInputError("Please Enter A Valid Number");
-        setCaloriesPerServing(0);
+        setCaloriesPerServing("");
       }
       //updates the number of CaloriesPerServing
       else {
         setCaloriesPerServing(Number(e.target.value));
+        setFoodDetails({
+          description: newFoodDescription,
+          brandName: newFoodBrandName,
+          brandOwner: newFoodBrandOwner,
+          fdcId: newFoodID,
+          ingredients: newFoodIngredients,
+          servingSize: newFoodServingSize,
+          servingSizeUnit: newFoodServingSizeUnit,
+          nutrients: [],
+          calories: {
+            name: "Energy",
+            id: 1008,
+            amount:
+              (Number(e.target.value.toFixed(2)) / newFoodServingSize) * 100,
+            amountPerServing: Number(e.target.value.toFixed(2)),
+            unit: "kcal",
+            number: 208,
+          },
+          protein: {
+            name: "Protein",
+            id: 1003,
+            amount: foodDetails.protein
+              ? foodDetails.protein.amount
+                ? foodDetails.protein.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.protein
+              ? foodDetails.protein.amountPerServing
+                ? foodDetails.protein.amountPerServing
+                : 0
+              : 0,
+            unit: "g",
+            number: 203,
+          },
+          fat: {
+            name: "Total lipid (fat)",
+            id: 1004,
+            amount: foodDetails.fat
+              ? foodDetails.fat.amount
+                ? foodDetails.fat.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.fat
+              ? foodDetails.fat.amountPerServing
+                ? foodDetails.fat.amountPerServing
+                : 0
+              : 0,
+            unit: "g",
+            number: 204,
+          },
+          carbohydrates: {
+            name: "Carbohydrate, by difference",
+            id: 1005,
+            amount: foodDetails.carbohydrates
+              ? foodDetails.carbohydrates.amount
+                ? foodDetails.carbohydrates.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.carbohydrates
+              ? foodDetails.carbohydrates.amountPerServing
+                ? foodDetails.carbohydrates.amountPerServing
+                : 0
+              : 0,
+            unit: "g",
+            number: 205,
+          },
+        });
         setInputError("");
       }
     } else {
       setInputError("Please Enter A Valid Number");
-      setCaloriesPerServing(0);
+      setCaloriesPerServing("");
     }
   };
   const handleProteinInput = (e) => {
@@ -576,25 +352,161 @@ export default function AppWrapper({ children }) {
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
           setInputError("Please Enter A Valid Number");
-          setProteinPerServing(0);
+          setProteinPerServing("");
         } else {
           setProteinPerServing(Number((numerator / denominator).toFixed(2)));
+          setFoodDetails({
+            description: newFoodDescription,
+            brandName: newFoodBrandName,
+            brandOwner: newFoodBrandOwner,
+            fdcId: newFoodID,
+            ingredients: newFoodIngredients,
+            servingSize: newFoodServingSize,
+            servingSizeUnit: newFoodServingSizeUnit,
+            nutrients: [],
+            calories: {
+              name: "Energy",
+              id: 1008,
+              amount: foodDetails.calories
+                ? foodDetails.calories.amount
+                  ? foodDetails.calories.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.calories
+                ? foodDetails.calories.amountPerServing
+                  ? foodDetails.calories.amountPerServing
+                  : 0
+                : 0,
+              unit: "kcal",
+              number: 208,
+            },
+            protein: {
+              name: "Protein",
+              id: 1003,
+              amount:
+                (Number((numerator / denominator).toFixed(2)) /
+                  newFoodServingSize) *
+                100,
+              amountPerServing: Number((numerator / denominator).toFixed(2)),
+              unit: "g",
+              number: 203,
+            },
+            fat: {
+              name: "Total lipid (fat)",
+              id: 1004,
+              amount: foodDetails.fat
+                ? foodDetails.fat.amount
+                  ? foodDetails.fat.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.fat
+                ? foodDetails.fat.amountPerServing
+                  ? foodDetails.fat.amountPerServing
+                  : 0
+                : 0,
+              unit: "g",
+              number: 204,
+            },
+            carbohydrates: {
+              name: "Carbohydrate, by difference",
+              id: 1005,
+              amount: foodDetails.carbohydrates
+                ? foodDetails.carbohydrates.amount
+                  ? foodDetails.carbohydrates.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.carbohydrates
+                ? foodDetails.carbohydrates.amountPerServing
+                  ? foodDetails.carbohydrates.amountPerServing
+                  : 0
+                : 0,
+              unit: "g",
+              number: 205,
+            },
+          });
           setInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
         setInputError("Please Enter A Valid Number");
-        setProteinPerServing(0);
+        setProteinPerServing("");
       }
       //updates the number of ProteinPerServing
       else {
         setProteinPerServing(Number(e.target.value));
+        setFoodDetails({
+          description: newFoodDescription,
+          brandName: newFoodBrandName,
+          brandOwner: newFoodBrandOwner,
+          fdcId: newFoodID,
+          ingredients: newFoodIngredients,
+          servingSize: newFoodServingSize,
+          servingSizeUnit: newFoodServingSizeUnit,
+          nutrients: [],
+          calories: {
+            name: "Energy",
+            id: 1008,
+            amount: foodDetails.calories
+              ? foodDetails.calories.amount
+                ? foodDetails.calories.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.calories
+              ? foodDetails.calories.amountPerServing
+                ? foodDetails.calories.amountPerServing
+                : 0
+              : 0,
+            unit: "kcal",
+            number: 208,
+          },
+          protein: {
+            name: "Protein",
+            id: 1003,
+            amount:
+              (Number(e.target.value.toFixed(2)) / newFoodServingSize) * 100,
+            amountPerServing: Number(e.target.value.toFixed(2)),
+            unit: "g",
+            number: 203,
+          },
+          fat: {
+            name: "Total lipid (fat)",
+            id: 1004,
+            amount: foodDetails.fat
+              ? foodDetails.fat.amount
+                ? foodDetails.fat.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.fat
+              ? foodDetails.fat.amountPerServing
+                ? foodDetails.fat.amountPerServing
+                : 0
+              : 0,
+            unit: "g",
+            number: 204,
+          },
+          carbohydrates: {
+            name: "Carbohydrate, by difference",
+            id: 1005,
+            amount: foodDetails.carbohydrates
+              ? foodDetails.carbohydrates.amount
+                ? foodDetails.carbohydrates.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.carbohydrates
+              ? foodDetails.carbohydrates.amountPerServing
+                ? foodDetails.carbohydrates.amountPerServing
+                : 0
+              : 0,
+            unit: "g",
+            number: 205,
+          },
+        });
         setInputError("");
       }
     } else {
       setInputError("Please Enter A Valid Number");
-      setProteinPerServing(0);
+      setProteinPerServing("");
     }
   };
   const handleFatInput = (e) => {
@@ -608,25 +520,163 @@ export default function AppWrapper({ children }) {
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
           setInputError("Please Enter A Valid Number");
-          setFatPerServing(0);
+          setFatPerServing("");
         } else {
           setFatPerServing(Number((numerator / denominator).toFixed(2)));
+          setFoodDetails({
+            description: newFoodDescription,
+            brandName: newFoodBrandName,
+            brandOwner: newFoodBrandOwner,
+            fdcId: newFoodID,
+            ingredients: newFoodIngredients,
+            servingSize: newFoodServingSize,
+            servingSizeUnit: newFoodServingSizeUnit,
+            nutrients: [],
+            calories: {
+              name: "Energy",
+              id: 1008,
+              amount: foodDetails.calories
+                ? foodDetails.calories.amount
+                  ? foodDetails.calories.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.calories
+                ? foodDetails.calories.amountPerServing
+                  ? foodDetails.calories.amountPerServing
+                  : 0
+                : 0,
+              unit: "kcal",
+              number: 208,
+            },
+            protein: {
+              name: "Protein",
+              id: 1003,
+              amount: foodDetails.protein
+                ? foodDetails.protein.amount
+                  ? foodDetails.protein.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.protein
+                ? foodDetails.protein.amountPerServing
+                  ? foodDetails.protein.amountPerServing
+                  : 0
+                : 0,
+
+              unit: "g",
+              number: 203,
+            },
+            fat: {
+              name: "Total lipid (fat)",
+              id: 1004,
+              amount:
+                (Number((numerator / denominator).toFixed(2)) /
+                  newFoodServingSize) *
+                100,
+              amountPerServing: Number((numerator / denominator).toFixed(2)),
+              unit: "g",
+              number: 204,
+            },
+            carbohydrates: {
+              name: "Carbohydrate, by difference",
+              id: 1005,
+              amount: foodDetails.carbohydrates
+                ? foodDetails.carbohydrates.amount
+                  ? foodDetails.carbohydrates.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.carbohydrates
+                ? foodDetails.carbohydrates.amountPerServing
+                  ? foodDetails.carbohydrates.amountPerServing
+                  : 0
+                : 0,
+              unit: "g",
+              number: 205,
+            },
+          });
           setInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
         setInputError("Please Enter A Valid Number");
-        setFatPerServing(0);
+        setFatPerServing("");
       }
       //updates the number of FatPerServing
       else {
         setFatPerServing(Number(e.target.value));
+        setFoodDetails({
+          description: newFoodDescription,
+          brandName: newFoodBrandName,
+          brandOwner: newFoodBrandOwner,
+          fdcId: newFoodID,
+          ingredients: newFoodIngredients,
+          servingSize: newFoodServingSize,
+          servingSizeUnit: newFoodServingSizeUnit,
+          nutrients: [],
+          calories: {
+            name: "Energy",
+            id: 1008,
+            amount: foodDetails.calories
+              ? foodDetails.calories.amount
+                ? foodDetails.calories.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.calories
+              ? foodDetails.calories.amountPerServing
+                ? foodDetails.calories.amountPerServing
+                : 0
+              : 0,
+            unit: "kcal",
+            number: 208,
+          },
+          protein: {
+            name: "Protein",
+            id: 1003,
+            amount: foodDetails.protein
+              ? foodDetails.protein.amount
+                ? foodDetails.protein.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.protein
+              ? foodDetails.protein.amountPerServing
+                ? foodDetails.protein.amountPerServing
+                : 0
+              : 0,
+
+            unit: "g",
+            number: 203,
+          },
+          fat: {
+            name: "Total lipid (fat)",
+            id: 1004,
+            amount:
+              (Number(e.target.value.toFixed(2)) / newFoodServingSize) * 100,
+            amountPerServing: Number(e.target.value.toFixed(2)),
+            unit: "g",
+            number: 204,
+          },
+          carbohydrates: {
+            name: "Carbohydrate, by difference",
+            id: 1005,
+            amount: foodDetails.carbohydrates
+              ? foodDetails.carbohydrates.amount
+                ? foodDetails.carbohydrates.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.carbohydrates
+              ? foodDetails.carbohydrates.amountPerServing
+                ? foodDetails.carbohydrates.amountPerServing
+                : 0
+              : 0,
+            unit: "g",
+            number: 205,
+          },
+        });
         setInputError("");
       }
     } else {
       setInputError("Please Enter A Valid Number");
-      setFatPerServing(0);
+      setFatPerServing("");
     }
   };
   const handleCarbohydratesInput = (e) => {
@@ -640,27 +690,166 @@ export default function AppWrapper({ children }) {
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
           setInputError("Please Enter A Valid Number");
-          setCarbohydratesPerServing(0);
+          setCarbohydratesPerServing("");
         } else {
           setCarbohydratesPerServing(
             Number((numerator / denominator).toFixed(2))
           );
+          setFoodDetails({
+            description: newFoodDescription,
+            brandName: newFoodBrandName,
+            brandOwner: newFoodBrandOwner,
+            fdcId: newFoodID,
+            ingredients: newFoodIngredients,
+            servingSize: newFoodServingSize,
+            servingSizeUnit: newFoodServingSizeUnit,
+            nutrients: [],
+            calories: {
+              name: "Energy",
+              id: 1008,
+              amount: foodDetails.calories
+                ? foodDetails.calories.amount
+                  ? foodDetails.calories.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.calories
+                ? foodDetails.calories.amountPerServing
+                  ? foodDetails.calories.amountPerServing
+                  : 0
+                : 0,
+              unit: "kcal",
+              number: 208,
+            },
+            protein: {
+              name: "Protein",
+              id: 1003,
+              amount: foodDetails.protein
+                ? foodDetails.protein.amount
+                  ? foodDetails.protein.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.protein
+                ? foodDetails.protein.amountPerServing
+                  ? foodDetails.protein.amountPerServing
+                  : 0
+                : 0,
+
+              unit: "g",
+              number: 203,
+            },
+            fat: {
+              name: "Total lipid (fat)",
+              id: 1004,
+              amount: foodDetails.fat
+                ? foodDetails.fat.amount
+                  ? foodDetails.fat.amount
+                  : 0
+                : 0,
+              amountPerServing: foodDetails.fat
+                ? foodDetails.fat.amountPerServing
+                  ? foodDetails.fat.amountPerServing
+                  : 0
+                : 0,
+
+              unit: "g",
+              number: 204,
+            },
+            carbohydrates: {
+              name: "Carbohydrate, by difference",
+              id: 1005,
+              amount:
+                (Number((numerator / denominator).toFixed(2)) /
+                  newFoodServingSize) *
+                100,
+              amountPerServing: Number((numerator / denominator).toFixed(2)),
+              unit: "g",
+              number: 205,
+            },
+          });
           setInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
         setInputError("Please Enter A Valid Number");
-        setCarbohydratesPerServing(0);
+        setCarbohydratesPerServing("");
       }
       //updates the number of CarbohydratesPerServing
       else {
         setCarbohydratesPerServing(Number(e.target.value));
+        setFoodDetails({
+          description: newFoodDescription,
+          brandName: newFoodBrandName,
+          brandOwner: newFoodBrandOwner,
+          fdcId: newFoodID,
+          ingredients: newFoodIngredients,
+          servingSize: newFoodServingSize,
+          servingSizeUnit: newFoodServingSizeUnit,
+          nutrients: [],
+          calories: {
+            name: "Energy",
+            id: 1008,
+            amount: foodDetails.calories
+              ? foodDetails.calories.amount
+                ? foodDetails.calories.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.calories
+              ? foodDetails.calories.amountPerServing
+                ? foodDetails.calories.amountPerServing
+                : 0
+              : 0,
+            unit: "kcal",
+            number: 208,
+          },
+          protein: {
+            name: "Protein",
+            id: 1003,
+            amount: foodDetails.protein
+              ? foodDetails.protein.amount
+                ? foodDetails.protein.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.protein
+              ? foodDetails.protein.amountPerServing
+                ? foodDetails.protein.amountPerServing
+                : 0
+              : 0,
+
+            unit: "g",
+            number: 203,
+          },
+          fat: {
+            name: "Total lipid (fat)",
+            id: 1004,
+            amount: foodDetails.fat
+              ? foodDetails.fat.amount
+                ? foodDetails.fat.amount
+                : 0
+              : 0,
+            amountPerServing: foodDetails.fat
+              ? foodDetails.fat.amountPerServing
+                ? foodDetails.fat.amountPerServing
+                : 0
+              : 0,
+            unit: "g",
+            number: 204,
+          },
+          carbohydrates: {
+            name: "Carbohydrate, by difference",
+            id: 1005,
+            amount:
+              (Number(e.target.value.toFixed(2)) / newFoodServingSize) * 100,
+            amountPerServing: Number(e.target.value.toFixed(2)),
+            unit: "g",
+            number: 205,
+          },
+        });
         setInputError("");
       }
     } else {
       setInputError("Please Enter A Valid Number");
-      setCarbohydratesPerServing(0);
+      setCarbohydratesPerServing("");
     }
   };
   const handleSaveToMyFoods = () => {};
