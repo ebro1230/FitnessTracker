@@ -1123,6 +1123,7 @@ export default function AppWrapper({ children }) {
 
   const handleUpdateServings = (updateServings) => {
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
+    console.log("Number Check:", numberCheck.test(updateServings));
     if (numberCheck.test(updateServings)) {
       //checks if the input is a fraction
       if (!Number(updateServings) && updateServings != "0") {
