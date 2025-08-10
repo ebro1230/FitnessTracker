@@ -89,22 +89,39 @@ export default function MealStack({
                 }
               )}
             </tbody>
+            {userData.days[indexOfPreviousData][meal].foodItems.map(
+              (foodItem, index) => {
+                return (
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    id={`delete-button-${index}`}
+                    title={meal}
+                    onClick={(e) => onDeleteFoodItem(e)}
+                  >
+                    <i title={meal} className="bi bi-trash"></i>
+                  </Button>
+                );
+              }
+            )}
           </Table>
-          {userData.days[indexOfPreviousData][meal].foodItems.map(
-            (foodItem, index) => {
-              return (
-                <Button
-                  size="sm"
-                  variant="danger"
-                  id={`delete-button-${index}`}
-                  title={meal}
-                  onClick={(e) => onDeleteFoodItem(e)}
-                >
-                  <i title={meal} className="bi bi-trash"></i>
-                </Button>
-              );
-            }
-          )}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {userData.days[indexOfPreviousData][meal].foodItems.map(
+              (foodItem, index) => {
+                return (
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    id={`delete-button-${index}`}
+                    title={meal}
+                    onClick={(e) => onDeleteFoodItem(e)}
+                  >
+                    <i title={meal} className="bi bi-trash"></i>
+                  </Button>
+                );
+              }
+            )}
+          </div>
         </Stack>
       ) : null}
     </>
