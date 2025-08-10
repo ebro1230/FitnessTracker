@@ -40,6 +40,11 @@
 .table-dark{
   width:auto;
 }
+.align-middle{
+  vertical-align: middle !important;
+  border-top-width: 1px !important;
+  border-bottom-width: 1px !important;
+}
 .meal-table{
   width: 100% !important;
   border-collapse: separate !important;
@@ -53,6 +58,7 @@ tr.food-row-table td.delete-button-table-row{
   display:flex;
   justify-content: flex-end;
   padding-right: 0rem;
+  --bs-table-bg-type: none !important;
 }
 .profile-table{
   width: auto !important;
