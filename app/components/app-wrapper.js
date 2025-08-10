@@ -1549,19 +1549,19 @@ export default function AppWrapper({ children }) {
         // setPreviousData(true);
         // setIndexOfPreviousData(index);
       }
-      if (bmiKG === "TBD") {
-      } else if (
+      if (
         Number(bmiKG) != initialUser.bmiKG &&
         bmiKG !== "" &&
-        bmiKG !== 0
+        bmiKG !== 0 &&
+        bmiKG !== "TBD"
       ) {
         formData.append("bmiKG", Number(bmiKG));
       }
-      if (bmiLBS === "TBD") {
-      } else if (
+      if (
         Number(bmiLBS) != initialUser.bmiLBS &&
         bmiLBS !== "" &&
-        bmiLBS !== 0
+        bmiLBS !== 0 &&
+        bmiLBS !== "TBD"
       ) {
         formData.append("bmiLBS", Number(bmiLBS));
       }
