@@ -42,6 +42,13 @@
 }
 .meal-table{
   width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+tr.food-row-table td.delete-button-table-row{
+  border: none;
+  border-top: none;
+  border-bottom: none;
 }
 .profile-table{
   width: auto !important;

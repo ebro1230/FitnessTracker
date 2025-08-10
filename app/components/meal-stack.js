@@ -55,7 +55,10 @@ export default function MealStack({
                 (foodItem, index) => {
                   return (
                     <>
-                      <tr key={`${foodItem.fdcId} + ${index}`}>
+                      <tr
+                        key={`${foodItem.fdcId} + ${index}`}
+                        className="food-row-table"
+                      >
                         <td className="align-middle">{foodItem.description}</td>
                         <td className="align-middle">
                           {foodItem.calories.servings}
@@ -72,10 +75,7 @@ export default function MealStack({
                         <td className="align-middle">
                           {foodItem.calories.amountEaten.toFixed(2)}
                         </td>
-                        <td
-                          className="align-middle"
-                          style={{ border: "none !important" }}
-                        >
+                        <td className="delete-button-table-row">
                           <Button
                             size="sm"
                             variant="danger"
