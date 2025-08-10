@@ -973,6 +973,7 @@ export default function AppWrapper({ children }) {
       setResults({ foods: [] });
       setSearch("");
       setCurrentSearch("");
+      setUpdateServings("");
       setIsModalOpen(false);
       setServings(1);
     } else {
@@ -1105,6 +1106,7 @@ export default function AppWrapper({ children }) {
       setResults({ foods: [] });
       setSearch("");
       setCurrentSearch("");
+      setUpdateServings("");
       setIsModalOpen(false);
       setServings(1);
     }
@@ -1141,7 +1143,7 @@ export default function AppWrapper({ children }) {
       //updates the number of servings
       else {
         setServings(Number(updateServings));
-        setUpdateServings("");
+        //setUpdateServings("");
         setInputError("");
       }
     } else {
@@ -1153,6 +1155,7 @@ export default function AppWrapper({ children }) {
     setIsModalOpen(false);
     setSearchModal(true);
     setInputError("");
+    setUpdateServings("");
     setServings(1);
   };
 
