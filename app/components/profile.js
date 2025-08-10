@@ -343,13 +343,15 @@ export default function Profile({
                     <td>Weeks Until Goal</td>
                     <td>
                       {userData.preference === "Metric"
-                        ? weightLossPerWeekKG
+                        ? weightLossPerWeekKG && currentWeightKG && goalWeightKG
                           ? Math.round(
                               (currentWeightKG - goalWeightKG) /
                                 weightLossPerWeekKG
                             )
                           : "TBD"
-                        : weightLossPerWeekLBS
+                        : weightLossPerWeekLBS &&
+                          currentWeightLBS &&
+                          goalWeightLBS
                         ? Math.round(
                             (currentWeightLBS - goalWeightLBS) /
                               weightLossPerWeekLBS

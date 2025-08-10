@@ -1777,14 +1777,7 @@ export default function AppWrapper({ children }) {
     setConfirmNewPassword(e.target.value);
     setPasswordError("");
   };
-  console.log("Height Metric:", Boolean(heightMetric), heightMetric);
-  console.log(
-    "Current Weight Metric:",
-    Boolean(currentWeightKG),
-    currentWeightKG
-  );
-  console.log("BMI KG:", bmiKG);
-  console.log("BMI LBS:", bmiLBS);
+
   const handleCurrentWeightChange = (e) => {
     if (preference === "Metric") {
       setCurrentWeightKG(e.target.value);
@@ -2150,7 +2143,12 @@ export default function AppWrapper({ children }) {
     } else {
       setActivityLevelChanged(false);
     }
-    handleDailyCalorieGoalUpdate(weightLossPerWeekLBS, Number(e.target.value));
+    if (currentWeightKG && goalWeightKG) {
+      handleDailyCalorieGoalUpdate(
+        weightLossPerWeekLBS,
+        Number(e.target.value)
+      );
+    }
   };
 
   const handleActivityLevelCancel = () => {
@@ -2219,7 +2217,12 @@ export default function AppWrapper({ children }) {
       } else {
         setWeightLossPerWeekChanged(false);
       }
-      handleDailyCalorieGoalUpdate(Number(e.target.value * 2.2), activityLevel);
+      if (currentWeightKG && goalWeightKG) {
+        handleDailyCalorieGoalUpdate(
+          Number(e.target.value * 2.2),
+          activityLevel
+        );
+      }
     } else {
       setWeightLossPerWeekLBS(Number(e.target.value));
       if (Number(e.target.value) === 0.25) {
@@ -2244,7 +2247,9 @@ export default function AppWrapper({ children }) {
       } else {
         setWeightLossPerWeekChanged(false);
       }
-      handleDailyCalorieGoalUpdate(Number(e.target.value), activityLevel);
+      if (currentWeightKG && goalWeightKG) {
+        handleDailyCalorieGoalUpdate(Number(e.target.value), activityLevel);
+      }
     }
   };
 
