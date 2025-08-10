@@ -1594,6 +1594,7 @@ export default function Home() {
             <FoodDetailsModal
               isModalOpen={isModalOpen}
               onCloseModal={handleCloseModal}
+              onCloseSearchModal={handleCloseSearchModal}
               foodDetailsLoading={foodDetailsLoading}
               foodDetails={foodDetails}
               updateServings={updateServings}

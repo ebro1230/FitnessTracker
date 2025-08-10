@@ -4,6 +4,7 @@ import LoadingIndicator from "@/app/components/loading-indicator";
 export default function FoodDetailsModal({
   isModalOpen,
   onCloseModal,
+  onCloseSearchModal,
   foodDetailsLoading,
   foodDetails,
   updateServings,
@@ -52,13 +53,13 @@ export default function FoodDetailsModal({
                     </p>
                   ) : null}
                 </div>
-                <Button
+                {/* <Button
                   variant="primary"
                   onClick={() => onUpdateServings()}
                   className="update-servings-button"
                 >
                   Update # of Servings
-                </Button>
+                </Button> */}
               </Modal.Header>
               <Modal.Body>
                 <Table
@@ -170,9 +171,21 @@ export default function FoodDetailsModal({
                       onClick={() => {
                         onAddToMeal();
                         onCloseModal();
+                        onCloseSearchModal();
                       }}
                     >
-                      Add to Meal
+                      Add to Meal & Close
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="modal-button"
+                      variant="success"
+                      onClick={() => {
+                        onAddToMeal();
+                        onCloseModal();
+                      }}
+                    >
+                      Add to Meal & Add Another Food Item
                     </Button>
                   </div>
                 </div>

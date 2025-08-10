@@ -1151,6 +1151,7 @@ export default function AppWrapper({ children }) {
         setInputError("");
       }
     } else {
+      setInputError("Please Enter A Valid Number");
       setServings(1);
     }
   };
