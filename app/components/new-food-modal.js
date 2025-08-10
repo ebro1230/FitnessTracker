@@ -86,7 +86,7 @@ export default function NewFoodModal({
                       ) : null}
                     </td>
                     <td>
-                      {caloriesPerServing * servings > 0
+                      {caloriesPerServing * servings >= 0
                         ? (caloriesPerServing * servings).toFixed(2)
                         : "TBD"}
                     </td>
@@ -109,7 +109,7 @@ export default function NewFoodModal({
                       ) : null}
                     </td>
                     <td>
-                      {proteinPerServing * servings > 0
+                      {proteinPerServing * servings >= 0
                         ? (proteinPerServing * servings).toFixed(2)
                         : "TBD"}
                     </td>
@@ -132,7 +132,7 @@ export default function NewFoodModal({
                       ) : null}
                     </td>
                     <td>
-                      {fatPerServing * servings > 0
+                      {fatPerServing * servings >= 0
                         ? (fatPerServing * servings).toFixed(2)
                         : "TBD"}
                     </td>
@@ -155,7 +155,7 @@ export default function NewFoodModal({
                       ) : null}
                     </td>
                     <td>
-                      {carbohydratesPerServing * servings > 0
+                      {carbohydratesPerServing * servings >= 0
                         ? (carbohydratesPerServing * servings).toFixed(2)
                         : "TBD"}
                     </td>
