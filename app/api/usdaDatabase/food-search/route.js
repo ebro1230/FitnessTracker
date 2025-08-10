@@ -2,7 +2,7 @@ import { createRouter } from "next-connect";
 import { NextResponse } from "next/server";
 import bodyParser from "body-parser";
 import cors from "cors";
-const NextResponseDefault = NextResponse.default
+const NextResponseDefault = NextResponse.default;
 
 const handler = createRouter();
 
@@ -23,7 +23,7 @@ handler.post(async (req) => {
     console.log(page);
 
     return fetch(
-      `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.API_KEY}&query=${search}&pageSize=25&pageNumber=${page}&dataType=Branded&sortBy=score&sortOrder=asc`
+      `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.API_KEY}&query=${search}*&pageSize=25&pageNumber=${page}&dataType=Branded&sortBy=score&sortOrder=asc`
     )
       .then((response) => {
         return response.json();
