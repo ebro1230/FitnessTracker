@@ -175,6 +175,7 @@ export default function AppWrapper({ children }) {
   };
   const handleFoodDescriptionInput = (e) => {
     setFoodDescription(e.target.value);
+    setFoodID(e.target.value);
   };
 
   const handleCaloriesInput = (e) => {
@@ -190,7 +191,7 @@ export default function AppWrapper({ children }) {
           setInputError("Please Enter A Valid Number");
           setCaloriesPerServing("");
         } else {
-          setCaloriesPerServing(Number((numerator / denominator).toFixed(2)));
+          setCaloriesPerServing(e.target.value);
           setFoodDetails({
             description: newFoodDescription,
             brandName: newFoodBrandName,
@@ -270,7 +271,7 @@ export default function AppWrapper({ children }) {
       }
       //updates the number of CaloriesPerServing
       else {
-        setCaloriesPerServing(Number(e.target.value));
+        setCaloriesPerServing(e.target.value);
         setFoodDetails({
           description: newFoodDescription,
           brandName: newFoodBrandName,
@@ -359,7 +360,7 @@ export default function AppWrapper({ children }) {
           setInputError("Please Enter A Valid Number");
           setProteinPerServing("");
         } else {
-          setProteinPerServing(Number((numerator / denominator).toFixed(2)));
+          setProteinPerServing(e.target.value);
           setFoodDetails({
             description: newFoodDescription,
             brandName: newFoodBrandName,
@@ -439,7 +440,7 @@ export default function AppWrapper({ children }) {
       }
       //updates the number of ProteinPerServing
       else {
-        setProteinPerServing(Number(e.target.value));
+        setProteinPerServing(e.target.value);
         setFoodDetails({
           description: newFoodDescription,
           brandName: newFoodBrandName,
@@ -528,7 +529,7 @@ export default function AppWrapper({ children }) {
           setInputError("Please Enter A Valid Number");
           setFatPerServing("");
         } else {
-          setFatPerServing(Number((numerator / denominator).toFixed(2)));
+          setFatPerServing(e.target.value);
           setFoodDetails({
             description: newFoodDescription,
             brandName: newFoodBrandName,
@@ -609,7 +610,7 @@ export default function AppWrapper({ children }) {
       }
       //updates the number of FatPerServing
       else {
-        setFatPerServing(Number(e.target.value));
+        setFatPerServing(e.target.value);
         setFoodDetails({
           description: newFoodDescription,
           brandName: newFoodBrandName,
@@ -699,9 +700,7 @@ export default function AppWrapper({ children }) {
           setInputError("Please Enter A Valid Number");
           setCarbohydratesPerServing("");
         } else {
-          setCarbohydratesPerServing(
-            Number((numerator / denominator).toFixed(2))
-          );
+          setCarbohydratesPerServing(e.target.value);
           setFoodDetails({
             description: newFoodDescription,
             brandName: newFoodBrandName,
@@ -783,7 +782,7 @@ export default function AppWrapper({ children }) {
       }
       //updates the number of CarbohydratesPerServing
       else {
-        setCarbohydratesPerServing(Number(e.target.value));
+        setCarbohydratesPerServing(e.target.value);
         setFoodDetails({
           description: newFoodDescription,
           brandName: newFoodBrandName,
@@ -1516,6 +1515,11 @@ export default function AppWrapper({ children }) {
   };
   const handleCloseNewFoodModal = () => {
     setNewFood(false);
+    setFoodDescription("");
+    setCaloriesPerServing("");
+    setProteinPerServing("");
+    setFatPerServing("");
+    setCarbohydratesPerServing("");
     setFoodEntry(true);
   };
 
