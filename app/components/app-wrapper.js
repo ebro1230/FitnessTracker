@@ -39,6 +39,7 @@ export default function AppWrapper({ children }) {
   const [foodDetailsLoading, setFoodDetailsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchModal, setSearchModal] = useState(false);
+  const [foodEntry, setFoodEntry] = useState(false);
   const [servings, setServings] = useState(1);
   const [updateServings, setUpdateServings] = useState("");
   const [inputError, setInputError] = useState("");
@@ -533,6 +534,10 @@ export default function AppWrapper({ children }) {
 
   const handleAddFoodItem = (meal) => {
     setCurrentMeal(meal);
+    setFoodEntry(true);
+  };
+
+  const handleFoodLookUp = () => {
     setSearchModal(true);
   };
 
@@ -1163,6 +1168,12 @@ export default function AppWrapper({ children }) {
     setUpdateServings("");
     setServings(1);
   };
+
+  const handleCloseFoodEntryModal = () => {
+    setFoodEntry(false);
+  };
+
+  const handleCustomFoodEntry = () => {};
 
   const handleCloseSearchModal = () => {
     setSearchModal(false);
@@ -2654,6 +2665,10 @@ export default function AppWrapper({ children }) {
     handleActivityLevelSave,
     activityLevel,
     activityLevelChanged,
+    foodEntry,
+    handleFoodLookUp,
+    handleCloseFoodEntryModal,
+    handleCustomFoodEntry,
   };
 
   return (
