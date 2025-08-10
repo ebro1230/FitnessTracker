@@ -18,6 +18,8 @@ export default function NewFoodModal({
   onFatInput,
   carbohydratesPerServing,
   onCarbohydratesInput,
+  newFoodDescription,
+  onFoodDescriptionInput,
 }) {
   return (
     <>
@@ -31,9 +33,18 @@ export default function NewFoodModal({
           <>
             <Modal.Header closeButton>
               <Modal.Title className="food-details-header-text">
-                New Food
+                <label>Food Name:</label>
+                <input
+                  value={newFoodDescription}
+                  placeholder="Food Name"
+                  onChange={(e) => {
+                    onFoodDescriptionInput(e);
+                  }}
+                  className="number-of-servings-input"
+                />
               </Modal.Title>
               <div className="servings-input-div">
+                <label>Number of Servings:</label>
                 <input
                   value={updateServings}
                   placeholder="# of Servings"

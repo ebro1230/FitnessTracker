@@ -172,6 +172,9 @@ export default function AppWrapper({ children }) {
     setUpdateServings(e.target.value);
     handleUpdateServings(e.target.value);
   };
+  const handleFoodDescriptionInput = (e) => {
+    setFoodDescription(e.target.value);
+  };
 
   const handleCaloriesInput = (e) => {
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
@@ -3015,6 +3018,8 @@ export default function AppWrapper({ children }) {
     handleFatInput,
     carbohydratesPerServing,
     handleCarbohydratesInput,
+    newFoodDescription,
+    handleFoodDescriptionInput,
   };
 
   return (
