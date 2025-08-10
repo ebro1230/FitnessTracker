@@ -85,10 +85,8 @@ tr.food-row-table td.delete-button-table-row{
 }
 @media (max-width: 575.98px) {
   .fit-content-modal {
-    max-width: calc(100% - 1rem); /* keep mobile-friendly padding */
-    width: auto;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 .search-buttons-div{
