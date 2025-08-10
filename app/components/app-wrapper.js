@@ -464,16 +464,6 @@ export default function AppWrapper({ children }) {
   //   };
 
   const handleUserComparison = (user, newUser) => {
-    console.log(
-      "Current Weight (KG):",
-      user.currentWeightKG,
-      newUser.currentWeightKG
-    );
-    console.log(
-      "Current Weight (LBS):",
-      user.currentWeightLBS,
-      newUser.currentWeightLBS
-    );
     if (
       (newUser.currentWeightKG && !user.currentWeightKG) ||
       (newUser.currentWeightLBS && !user.currentWeightLBS) ||
@@ -483,7 +473,6 @@ export default function AppWrapper({ children }) {
       (newUser.heightImperial && !user.heightImperial) ||
       newPassword
     ) {
-      console.log("New User True, Old User false");
       setUserChanged(true);
     } else if (
       newUser.family_name === user.family_name &&
@@ -510,7 +499,6 @@ export default function AppWrapper({ children }) {
       user.heightImperial.length === 0 &&
       !newPassword
     ) {
-      console.log("New User undefined");
       setUserChanged(false);
     } else if (
       newUser.family_name != user.family_name ||
@@ -527,10 +515,8 @@ export default function AppWrapper({ children }) {
       newUser.heightImperial != user.heightImperial ||
       newPassword
     ) {
-      console.log("Changes");
       setUserChanged(true);
     } else {
-      console.log("catchall");
       setUserChanged(false);
     }
   };
@@ -571,6 +557,8 @@ export default function AppWrapper({ children }) {
       }) // Handle data
       .catch((error) => {
         console.error("Error:", error);
+        setInitialUser(initialUser);
+        setUserChanged(false);
       }); // Handle errors
   };
 
@@ -1794,14 +1782,19 @@ export default function AppWrapper({ children }) {
 
       handleUserComparison(initialUser, newUser);
       setCurrentWeightLBS(Number((e.target.value * 2.2).toFixed(2)));
-      setBMIKG(Number(e.target.value) / (Number(heightMetric) / 100) ** 2);
-      setBMILBS(
-        (Number(e.target.value * 2.2) * 703) /
-          Math.pow(
-            Number(heightImperial[0]) * 12 + Number(heightImperial[1]),
-            2
-          )
-      );
+      if (heightMetric) {
+        setBMIKG(Number(e.target.value) / (Number(heightMetric) / 100) ** 2);
+        setBMILBS(
+          (Number(e.target.value * 2.2) * 703) /
+            Math.pow(
+              Number(heightImperial[0]) * 12 + Number(heightImperial[1]),
+              2
+            )
+        );
+      } else {
+        setBMIKG("TBD");
+        setBMILBS("TBD");
+      }
     } else {
       setCurrentWeightLBS(e.target.value);
       let newUser = structuredClone(initialUser);
@@ -1820,16 +1813,21 @@ export default function AppWrapper({ children }) {
 
       handleUserComparison(initialUser, newUser);
       setCurrentWeightKG(Number((e.target.value / 2.2).toFixed(2)));
-      setBMIKG(
-        Number(e.target.value / 2.2) / (Number(heightMetric) / 100) ** 2
-      );
-      setBMILBS(
-        (Number(e.target.value) * 703) /
-          Math.pow(
-            Number(heightImperial[0]) * 12 + Number(heightImperial[1]),
-            2
-          )
-      );
+      if (heightMetric) {
+        setBMIKG(
+          Number(e.target.value / 2.2) / (Number(heightMetric) / 100) ** 2
+        );
+        setBMILBS(
+          (Number(e.target.value) * 703) /
+            Math.pow(
+              Number(heightImperial[0]) * 12 + Number(heightImperial[1]),
+              2
+            )
+        );
+      } else {
+        setBMIKG("TBD");
+        setBMILBS("TBD");
+      }
     }
     setCurrentWeightError("");
   };
@@ -1914,21 +1912,26 @@ export default function AppWrapper({ children }) {
         : ["", ""]
     );
     setHeightError("");
-    setBMIKG(Number(currentWeightKG) / (Number(e.target.value) / 100) ** 2);
-    setBMILBS(
-      data.bmiLBS
-        ? data.bmiLBS
-        : (Number(currentWeightLBS) * 703) /
-            Math.pow(
-              Math.floor(Number(e.target.value) / 30.48) * 12 +
-                Math.floor(
-                  12 *
-                    (Number(e.target.value) / 30.48 -
-                      Math.floor(Number(e.target.value) / 30.48))
-                ),
-              2
-            )
-    );
+    if (currentWeightKG) {
+      setBMIKG(Number(currentWeightKG) / (Number(e.target.value) / 100) ** 2);
+      setBMILBS(
+        data.bmiLBS
+          ? data.bmiLBS
+          : (Number(currentWeightLBS) * 703) /
+              Math.pow(
+                Math.floor(Number(e.target.value) / 30.48) * 12 +
+                  Math.floor(
+                    12 *
+                      (Number(e.target.value) / 30.48 -
+                        Math.floor(Number(e.target.value) / 30.48))
+                  ),
+                2
+              )
+      );
+    } else {
+      setBMIKG("TBD");
+      setBMILBS("TBD");
+    }
   };
 
   const handleImperialFeetHeightChange = (e) => {
@@ -1956,16 +1959,21 @@ export default function AppWrapper({ children }) {
     if (heightImperial[0] === "" && heightImperial[1] === "") {
       setHeightImperial([e.target.value, ""]);
       setHeightMetric(Math.round(Number(e.target.value * 12 * 2.54)));
-      setBMIKG(
-        (currentWeightKG /
-          Math.round(Number(e.target.value * 12 * 2.54)) /
-          100) **
-          2
-      );
-      setBMILBS(
-        (Number(currentWeightLBS) * 703) /
-          Math.pow(Number(e.target.value) * 12, 2)
-      );
+      if (currentWeightKG) {
+        setBMIKG(
+          (currentWeightKG /
+            Math.round(Number(e.target.value * 12 * 2.54)) /
+            100) **
+            2
+        );
+        setBMILBS(
+          (Number(currentWeightLBS) * 703) /
+            Math.pow(Number(e.target.value) * 12, 2)
+        );
+      } else {
+        setBMIKG("TBD");
+        setBMILBS("TBD");
+      }
     } else {
       setHeightImperial((prevHeights) =>
         prevHeights.map((h, index) =>
@@ -1975,16 +1983,23 @@ export default function AppWrapper({ children }) {
       setHeightMetric(
         Math.round(Number((e.target.value * 12 + heightImperial[1]) * 2.54))
       );
-      setBMIKG(
-        (currentWeightKG /
-          Math.round(Number((e.target.value * 12 + heightImperial[1]) * 2.54)) /
-          100) **
-          2
-      );
-      setBMILBS(
-        (Number(currentWeightLBS) * 703) /
-          Math.pow(Number(e.target.value) * 12 + Number(heightImperial[1]), 2)
-      );
+      if (currentWeightKG) {
+        setBMIKG(
+          (currentWeightKG /
+            Math.round(
+              Number((e.target.value * 12 + heightImperial[1]) * 2.54)
+            ) /
+            100) **
+            2
+        );
+        setBMILBS(
+          (Number(currentWeightLBS) * 703) /
+            Math.pow(Number(e.target.value) * 12 + Number(heightImperial[1]), 2)
+        );
+      } else {
+        setBMIKG("TBD");
+        setBMILBS("TBD");
+      }
     }
     if (!heightImperial[1] && !e.target.value) {
       setHeightMetric("");
@@ -2036,16 +2051,23 @@ export default function AppWrapper({ children }) {
       setHeightMetric(
         Math.round(Number((e.target.value + heightImperial[0] * 12) * 2.54))
       );
-      setBMIKG(
-        (currentWeightKG /
-          Math.round(Number((e.target.value + heightImperial[0] * 12) * 2.54)) /
-          100) **
-          2
-      );
-      setBMILBS(
-        (Number(currentWeightLBS) * 703) /
-          Math.pow(Number(e.target.value) + Number(heightImperial[0] * 12), 2)
-      );
+      if (currentWeightKG) {
+        setBMIKG(
+          (currentWeightKG /
+            Math.round(
+              Number((e.target.value + heightImperial[0] * 12) * 2.54)
+            ) /
+            100) **
+            2
+        );
+        setBMILBS(
+          (Number(currentWeightLBS) * 703) /
+            Math.pow(Number(e.target.value) + Number(heightImperial[0] * 12), 2)
+        );
+      } else {
+        setBMIKG("TBD");
+        setBMILBS("TBD");
+      }
     }
     if (!heightImperial[0] && !e.target.value) {
       setHeightMetric("");
