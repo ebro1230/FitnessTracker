@@ -187,7 +187,7 @@ export default function Profile({
                     <td>BMI Category</td>
                     <td>
                       {userData.preference === "Metric"
-                        ? !bmiKG
+                        ? !bmiKG || bmiKG === "TBD"
                           ? "TBD"
                           : bmiKG < 18.5
                           ? "Underweight"
@@ -202,7 +202,7 @@ export default function Profile({
                           : bmiKG >= 40
                           ? "Obesity Class III (Severe/Morbid)"
                           : null
-                        : !bmiLBS
+                        : !bmiLBS || bmiLBS === "TBD"
                         ? "TBD"
                         : bmiLBS < 18.5
                         ? "Underweight"
