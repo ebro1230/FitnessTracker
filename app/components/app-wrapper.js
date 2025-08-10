@@ -1288,17 +1288,19 @@ export default function AppWrapper({ children }) {
         description: foodDetails.description,
         fdcId: foodDetails.fdcId,
         ingredients: foodDetails.ingredients,
-        nutrients: foodDetails.nutrients.map((nutrient) => {
-          return {
-            name: nutrient.name,
-            number: nutrient.number,
-            unit: nutrient.unit,
-            amountPerServing: nutrient.amountPerServing,
-            amount: nutrient.amount,
-            servingsEaten: servings,
-            amountEaten: nutrient.amountPerServing * servings,
-          };
-        }),
+        nutrients: foodDetails.nutrients.length
+          ? foodDetails.nutrients.map((nutrient) => {
+              return {
+                name: nutrient.name,
+                number: nutrient.number,
+                unit: nutrient.unit,
+                amountPerServing: nutrient.amountPerServing,
+                amount: nutrient.amount,
+                servingsEaten: servings,
+                amountEaten: nutrient.amountPerServing * servings,
+              };
+            })
+          : null,
       };
       //adds the food item to the specific date and meal of the user
       user.days[index][currentMeal].foodItems.push(foodItem);
