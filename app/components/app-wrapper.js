@@ -1591,11 +1591,16 @@ export default function AppWrapper({ children }) {
   };
 
   const handleBMIUpdate = () => {
-    setBMIKG(Number(currentWeightKG) / (Number(heightMetric) / 100) ** 2);
-    setBMILBS(
-      (Number(currentWeightLBS) * 703) /
-        Math.pow(Number(heightImperial[0]) * 12 + Number(heightImperial[1]), 2)
-    );
+    if (currentWeightKG && heightMetric) {
+      setBMIKG(Number(currentWeightKG) / (Number(heightMetric) / 100) ** 2);
+      setBMILBS(
+        (Number(currentWeightLBS) * 703) /
+          Math.pow(
+            Number(heightImperial[0]) * 12 + Number(heightImperial[1]),
+            2
+          )
+      );
+    }
   };
 
   const handleFamilyNameChange = (e) => {
@@ -1772,7 +1777,12 @@ export default function AppWrapper({ children }) {
     setConfirmNewPassword(e.target.value);
     setPasswordError("");
   };
-
+  console.log("Height Metric:", Boolean(heightMetric), heightMetric);
+  console.log(
+    "Current Weight Metric:",
+    Boolean(currentWeightKG),
+    currentWeightKG
+  );
   const handleCurrentWeightChange = (e) => {
     if (preference === "Metric") {
       setCurrentWeightKG(e.target.value);
