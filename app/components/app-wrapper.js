@@ -2423,27 +2423,29 @@ export default function AppWrapper({ children }) {
               (day) => day.date === selectedDateFormatted
             );
             setIndexOfPreviousData(previousDataIndex);
-            setDailyMacros([
-              {
-                name: "Protein",
-                value:
-                  data.days[previousDataIndex].totals.proteinPercentage * 100,
-              },
-              {
-                name: "Carbohydrate",
-                value:
-                  data.days[previousDataIndex].totals.carbohydratePercentage *
-                  100,
-              },
-              {
-                name: "Fat",
-                value: Number(
-                  (
-                    data.days[previousDataIndex].totals.fatPercentage * 100
-                  ).toFixed(2)
-                ),
-              },
-            ]);
+            if (updatedUser.days[previousDataIndex].totals.calories) {
+              setDailyMacros([
+                {
+                  name: "Protein",
+                  value:
+                    data.days[previousDataIndex].totals.proteinPercentage * 100,
+                },
+                {
+                  name: "Carbohydrate",
+                  value:
+                    data.days[previousDataIndex].totals.carbohydratePercentage *
+                    100,
+                },
+                {
+                  name: "Fat",
+                  value: Number(
+                    (
+                      data.days[previousDataIndex].totals.fatPercentage * 100
+                    ).toFixed(2)
+                  ),
+                },
+              ]);
+            }
           } else {
             setPreviousData(false);
             setIndexOfPreviousData(-1);

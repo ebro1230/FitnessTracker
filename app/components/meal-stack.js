@@ -54,24 +54,25 @@ export default function MealStack({
               {userData.days[indexOfPreviousData][meal].foodItems.map(
                 (foodItem, index) => {
                   return (
-                    <tr key={`${foodItem.fdcId} + ${index}`}>
-                      <td className="align-middle">{foodItem.description}</td>
-                      <td className="align-middle">
-                        {foodItem.calories.servings}
-                      </td>
-                      <td className="align-middle">
-                        {foodItem.protein.amountEaten.toFixed(2)}
-                      </td>
-                      <td className="align-middle">
-                        {foodItem.fat.amountEaten.toFixed(2)}
-                      </td>
-                      <td className="align-middle">
-                        {foodItem.carbohydrates.amountEaten.toFixed(2)}
-                      </td>
-                      <td className="align-middle">
-                        {foodItem.calories.amountEaten.toFixed(2)}
-                      </td>
-                      {/* <td className="align-middle">
+                    <>
+                      <tr key={`${foodItem.fdcId} + ${index}`}>
+                        <td className="align-middle">{foodItem.description}</td>
+                        <td className="align-middle">
+                          {foodItem.calories.servings}
+                        </td>
+                        <td className="align-middle">
+                          {foodItem.protein.amountEaten.toFixed(2)}
+                        </td>
+                        <td className="align-middle">
+                          {foodItem.fat.amountEaten.toFixed(2)}
+                        </td>
+                        <td className="align-middle">
+                          {foodItem.carbohydrates.amountEaten.toFixed(2)}
+                        </td>
+                        <td className="align-middle">
+                          {foodItem.calories.amountEaten.toFixed(2)}
+                        </td>
+                        {/* <td className="align-middle">
                         <Button
                         size="sm"
                         variant="danger"
@@ -82,21 +83,22 @@ export default function MealStack({
                         <i id={index} title={meal} className="bi bi-trash"></i>
                       </Button>
                       </td> */}
-                    </tr>
+                      </tr>
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        id={`delete-button-${index}`}
+                        title={meal}
+                        onClick={(e) => onDeleteFoodItem(e)}
+                      >
+                        <i title={meal} className="bi bi-trash"></i>
+                      </Button>
+                    </>
                   );
                 }
               )}
             </tbody>
           </Table>
-          <Button
-            size="sm"
-            variant="danger"
-            // id={indedx}
-            title={meal}
-            onClick={(e) => onDeleteFoodItem(e)}
-          >
-            <i title={meal} className="bi bi-trash"></i>
-          </Button>
         </Stack>
       ) : null}
     </>

@@ -167,7 +167,7 @@ export default function FoodDetailsModal({
                     <Button
                       size="sm"
                       className="modal-button"
-                      variant="success"
+                      variant="primary"
                       onClick={() => {
                         onAddToMeal();
                         onCloseModal();
