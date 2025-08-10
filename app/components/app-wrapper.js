@@ -75,7 +75,8 @@ export default function AppWrapper({ children }) {
   const [activityLevelChanged, setActivityLevelChanged] = useState(false);
   const [dailyCalorieGoal, setDailyCalorieGoal] = useState("");
 
-  const numberCheck = /^ -?(?:\d+(?:\.\d*)?|\d+\/\d+)$/;
+  const numberCheck =
+    /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/(?:\d+(?:\.\d*)?|\.\d+))?$/;
   const textCheck = /^[a-zA-Z]+$/;
   const ageCheck = /^(1[89]|[2-9][0-9])$/;
   const lbsCheck =
