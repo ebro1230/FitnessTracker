@@ -1252,7 +1252,9 @@ export default function AppWrapper({ children }) {
     setGender(initialUser.gender ? initialUser.gender : "Male");
     setBMIKG(
       initialUser.bmiKG
-        ? initialUser.bmiKG
+        ? typeof initialUser.bmiKG === "number"
+          ? initialUser.bmiKG
+          : "TBD"
         : initialUser.currentWeightKG && initialUser.heightMetric
         ? Number(initialUser.currentWeightKG) /
           (Number(initialUser.heightMetric) / 100) ** 2
@@ -1260,7 +1262,9 @@ export default function AppWrapper({ children }) {
     );
     setBMILBS(
       initialUser.bmiLBS
-        ? initialUser.bmiLBS
+        ? typeof initialUser.bmiLBS === "number"
+          ? initialUser.bmiLBS
+          : "TBD"
         : initialUser.currentWeightLBS &&
           initialUser.heightImperial[1] &&
           initialUser.heightImperial[0]
@@ -2036,12 +2040,18 @@ export default function AppWrapper({ children }) {
     if (heightImperial.length === 0) {
       setHeightImperial(["", Number(e.target.value)]);
       setHeightMetric(Math.round(Number(e.target.value * 2.54)));
-      setBMIKG(
-        (currentWeightKG / Math.round(Number(e.target.value * 2.54)) / 100) ** 2
-      );
-      setBMILBS(
-        (Number(currentWeightLBS) * 703) / Math.pow(Number(e.target.value), 2)
-      );
+      if (currentWeightKG) {
+        setBMIKG(
+          (currentWeightKG / Math.round(Number(e.target.value * 2.54)) / 100) **
+            2
+        );
+        setBMILBS(
+          (Number(currentWeightLBS) * 703) / Math.pow(Number(e.target.value), 2)
+        );
+      } else {
+        setBMIKG("TBD");
+        setBMILBS("TBD");
+      }
     } else {
       setHeightImperial((prevHeights) =>
         prevHeights.map((h, index) =>
@@ -2310,13 +2320,17 @@ export default function AppWrapper({ children }) {
         ) {
           setBMIKG(
             data.bmiKG
-              ? data.bmiKG
+              ? typeof data.bmiKG === "number"
+                ? data.bmiKG
+                : "TBD"
               : Number(data.currentWeightKG) /
                   (Number(data.heightMetric) / 100) ** 2
           );
           setBMILBS(
             data.bmiLBS
-              ? data.bmiLBS
+              ? typeof data.bmiLBS === "number"
+                ? data.bmiLBS
+                : "TBD"
               : (Number(data.currentWeightLBS) * 703) /
                   Math.pow(
                     Number(data.heightImperial[0]) * 12 +
