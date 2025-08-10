@@ -1131,6 +1131,7 @@ export default function AppWrapper({ children }) {
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
           setInputError("Please Enter A Valid Number");
+          setServings(1);
         } else {
           setServings(Number((numerator / denominator).toFixed(2)));
           setInputError("");
@@ -1139,6 +1140,7 @@ export default function AppWrapper({ children }) {
       //checks if the number is less than zero or equal to zero
       else if (Number(updateServings) < 0 || updateServings === "0") {
         setInputError("Please Enter A Valid Number");
+        setServings(1);
       }
       //updates the number of servings
       else {
@@ -1147,7 +1149,7 @@ export default function AppWrapper({ children }) {
         setInputError("");
       }
     } else {
-      setInputError("Please Enter A Valid Number");
+      setServings(1);
     }
   };
 
