@@ -79,8 +79,7 @@ tr.food-row-table td.delete-button-table-row{
 }
 
 .fit-content-modal {
-  max-width: fit-content; /* key part */
-  width: auto;            /* don’t force Bootstrap's default width */
+  width: fit-content !important;            /* don’t force Bootstrap's default width */
 }
 .search-buttons-div{
   display: flex;
@@ -134,6 +133,7 @@ tbody{
 }
 .modal-button{
   margin: 0rem 0.5rem;
+  font-size: clamp(8px,1.2vw,16px) !important
 }
 .profile-div{
   display: flex;
