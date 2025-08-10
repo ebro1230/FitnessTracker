@@ -49,6 +49,10 @@ tr.food-row-table td.delete-button-table-row{
   border: none;
   border-top: none;
   border-bottom: none;
+  background: none;
+  display:flex;
+  justify-content: flex-end;
+  padding-right: 0rem;
 }
 .profile-table{
   width: auto !important;
