@@ -83,6 +83,14 @@ tr.food-row-table td.delete-button-table-row{
     width: auto;
   margin: 0 auto; /* keeps it horizontally centered */
 }
+@media (max-width: 575.98px) {
+  .fit-content-modal {
+    max-width: calc(100% - 1rem); /* keep mobile-friendly padding */
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 .search-buttons-div{
   display: flex;
   justify-content: center;
