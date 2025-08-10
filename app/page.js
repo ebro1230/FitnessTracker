@@ -96,7 +96,6 @@ export default function Home() {
     handleFoodLookUp,
     handleCloseFoodEntryModal,
     handleCustomFoodEntry,
-    customFoodEntry,
     newFood,
     handleCloseNewFoodModal,
     handleSaveToMyFoods,

@@ -79,6 +79,7 @@ export default function AppWrapper({ children }) {
   const [proteinPerServing, setProteinPerServing] = useState("");
   const [fatPerServing, setFatPerServing] = useState("");
   const [carbohydratesPerServing, setCarbohydratesPerServing] = useState("");
+  const [newFood, setNewFood] = useState(false);
 
   const numberCheck =
     /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/(?:\d+(?:\.\d*)?|\.\d+))?$/;
@@ -1309,7 +1310,14 @@ export default function AppWrapper({ children }) {
     setFoodEntry(false);
   };
 
-  const handleCustomFoodEntry = () => {};
+  const handleCustomFoodEntry = () => {
+    setNewFood(true);
+    setFoodEntry(false);
+  };
+  const handleCloseNewFoodModal = () => {
+    setNewFood(false);
+    setFoodEntry(true);
+  };
 
   const handleCloseSearchModal = () => {
     setSearchModal(false);
