@@ -83,16 +83,16 @@ export default function MealStack({
                         <i id={index} title={meal} className="bi bi-trash"></i>
                       </Button>
                       </td> */}
+                        <Button
+                          size="sm"
+                          variant="danger"
+                          id={`delete-button-${index}`}
+                          title={meal}
+                          onClick={(e) => onDeleteFoodItem(e)}
+                        >
+                          <i title={meal} className="bi bi-trash"></i>
+                        </Button>
                       </tr>
-                      <Button
-                        size="sm"
-                        variant="danger"
-                        id={`delete-button-${index}`}
-                        title={meal}
-                        onClick={(e) => onDeleteFoodItem(e)}
-                      >
-                        <i title={meal} className="bi bi-trash"></i>
-                      </Button>
                     </>
                   );
                 }
