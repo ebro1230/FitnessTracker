@@ -11,8 +11,8 @@ export default function FoodEntryTypeModal({
     <Modal
       show={foodEntry}
       onHide={() => onCloseFoodEntryModal()}
-      style={{ width: "fit-content" }}
       centered
+      dialogClassName="fit-content-modal"
     >
       <Modal.Header closeButton>
         <Modal.Title className="food-entry-modal-title">

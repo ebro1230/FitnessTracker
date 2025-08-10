@@ -77,6 +77,11 @@ tr.food-row-table td.delete-button-table-row{
 .food-entry-modal-title{
   text-align: center;
 }
+
+.fit-content-modal {
+  max-width: fit-content; /* key part */
+  width: auto;            /* don’t force Bootstrap's default width */
+}
 .search-buttons-div{
   display: flex;
   justify-content: center;
