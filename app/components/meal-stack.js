@@ -72,56 +72,31 @@ export default function MealStack({
                         <td className="align-middle">
                           {foodItem.calories.amountEaten.toFixed(2)}
                         </td>
-                        {/* <td className="align-middle">
-                        <Button
-                        size="sm"
-                        variant="danger"
-                        id={index}
-                        title={meal}
-                        onClick={(e) => onDeleteFoodItem(e)}
-                      >
-                        <i id={index} title={meal} className="bi bi-trash"></i>
-                      </Button>
-                      </td> */}
+                        <td
+                          className="align-middle"
+                          style={{ border: "none !important" }}
+                        >
+                          <Button
+                            size="sm"
+                            variant="danger"
+                            id={index}
+                            title={meal}
+                            onClick={(e) => onDeleteFoodItem(e)}
+                          >
+                            <i
+                              id={index}
+                              title={meal}
+                              className="bi bi-trash"
+                            ></i>
+                          </Button>
+                        </td>
                       </tr>
                     </>
                   );
                 }
               )}
             </tbody>
-            {userData.days[indexOfPreviousData][meal].foodItems.map(
-              (foodItem, index) => {
-                return (
-                  <Button
-                    size="sm"
-                    variant="danger"
-                    id={`delete-button-${index}`}
-                    title={meal}
-                    onClick={(e) => onDeleteFoodItem(e)}
-                  >
-                    <i title={meal} className="bi bi-trash"></i>
-                  </Button>
-                );
-              }
-            )}
           </Table>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {userData.days[indexOfPreviousData][meal].foodItems.map(
-              (foodItem, index) => {
-                return (
-                  <Button
-                    size="sm"
-                    variant="danger"
-                    id={`delete-button-${index}`}
-                    title={meal}
-                    onClick={(e) => onDeleteFoodItem(e)}
-                  >
-                    <i title={meal} className="bi bi-trash"></i>
-                  </Button>
-                );
-              }
-            )}
-          </div>
         </Stack>
       ) : null}
     </>
