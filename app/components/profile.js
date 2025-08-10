@@ -172,10 +172,14 @@ export default function Profile({
                     <td>
                       {userData.preference === "Metric"
                         ? bmiKG
-                          ? bmiKG.toFixed(2)
+                          ? typeof bmiKG === "number"
+                            ? bmiKG.toFixed(2)
+                            : "TBD"
                           : "TBD"
                         : bmiLBS
-                        ? bmiLBS.toFixed(2)
+                        ? typeof bmiLBS === "number"
+                          ? bmiLBS.toFixed(2)
+                          : "TBD"
                         : "TBD"}
                     </td>
                   </tr>
