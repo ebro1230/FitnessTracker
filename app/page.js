@@ -15,6 +15,7 @@ import UpdateUserButtons from "@/app/components/update-user-buttons";
 import MealStack from "@/app/components/meal-stack";
 import SearchModal from "@/app/components/search-modal";
 import FoodDetailsModal from "@/app/components/food-details-modal";
+import FoodEntryTypeModal from "./components/food-entry-type-modal";
 import ProfileChangeButtons from "@/app/components/profile-change-buttons";
 import "@/app/react-datepicker.css"; // Import default styles
 import { addDays } from "date-fns";
