@@ -109,7 +109,8 @@ export default function AppWrapper({ children }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  console.log("Food Details:");
+  console.log(foodDetails);
   const handleUserComparison = (user, newUser) => {
     if (
       (newUser.currentWeightKG && !user.currentWeightKG) ||
