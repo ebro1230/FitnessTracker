@@ -1783,6 +1783,8 @@ export default function AppWrapper({ children }) {
     Boolean(currentWeightKG),
     currentWeightKG
   );
+  console.log("BMI KG:", bmiKG);
+  console.log("BMI LBS:", bmiLBS);
   const handleCurrentWeightChange = (e) => {
     if (preference === "Metric") {
       setCurrentWeightKG(e.target.value);
