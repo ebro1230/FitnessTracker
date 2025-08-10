@@ -41,11 +41,6 @@ export default function FoodDetailsModal({
                     onChange={(e) => {
                       onServingsInput(e);
                     }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        onUpdateServings();
-                      }
-                    }}
                     className="number-of-servings-input"
                   />
                   {inputError.length ? (

@@ -26,7 +26,6 @@ const UserSchema = new mongoose.Schema(
     weightLossPerWeekKG: { type: Number },
     weightLossPerWeekLBS: { type: Number },
     dailyCalorieGoal: { type: Number },
-
     days: [
       {
         date: { type: String },
@@ -82,6 +81,114 @@ const UserSchema = new mongoose.Schema(
           proteinPercentage: { type: Number },
           fatPercentage: { type: Number },
           carbohydratePercentage: { type: Number },
+        },
+      },
+    ],
+    myFoods: [
+      {
+        description: { type: String },
+        brandName: { type: String },
+        brandOwner: { type: String },
+        fdcId: {},
+        ingredients: { type: String },
+        servingSize: { type: Number },
+        servingSizeUnit: { type: String },
+        nutrients: Array,
+        calories: {
+          name: {
+            type: String,
+            default: "Energy",
+            immutable: true,
+          },
+          id: {
+            type: Number,
+            default: 1008,
+            immutable: true,
+          },
+          amount: { type: Number },
+          amountPerServing: { type: Number },
+          unit: {
+            type: String,
+            default: "kcal",
+            immutable: true,
+          },
+          number: {
+            type: Number,
+            default: 208,
+            immutable: true,
+          },
+        },
+        protein: {
+          name: {
+            type: String,
+            default: "Protein",
+            immutable: true,
+          },
+          id: {
+            type: Number,
+            default: 1003,
+            immutable: true,
+          },
+          amount: { type: Number },
+          amountPerServing: { type: Number },
+          unit: {
+            type: String,
+            default: "g",
+            immutable: true,
+          },
+          number: {
+            type: Number,
+            default: 203,
+            immutable: true,
+          },
+        },
+        fat: {
+          name: {
+            type: String,
+            default: "Total lipid (fat)",
+            immutable: true,
+          },
+          id: {
+            type: Number,
+            default: 1004,
+            immutable: true,
+          },
+          amount: { type: Number },
+          amountPerServing: { type: Number },
+          unit: {
+            type: String,
+            default: "g",
+            immutable: true,
+          },
+          number: {
+            type: Number,
+            default: 204,
+            immutable: true,
+          },
+        },
+        carbohydrates: {
+          name: {
+            type: String,
+            default: "Carbohydrate, by difference",
+            immutable: true,
+          },
+          id: {
+            type: Number,
+            default: 1005,
+            immutable: true,
+          },
+          amount: { type: Number },
+          amountPerServing: { type: Number },
+          unit: {
+            type: String,
+            default: "g",
+            immutable: true,
+          },
+          number: {
+            type: Number,
+            default: 205,
+            immutable: true,
+          },
         },
       },
     ],

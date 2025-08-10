@@ -23,6 +23,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Router } from "lucide-react";
 import { useContext } from "react";
 import { UserContext } from "@/lib/user-context";
+import NewFoodModal from "./components/new-food-modal";
 
 export default function Home() {
   const {
@@ -96,6 +97,17 @@ export default function Home() {
     handleCloseFoodEntryModal,
     handleCustomFoodEntry,
     customFoodEntry,
+    newFood,
+    handleCloseNewFoodModal,
+    handleSaveToMyFoods,
+    caloriesPerServing,
+    handleCaloriesInput,
+    proteinPerServing,
+    handleProteinInput,
+    fatPerServing,
+    handleFatInput,
+    carbohydratesPerServing,
+    handleCarbohydratesInput,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -369,6 +381,25 @@ export default function Home() {
               onCloseFoodEntryModal={handleCloseFoodEntryModal}
               onCustomFoodEntry={handleCustomFoodEntry}
               onFoodLookup={handleFoodLookUp}
+            />
+            <NewFoodModal
+              newFood={newFood}
+              onCloseNewFoodModal={handleCloseNewFoodModal}
+              onCloseFoodEntryModal={handleCloseFoodEntryModal}
+              updateServings={updateServings}
+              onServingsInput={handleServingsInput}
+              inputError={inputError}
+              servings={servings}
+              onAddToMeal={handleAddToMeal}
+              onSaveToMyFoods={handleSaveToMyFoods}
+              caloriesPerServing={caloriesPerServing}
+              onCaloriesInput={handleCaloriesInput}
+              proteinPerServing={proteinPerServing}
+              onProteinInput={handleProteinInput}
+              fatPerServing={fatPerServing}
+              onFatInput={handleFatInput}
+              carbohydratesPerServing={carbohydratesPerServing}
+              onCarbohydratesInput={handleCarbohydratesInput}
             />
           </>
         ) : (

@@ -75,6 +75,10 @@ export default function AppWrapper({ children }) {
   const [activityLevel, setActivityLevel] = useState("");
   const [activityLevelChanged, setActivityLevelChanged] = useState(false);
   const [dailyCalorieGoal, setDailyCalorieGoal] = useState("");
+  const [caloriesPerServing, setCaloriesPerServing] = useState("");
+  const [proteinPerServing, setProteinPerServing] = useState("");
+  const [fatPerServing, setFatPerServing] = useState("");
+  const [carbohydratesPerServing, setCarbohydratesPerServing] = useState("");
 
   const numberCheck =
     /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/(?:\d+(?:\.\d*)?|\.\d+))?$/;
@@ -526,6 +530,137 @@ export default function AppWrapper({ children }) {
   const handleServingsInput = (e) => {
     setUpdateServings(e.target.value);
     handleUpdateServings(e.target.value);
+  };
+
+  const handleCaloriesInput = (e) => {
+    //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
+    console.log("Number Check:", numberCheck.test(e.target.value));
+    if (numberCheck.test(e.target.value)) {
+      //checks if the input is a fraction
+      if (!Number(e.target.value) && e.target.value != "0") {
+        //splits the fraction into a numerator and a denominator
+        const [numerator, denominator] = e.target.value.split("/").map(Number);
+        //checks if the fraction is a positive number
+        if (numerator / denominator < 0) {
+          setInputError("Please Enter A Valid Number");
+          setCaloriesPerServing(0);
+        } else {
+          setCaloriesPerServing(Number((numerator / denominator).toFixed(2)));
+          setInputError("");
+        }
+      }
+      //checks if the number is less than zero
+      else if (Number(e.target.value) < 0) {
+        setInputError("Please Enter A Valid Number");
+        setCaloriesPerServing(0);
+      }
+      //updates the number of CaloriesPerServing
+      else {
+        setCaloriesPerServing(Number(e.target.value));
+        setInputError("");
+      }
+    } else {
+      setInputError("Please Enter A Valid Number");
+      setCaloriesPerServing(0);
+    }
+  };
+  const handleProteinInput = (e) => {
+    //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
+    console.log("Number Check:", numberCheck.test(e.target.value));
+    if (numberCheck.test(e.target.value)) {
+      //checks if the input is a fraction
+      if (!Number(e.target.value) && e.target.value != "0") {
+        //splits the fraction into a numerator and a denominator
+        const [numerator, denominator] = e.target.value.split("/").map(Number);
+        //checks if the fraction is a positive number
+        if (numerator / denominator < 0) {
+          setInputError("Please Enter A Valid Number");
+          setProteinPerServing(0);
+        } else {
+          setProteinPerServing(Number((numerator / denominator).toFixed(2)));
+          setInputError("");
+        }
+      }
+      //checks if the number is less than zero
+      else if (Number(e.target.value) < 0) {
+        setInputError("Please Enter A Valid Number");
+        setProteinPerServing(0);
+      }
+      //updates the number of ProteinPerServing
+      else {
+        setProteinPerServing(Number(e.target.value));
+        setInputError("");
+      }
+    } else {
+      setInputError("Please Enter A Valid Number");
+      setProteinPerServing(0);
+    }
+  };
+  const handleFatInput = (e) => {
+    //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
+    console.log("Number Check:", numberCheck.test(e.target.value));
+    if (numberCheck.test(e.target.value)) {
+      //checks if the input is a fraction
+      if (!Number(e.target.value) && e.target.value != "0") {
+        //splits the fraction into a numerator and a denominator
+        const [numerator, denominator] = e.target.value.split("/").map(Number);
+        //checks if the fraction is a positive number
+        if (numerator / denominator < 0) {
+          setInputError("Please Enter A Valid Number");
+          setFatPerServing(0);
+        } else {
+          setFatPerServing(Number((numerator / denominator).toFixed(2)));
+          setInputError("");
+        }
+      }
+      //checks if the number is less than zero
+      else if (Number(e.target.value) < 0) {
+        setInputError("Please Enter A Valid Number");
+        setFatPerServing(0);
+      }
+      //updates the number of FatPerServing
+      else {
+        setFatPerServing(Number(e.target.value));
+        setInputError("");
+      }
+    } else {
+      setInputError("Please Enter A Valid Number");
+      setFatPerServing(0);
+    }
+  };
+  const handleCarbohydratesInput = (e) => {
+    //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
+    console.log("Number Check:", numberCheck.test(e.target.value));
+    if (numberCheck.test(e.target.value)) {
+      //checks if the input is a fraction
+      if (!Number(e.target.value) && e.target.value != "0") {
+        //splits the fraction into a numerator and a denominator
+        const [numerator, denominator] = e.target.value.split("/").map(Number);
+        //checks if the fraction is a positive number
+        if (numerator / denominator < 0) {
+          setInputError("Please Enter A Valid Number");
+          setCarbohydratesPerServing(0);
+        } else {
+          setCarbohydratesPerServing(
+            Number((numerator / denominator).toFixed(2))
+          );
+          setInputError("");
+        }
+      }
+      //checks if the number is less than zero
+      else if (Number(e.target.value) < 0) {
+        setInputError("Please Enter A Valid Number");
+        setCarbohydratesPerServing(0);
+      }
+      //updates the number of CarbohydratesPerServing
+      else {
+        setCarbohydratesPerServing(Number(e.target.value));
+        setInputError("");
+      }
+    } else {
+      setInputError("Please Enter A Valid Number");
+      setCarbohydratesPerServing(0);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -2671,6 +2806,17 @@ export default function AppWrapper({ children }) {
     handleFoodLookUp,
     handleCloseFoodEntryModal,
     handleCustomFoodEntry,
+    newFood,
+    handleCloseNewFoodModal,
+    handleSaveToMyFoods,
+    caloriesPerServing,
+    handleCaloriesInput,
+    proteinPerServing,
+    handleProteinInput,
+    fatPerServing,
+    handleFatInput,
+    carbohydratesPerServing,
+    handleCarbohydratesInput,
   };
 
   return (
