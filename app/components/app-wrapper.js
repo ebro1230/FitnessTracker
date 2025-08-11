@@ -219,7 +219,7 @@ export default function AppWrapper({ children }) {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
-    if (numberCheck.test(e.target.value)) {
+    if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
         //splits the fraction into a numerator and a denominator
@@ -389,7 +389,7 @@ export default function AppWrapper({ children }) {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
-    if (numberCheck.test(e.target.value)) {
+    if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
         //splits the fraction into a numerator and a denominator
@@ -559,7 +559,7 @@ export default function AppWrapper({ children }) {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
-    if (numberCheck.test(e.target.value)) {
+    if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
         //splits the fraction into a numerator and a denominator
@@ -731,7 +731,7 @@ export default function AppWrapper({ children }) {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
-    if (numberCheck.test(e.target.value)) {
+    if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
         //splits the fraction into a numerator and a denominator
@@ -1548,6 +1548,7 @@ export default function AppWrapper({ children }) {
 
   const handleCloseFoodEntryModal = () => {
     setFoodEntry(false);
+    setFoodDetails([]);
   };
 
   const handleCustomFoodEntry = () => {
