@@ -243,10 +243,15 @@ export default function AppWrapper({ children }) {
               name: "Energy",
               id: 1008,
               amount:
-                (Number((numerator / denominator).toFixed(2)) /
-                  newFoodServingSize) *
-                100,
-              amountPerServing: Number((numerator / denominator).toFixed(2)),
+                e.target.value === ""
+                  ? 0
+                  : (Number((numerator / denominator).toFixed(2)) /
+                      newFoodServingSize) *
+                    100,
+              amountPerServing:
+                e.target.value === ""
+                  ? 0
+                  : Number((numerator / denominator).toFixed(2)),
               unit: "kcal",
               number: 208,
             },
@@ -323,9 +328,15 @@ export default function AppWrapper({ children }) {
             name: "Energy",
             id: 1008,
             amount:
-              (Number(Number(e.target.value).toFixed(2)) / newFoodServingSize) *
-              100,
-            amountPerServing: Number(Number(e.target.value).toFixed(2)),
+              e.target.value === ""
+                ? 0
+                : (Number(Number(e.target.value).toFixed(2)) /
+                    newFoodServingSize) *
+                  100,
+            amountPerServing:
+              e.target.value === ""
+                ? 0
+                : Number(Number(e.target.value).toFixed(2)),
             unit: "kcal",
             number: 208,
           },
@@ -429,10 +440,15 @@ export default function AppWrapper({ children }) {
               name: "Protein",
               id: 1003,
               amount:
-                (Number((numerator / denominator).toFixed(2)) /
-                  newFoodServingSize) *
-                100,
-              amountPerServing: Number((numerator / denominator).toFixed(2)),
+                e.target.value === ""
+                  ? 0
+                  : (Number((numerator / denominator).toFixed(2)) /
+                      newFoodServingSize) *
+                    100,
+              amountPerServing:
+                e.target.value === ""
+                  ? 0
+                  : Number((numerator / denominator).toFixed(2)),
               unit: "g",
               number: 203,
             },
@@ -509,9 +525,15 @@ export default function AppWrapper({ children }) {
             name: "Protein",
             id: 1003,
             amount:
-              (Number(Number(e.target.value).toFixed(2)) / newFoodServingSize) *
-              100,
-            amountPerServing: Number(Number(e.target.value).toFixed(2)),
+              e.target.value === ""
+                ? 0
+                : (Number(Number(e.target.value).toFixed(2)) /
+                    newFoodServingSize) *
+                  100,
+            amountPerServing:
+              e.target.value === ""
+                ? 0
+                : Number(Number(e.target.value).toFixed(2)),
             unit: "g",
             number: 203,
           },
@@ -616,10 +638,15 @@ export default function AppWrapper({ children }) {
               name: "Total lipid (fat)",
               id: 1004,
               amount:
-                (Number((numerator / denominator).toFixed(2)) /
-                  newFoodServingSize) *
-                100,
-              amountPerServing: Number((numerator / denominator).toFixed(2)),
+                e.target.value === ""
+                  ? 0
+                  : (Number((numerator / denominator).toFixed(2)) /
+                      newFoodServingSize) *
+                    100,
+              amountPerServing:
+                e.target.value === ""
+                  ? 0
+                  : Number((numerator / denominator).toFixed(2)),
               unit: "g",
               number: 204,
             },
@@ -697,9 +724,15 @@ export default function AppWrapper({ children }) {
             name: "Total lipid (fat)",
             id: 1004,
             amount:
-              (Number(Number(e.target.value).toFixed(2)) / newFoodServingSize) *
-              100,
-            amountPerServing: Number(Number(e.target.value).toFixed(2)),
+              e.target.value === ""
+                ? 0
+                : (Number(Number(e.target.value).toFixed(2)) /
+                    newFoodServingSize) *
+                  100,
+            amountPerServing:
+              e.target.value === ""
+                ? 0
+                : Number(Number(e.target.value).toFixed(2)),
             unit: "g",
             number: 204,
           },
@@ -805,10 +838,15 @@ export default function AppWrapper({ children }) {
               name: "Carbohydrate, by difference",
               id: 1005,
               amount:
-                (Number((numerator / denominator).toFixed(2)) /
-                  newFoodServingSize) *
-                100,
-              amountPerServing: Number((numerator / denominator).toFixed(2)),
+                e.target.value === ""
+                  ? 0
+                  : (Number((numerator / denominator).toFixed(2)) /
+                      newFoodServingSize) *
+                    100,
+              amountPerServing:
+                e.target.value === ""
+                  ? 0
+                  : Number((numerator / denominator).toFixed(2)),
               unit: "g",
               number: 205,
             },
@@ -886,9 +924,15 @@ export default function AppWrapper({ children }) {
             name: "Carbohydrate, by difference",
             id: 1005,
             amount:
-              (Number(Number(e.target.value).toFixed(2)) / newFoodServingSize) *
-              100,
-            amountPerServing: Number(Number(e.target.value).toFixed(2)),
+              e.target.value === ""
+                ? 0
+                : (Number(Number(e.target.value).toFixed(2)) /
+                    newFoodServingSize) *
+                  100,
+            amountPerServing:
+              e.target.value === ""
+                ? 0
+                : Number(Number(e.target.value).toFixed(2)),
             unit: "g",
             number: 205,
           },
