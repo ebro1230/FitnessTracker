@@ -20,6 +20,12 @@ export default function NewFoodModal({
   onCarbohydratesInput,
   newFoodDescription,
   onFoodDescriptionInput,
+  onCustomFoodInputCheck,
+  foodInputError,
+  caloriesInputError,
+  proteinInputError,
+  fatInputError,
+  carbohydrateInputError,
 }) {
   return (
     <>
@@ -33,7 +39,7 @@ export default function NewFoodModal({
           <>
             <Modal.Header closeButton>
               <Modal.Title className="food-details-header-text">
-                <label>Food Name:</label>
+                <label style={{ marginRight: "1rem" }}>Food Name:</label>
                 <input
                   value={newFoodDescription}
                   placeholder="Food Name"
@@ -42,9 +48,16 @@ export default function NewFoodModal({
                   }}
                   className="number-of-servings-input"
                 />
+                {foodInputError.length ? (
+                  <p className="number-of-servings-input-error">
+                    {foodInputError}
+                  </p>
+                ) : null}
               </Modal.Title>
-              <div className="servings-input-div">
-                <label>Number of Servings:</label>
+              <div className="custom-food-servings-input-div">
+                <label style={{ marginRight: "1rem" }}>
+                  Number of Servings:
+                </label>
                 <input
                   value={updateServings}
                   placeholder="# of Servings"
@@ -73,15 +86,15 @@ export default function NewFoodModal({
                     <td>
                       <input
                         value={caloriesPerServing}
-                        placeholder="# of Calories per Serving"
+                        placeholder="Calories per Serving"
                         onChange={(e) => {
                           onCaloriesInput(e);
                         }}
                         className="number-of-servings-input"
                       />
-                      {inputError.length ? (
+                      {caloriesInputError.length ? (
                         <p className="number-of-servings-input-error">
-                          {inputError}
+                          {caloriesInputError}
                         </p>
                       ) : null}
                     </td>
@@ -96,15 +109,15 @@ export default function NewFoodModal({
                     <td>
                       <input
                         value={proteinPerServing}
-                        placeholder="grams of Protein per Serving"
+                        placeholder="Protein per Serving"
                         onChange={(e) => {
                           onProteinInput(e);
                         }}
                         className="number-of-servings-input"
                       />
-                      {inputError.length ? (
+                      {proteinInputError.length ? (
                         <p className="number-of-servings-input-error">
-                          {inputError}
+                          {proteinInputError}
                         </p>
                       ) : null}
                     </td>
@@ -119,15 +132,15 @@ export default function NewFoodModal({
                     <td>
                       <input
                         value={fatPerServing}
-                        placeholder="grams of Fat per Serving"
+                        placeholder="Fat per Serving"
                         onChange={(e) => {
                           onFatInput(e);
                         }}
                         className="number-of-servings-input"
                       />
-                      {inputError.length ? (
+                      {fatInputError.length ? (
                         <p className="number-of-servings-input-error">
-                          {inputError}
+                          {fatInputError}
                         </p>
                       ) : null}
                     </td>
@@ -142,15 +155,15 @@ export default function NewFoodModal({
                     <td>
                       <input
                         value={carbohydratesPerServing}
-                        placeholder="grams of Carbohydrates per Serving"
+                        placeholder="Carbs per Serving"
                         onChange={(e) => {
                           onCarbohydratesInput(e);
                         }}
                         className="number-of-servings-input"
                       />
-                      {inputError.length ? (
+                      {carbohydrateInputError.length ? (
                         <p className="number-of-servings-input-error">
-                          {inputError}
+                          {carbohydrateInputError}
                         </p>
                       ) : null}
                     </td>
@@ -181,9 +194,11 @@ export default function NewFoodModal({
                     className="modal-button"
                     variant="primary"
                     onClick={() => {
-                      onAddToMeal();
-                      onCloseNewFoodModal();
-                      onCloseFoodEntryModal();
+                      if (onCustomFoodInputCheck()) {
+                        onAddToMeal();
+                        onCloseNewFoodModal();
+                        onCloseFoodEntryModal();
+                      }
                     }}
                   >
                     Add to Meal & Close

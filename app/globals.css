@@ -234,6 +234,12 @@ tbody{
   width:20%;
   margin: 0rem auto;
 }
+.custom-food-servings-input-div{
+  display: flex;
+  justify-content: center;
+  width:50%;
+  margin: 0rem auto;
+}
 .food-details-header-text{
   /* font-size: clamp(8px, 1.2vw, 16px) !important; */
   margin: 0rem auto;

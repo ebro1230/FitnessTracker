@@ -109,6 +109,12 @@ export default function Home() {
     handleCarbohydratesInput,
     newFoodDescription,
     handleFoodDescriptionInput,
+    handleCustomFoodInputCheck,
+    foodInputError,
+    caloriesInputError,
+    proteinInputError,
+    fatInputError,
+    carbohydrateInputError,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -403,6 +409,12 @@ export default function Home() {
               onCarbohydratesInput={handleCarbohydratesInput}
               newFoodDescription={newFoodDescription}
               onFoodDescriptionInput={handleFoodDescriptionInput}
+              onCustomFoodInputCheck={handleCustomFoodInputCheck}
+              foodInputError={foodInputError}
+              caloriesInputError={caloriesInputError}
+              proteinInputError={proteinInputError}
+              fatInputError={fatInputError}
+              carbohydrateInputError={carbohydrateInputError}
             />
           </>
         ) : (

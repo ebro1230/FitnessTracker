@@ -80,13 +80,18 @@ export default function AppWrapper({ children }) {
   const [fatPerServing, setFatPerServing] = useState("");
   const [carbohydratesPerServing, setCarbohydratesPerServing] = useState("");
   const [newFood, setNewFood] = useState(false);
-  const [newFoodDescription, setFoodDescription] = useState("");
+  const [newFoodDescription, setNewFoodDescription] = useState("");
   const [newFoodBrandName, setFoodBrandName] = useState("");
   const [newFoodBrandOwner, setFoodBrandOwner] = useState("");
   const [newFoodID, setFoodID] = useState("");
   const [newFoodIngredients, setNewFoodIngredients] = useState("");
   const [newFoodServingSize, setFoodServingSize] = useState("");
   const [newFoodServingSizeUnit, setFoodServingSizeUnit] = useState("");
+  const [foodInputError, setFoodInputError] = useState("");
+  const [caloriesInputError, setCaloriesInputError] = useState("");
+  const [proteinInputError, setProteinInputError] = useState("");
+  const [fatInputError, setFatInputError] = useState("");
+  const [carbohydrateInputError, setCarbohydrateInputError] = useState("");
 
   const numberCheck =
     /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/(?:\d+(?:\.\d*)?|\.\d+))?$/;
@@ -174,11 +179,44 @@ export default function AppWrapper({ children }) {
     handleUpdateServings(e.target.value);
   };
   const handleFoodDescriptionInput = (e) => {
-    setFoodDescription(e.target.value);
+    setNewFoodDescription(e.target.value);
     setFoodID(e.target.value);
   };
 
+  const handleCustomFoodInputCheck = () => {
+    if (
+      newFoodDescription &&
+      (caloriesPerServing > 0 ||
+        proteinPerServing > 0 ||
+        fatPerServing > 0 ||
+        carbohydratesPerServing > 0)
+    ) {
+      if (initialUser.myFoods.length) {
+        if (
+          initialUser.myFoods.some((food) => {
+            return food.description === newFoodDescription;
+          })
+        ) {
+          setFoodInputError(
+            `Your "My Foods" already contain a food with that name.  Please enter a unique name.`
+          );
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      setFoodInputError(
+        "Custom Foods must have a description and at least one of the nutrients must be > 0"
+      );
+      return false;
+    }
+  };
+
   const handleCaloriesInput = (e) => {
+    setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value)) {
@@ -188,7 +226,7 @@ export default function AppWrapper({ children }) {
         const [numerator, denominator] = e.target.value.split("/").map(Number);
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
-          setInputError("Please Enter A Valid Number");
+          setCaloriesInputError("Please Enter A Valid Number");
           setCaloriesPerServing("");
         } else {
           setCaloriesPerServing(e.target.value);
@@ -261,12 +299,12 @@ export default function AppWrapper({ children }) {
               number: 205,
             },
           });
-          setInputError("");
+          setCaloriesInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
-        setInputError("Please Enter A Valid Number");
+        setCaloriesInputError("Please Enter A Valid Number");
         setCaloriesPerServing("");
       }
       //updates the number of CaloriesPerServing
@@ -340,14 +378,15 @@ export default function AppWrapper({ children }) {
             number: 205,
           },
         });
-        setInputError("");
+        setCaloriesInputError("");
       }
     } else {
-      setInputError("Please Enter A Valid Number");
+      setCaloriesInputError("Please Enter A Valid Number");
       setCaloriesPerServing("");
     }
   };
   const handleProteinInput = (e) => {
+    setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value)) {
@@ -357,7 +396,7 @@ export default function AppWrapper({ children }) {
         const [numerator, denominator] = e.target.value.split("/").map(Number);
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
-          setInputError("Please Enter A Valid Number");
+          setProteinInputError("Please Enter A Valid Number");
           setProteinPerServing("");
         } else {
           setProteinPerServing(e.target.value);
@@ -430,12 +469,12 @@ export default function AppWrapper({ children }) {
               number: 205,
             },
           });
-          setInputError("");
+          setProteinInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
-        setInputError("Please Enter A Valid Number");
+        setProteinInputError("Please Enter A Valid Number");
         setProteinPerServing("");
       }
       //updates the number of ProteinPerServing
@@ -509,14 +548,15 @@ export default function AppWrapper({ children }) {
             number: 205,
           },
         });
-        setInputError("");
+        setProteinInputError("");
       }
     } else {
-      setInputError("Please Enter A Valid Number");
+      setProteinInputError("Please Enter A Valid Number");
       setProteinPerServing("");
     }
   };
   const handleFatInput = (e) => {
+    setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value)) {
@@ -526,7 +566,7 @@ export default function AppWrapper({ children }) {
         const [numerator, denominator] = e.target.value.split("/").map(Number);
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
-          setInputError("Please Enter A Valid Number");
+          setFatInputError("Please Enter A Valid Number");
           setFatPerServing("");
         } else {
           setFatPerServing(e.target.value);
@@ -600,12 +640,12 @@ export default function AppWrapper({ children }) {
               number: 205,
             },
           });
-          setInputError("");
+          setFatInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
-        setInputError("Please Enter A Valid Number");
+        setFatInputError("Please Enter A Valid Number");
         setFatPerServing("");
       }
       //updates the number of FatPerServing
@@ -680,14 +720,15 @@ export default function AppWrapper({ children }) {
             number: 205,
           },
         });
-        setInputError("");
+        setFatInputError("");
       }
     } else {
-      setInputError("Please Enter A Valid Number");
+      setFatInputError("Please Enter A Valid Number");
       setFatPerServing("");
     }
   };
   const handleCarbohydratesInput = (e) => {
+    setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
     console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value)) {
@@ -697,7 +738,7 @@ export default function AppWrapper({ children }) {
         const [numerator, denominator] = e.target.value.split("/").map(Number);
         //checks if the fraction is a positive number
         if (numerator / denominator < 0) {
-          setInputError("Please Enter A Valid Number");
+          setCarbohydrateInputError("Please Enter A Valid Number");
           setCarbohydratesPerServing("");
         } else {
           setCarbohydratesPerServing(e.target.value);
@@ -772,12 +813,12 @@ export default function AppWrapper({ children }) {
               number: 205,
             },
           });
-          setInputError("");
+          setCarbohydrateInputError("");
         }
       }
       //checks if the number is less than zero
       else if (Number(e.target.value) < 0) {
-        setInputError("Please Enter A Valid Number");
+        setCarbohydrateInputError("Please Enter A Valid Number");
         setCarbohydratesPerServing("");
       }
       //updates the number of CarbohydratesPerServing
@@ -852,10 +893,10 @@ export default function AppWrapper({ children }) {
             number: 205,
           },
         });
-        setInputError("");
+        setCarbohydrateInputError("");
       }
     } else {
-      setInputError("Please Enter A Valid Number");
+      setCarbohydrateInputError("Please Enter A Valid Number");
       setCarbohydratesPerServing("");
     }
   };
@@ -1515,7 +1556,7 @@ export default function AppWrapper({ children }) {
   };
   const handleCloseNewFoodModal = () => {
     setNewFood(false);
-    setFoodDescription("");
+    setNewFoodDescription("");
     setCaloriesPerServing("");
     setProteinPerServing("");
     setFatPerServing("");
@@ -3031,6 +3072,12 @@ export default function AppWrapper({ children }) {
     handleCarbohydratesInput,
     newFoodDescription,
     handleFoodDescriptionInput,
+    handleCustomFoodInputCheck,
+    foodInputError,
+    caloriesInputError,
+    proteinInputError,
+    fatInputError,
+    carbohydrateInputError,
   };
 
   return (
