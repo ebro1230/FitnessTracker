@@ -961,14 +961,9 @@ export default function AppWrapper({ children }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:");
-        setInitialUser((prev) => ({
-          ...prev, // keep the rest of the object
-          myFoods: data, // overwrite just this key
-        }));
-        setUpdatedUser((prev) => ({
-          ...prev, // keep the rest of the object
-          myFoods: data, // overwrite just this key
-        }));
+        console.log(data);
+        setInitialUser(data);
+        setUpdatedUser(data);
         setUserChanged(false);
         setUpdating(false);
         console.log(data);
