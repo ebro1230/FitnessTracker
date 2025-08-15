@@ -945,7 +945,9 @@ export default function AppWrapper({ children }) {
       setCarbohydratesPerServing("");
     }
   };
-  const handleSaveToMyFoods = () => {};
+  const handleSaveToMyFoods = () => {
+    console.log("Saved to My Foods!");
+  };
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);

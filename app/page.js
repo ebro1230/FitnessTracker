@@ -32,6 +32,7 @@ export default function Home() {
     isUnauthenticated,
     isLoading,
     updatedUser,
+    initialUser,
     userChanged,
     preference,
     averageMacros,
@@ -385,6 +386,7 @@ export default function Home() {
             />
             <FoodEntryTypeModal
               foodEntry={foodEntry}
+              customFoods={initialUser.myFoods ? initialUser.myFoods : []}
               onCloseFoodEntryModal={handleCloseFoodEntryModal}
               onCustomFoodEntry={handleCustomFoodEntry}
               onFoodLookup={handleFoodLookUp}

@@ -6,6 +6,7 @@ export default function FoodEntryTypeModal({
   onCloseFoodEntryModal,
   onFoodLookup,
   onCustomFoodEntry,
+  customFoods,
 }) {
   return (
     <Modal
@@ -21,6 +22,16 @@ export default function FoodEntryTypeModal({
       </Modal.Header>
       <Modal.Body>
         <div style={{ display: "flex", justifyContent: "center" }}>
+          {customFoods.length ? (
+            <Button
+              size="sm"
+              className="modal-button"
+              variant="primary"
+              onClick={() => {}}
+            >
+              My Foods
+            </Button>
+          ) : null}
           <Button
             size="sm"
             className="modal-button"
