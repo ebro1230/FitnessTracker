@@ -13,8 +13,6 @@ export default function SearchModal({
   searchLoading,
   onFoodChoice,
 }) {
-  console.log("RESULTS");
-  console.log(results);
   return (
     <Modal
       show={searchModal}

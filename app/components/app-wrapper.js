@@ -294,7 +294,6 @@ export default function AppWrapper({ children }) {
   const handleCaloriesInput = (e) => {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
-    console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
@@ -475,7 +474,6 @@ export default function AppWrapper({ children }) {
   const handleProteinInput = (e) => {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
-    console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
@@ -656,7 +654,6 @@ export default function AppWrapper({ children }) {
   const handleFatInput = (e) => {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
-    console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
@@ -839,7 +836,6 @@ export default function AppWrapper({ children }) {
   const handleCarbohydratesInput = (e) => {
     setFoodInputError("");
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
-    console.log("Number Check:", numberCheck.test(e.target.value));
     if (numberCheck.test(e.target.value) || e.target.value === "") {
       //checks if the input is a fraction
       if (!Number(e.target.value) && e.target.value != "0") {
@@ -1038,7 +1034,6 @@ export default function AppWrapper({ children }) {
       console.log("new user.myfoods");
       user.myFoods = [foodDetails];
     }
-    console.log(user.myFoods);
     fetch(`/api/getUser/${session.user.id}`, {
       method: "PUT",
       headers: {
@@ -1108,8 +1103,6 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
-        console.log("Success:");
-        console.log(data);
         setInitialUser(data);
         //setUpdatedUser(data);
         setUserChanged(false);
@@ -1687,7 +1680,6 @@ export default function AppWrapper({ children }) {
 
   const handleUpdateServings = (updateServings) => {
     //Using a regex, checks if the text put into the update servings input is a number, decimal, or fraction
-    console.log("Number Check:", numberCheck.test(updateServings));
     if (numberCheck.test(updateServings)) {
       //checks if the input is a fraction
       if (!Number(updateServings) && updateServings != "0") {
@@ -2033,7 +2025,6 @@ export default function AppWrapper({ children }) {
         Number(heightImperial[0]) != initialUser.heightImperial[0] &&
         heightImperial[0] !== ""
       ) {
-        console.log("Height Imperial Feet Appended");
         formData.append("heightImperialFeet", Number(heightImperial[0]));
       }
       if (
@@ -2041,10 +2032,8 @@ export default function AppWrapper({ children }) {
         heightImperial[0] !== ""
       ) {
         if (heightImperial[1] !== "") {
-          console.log("Height Imperial Inches Appended as Filled in Number");
           formData.append("heightImperialInches", Number(heightImperial[1]));
         } else {
-          console.log("Height Imperial Inches Appended as 0");
           formData.append("heightImperialInches", 0);
         }
       }
@@ -2174,18 +2163,15 @@ export default function AppWrapper({ children }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:");
           setInitialUser(data);
           setUpdatedUser(data);
           setUserChanged(false);
           setUpdating(false);
-          console.log(data);
         })
         .catch((error) => {
           console.error("Error:", error);
           setUpdating(false);
         });
-      console.log("USER UPDATED");
     }
   };
 
@@ -2772,12 +2758,10 @@ export default function AppWrapper({ children }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:");
         setInitialUser(data);
         setUpdatedUser(data);
         setActivityLevelChanged(false);
         setUpdating(false);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -2878,12 +2862,10 @@ export default function AppWrapper({ children }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:");
         setInitialUser(data);
         setUpdatedUser(data);
         setWeightLossPerWeekChanged(false);
         setUpdating(false);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Error:", error);
