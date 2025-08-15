@@ -208,10 +208,12 @@ export default function NewFoodModal({
                     className="modal-button"
                     variant="success"
                     onClick={() => {
-                      onAddToMeal();
-                      onSaveToMyFoods();
-                      onCloseNewFoodModal();
-                      onCloseFoodEntryModal();
+                      if (onCustomFoodInputCheck()) {
+                        onAddToMeal();
+                        onSaveToMyFoods();
+                        onCloseNewFoodModal();
+                        onCloseFoodEntryModal();
+                      }
                     }}
                   >
                     Add to Meal & Save to My Foods
