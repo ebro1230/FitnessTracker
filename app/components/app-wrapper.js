@@ -977,6 +977,8 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
+        console.log("Success:");
+        console.log(data);
         setInitialUser(data);
         console.log("Saved to My Foods!");
         setUserChanged(false);
