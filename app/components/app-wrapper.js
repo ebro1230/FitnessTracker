@@ -182,6 +182,7 @@ export default function AppWrapper({ children }) {
   const handleFoodDescriptionInput = (e) => {
     setNewFoodDescription(e.target.value);
     setFoodID(e.target.value);
+    setFoodInputError("");
   };
 
   const handleCustomFoodInputCheck = () => {
@@ -946,6 +947,37 @@ export default function AppWrapper({ children }) {
     }
   };
   const handleSaveToMyFoods = () => {
+    setUpdating(true);
+    const formData = new FormData();
+    formData.append("foodDetails", JSON.stringify(foodDetails));
+    fetch(`/api/updateUser/${session.user.id}/customFood`, {
+      method: "PUT",
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      //body: JSON.stringify(body),
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:");
+        setInitialUser((prev) => ({
+          ...prev, // keep the rest of the object
+          myFoods: data, // overwrite just this key
+        }));
+        setUpdatedUser((prev) => ({
+          ...prev, // keep the rest of the object
+          myFoods: data, // overwrite just this key
+        }));
+        setUserChanged(false);
+        setUpdating(false);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setUpdating(false);
+      });
+
     console.log("Saved to My Foods!");
   };
 
