@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import User from "@/models/User";
 
-const NextResponseDefault = NextResponse.default
-console.log("Next Response:", typeof NextResponseDefault)
+const NextResponseDefault = NextResponse.default;
+console.log("Next Response:", typeof NextResponseDefault);
 
 export async function GET(req, { params }) {
   await connectToDatabase();
@@ -13,12 +13,18 @@ export async function GET(req, { params }) {
     const user = await User.findById(id); // Find user by ID
 
     if (!user) {
-      return NextResponseDefault.json({ error: "User not found" }, { status: 404 });
+      return NextResponseDefault.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponseDefault.json(user, { status: 200 });
   } catch (error) {
-    return NextResponseDefault.json({ error: "Invalid user ID" }, { status: 400 });
+    return NextResponseDefault.json(
+      { error: "Invalid user ID" },
+      { status: 400 }
+    );
   }
 }
 
@@ -26,6 +32,7 @@ export async function PUT(req) {
   try {
     await connectToDatabase();
     const body = await req.json(); // Parse JSON in App Router
+    console.log(body);
     const user = await User.findByIdAndUpdate(
       body._id, // The ID of the user to update
       body, // The data to update
