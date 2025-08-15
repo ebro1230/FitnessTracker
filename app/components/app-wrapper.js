@@ -956,7 +956,7 @@ export default function AppWrapper({ children }) {
         console.log("ERROR");
       } else {
         console.log("added to existing my foods");
-        user.myFoods = user.myFoods.push(foodDetails);
+        user.myFoods.push(foodDetails);
       }
     } else {
       console.log("new user.myfoods");
