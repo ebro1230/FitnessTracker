@@ -85,8 +85,8 @@ export default function AppWrapper({ children }) {
   const [newFoodBrandOwner, setFoodBrandOwner] = useState("");
   const [newFoodID, setFoodID] = useState("");
   const [newFoodIngredients, setNewFoodIngredients] = useState("");
-  const [newFoodServingSize, setFoodServingSize] = useState("");
-  const [newFoodServingSizeUnit, setFoodServingSizeUnit] = useState("");
+  const [newFoodServingSize, setNewFoodServingSize] = useState("");
+  const [newFoodServingSizeUnit, setNewFoodServingSizeUnit] = useState("");
   const [foodInputError, setFoodInputError] = useState("");
   const [caloriesInputError, setCaloriesInputError] = useState("");
   const [proteinInputError, setProteinInputError] = useState("");
@@ -178,6 +178,7 @@ export default function AppWrapper({ children }) {
     setUpdateServings(e.target.value);
     handleUpdateServings(e.target.value);
   };
+
   const handleFoodDescriptionInput = (e) => {
     setNewFoodDescription(e.target.value);
     setFoodID(e.target.value);
@@ -198,7 +199,7 @@ export default function AppWrapper({ children }) {
           })
         ) {
           setFoodInputError(
-            `Your "My Foods" already contain a food with that name.  Please enter a unique name.`
+            `Your "My Foods" already contain a food with that name.\nPlease enter a unique name.`
           );
           return false;
         } else {
@@ -209,7 +210,7 @@ export default function AppWrapper({ children }) {
       }
     } else {
       setFoodInputError(
-        "Custom Foods must have a description and at least one of the nutrients must be > 0"
+        "Custom Foods must have a description\n&\nat least one of the nutrients must be > 0"
       );
       return false;
     }
