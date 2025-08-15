@@ -983,6 +983,7 @@ export default function AppWrapper({ children }) {
         console.log("Success:");
         console.log(data);
         setInitialUser(data);
+        setUpdatedUser(data);
         console.log("Saved to My Foods!");
         setUserChanged(false);
         setUpdating(false);
@@ -990,6 +991,7 @@ export default function AppWrapper({ children }) {
       .catch((error) => {
         console.error("Error:", error);
         setInitialUser(initialUser);
+        setUpdatedUser(initialUser);
         setUserChanged(false);
         setUpdating(false);
       }) // Handle errors
