@@ -1449,7 +1449,7 @@ export default function AppWrapper({ children }) {
       };
       //adds the food item to the specific date and meal of the user
       user.days[index][currentMeal].foodItems.push(foodItem);
-      handleUpdateMealTotals(user, currentMeal, index);
+      handleUpdateMealTotals(user, currentMeal, index, customFood);
       setPreviousData(true);
       setIndexOfPreviousData(index);
       setUserChanged(true);
