@@ -182,6 +182,81 @@ export default function AppWrapper({ children }) {
     setNewFoodDescription(e.target.value);
     setFoodID(e.target.value);
     setFoodInputError("");
+    console.log("Food Description Input Change:", e.target.value);
+    setFoodDetails({
+      description: e.target.value,
+      brandName: newFoodBrandName,
+      brandOwner: newFoodBrandOwner,
+      fdcId: newFoodID,
+      ingredients: newFoodIngredients,
+      servingSize: newFoodServingSize,
+      servingSizeUnit: newFoodServingSizeUnit,
+      nutrients: [],
+      calories: {
+        name: "Energy",
+        id: 1008,
+        amount: foodDetails.calories
+          ? foodDetails.calories.amount
+            ? foodDetails.calories.amount
+            : 0
+          : 0,
+        amountPerServing: foodDetails.calories
+          ? foodDetails.calories.amountPerServing
+            ? foodDetails.calories.amountPerServing
+            : 0
+          : 0,
+        unit: "kcal",
+        number: 208,
+      },
+      protein: {
+        name: "Protein",
+        id: 1003,
+        amount: foodDetails.protein
+          ? foodDetails.protein.amountPerServing
+            ? foodDetails.protein.amountPerServing
+            : 0
+          : 0,
+        amountPerServing: foodDetails.protein
+          ? foodDetails.protein.amountPerServing
+            ? foodDetails.protein.amountPerServing
+            : 0
+          : 0,
+        unit: "g",
+        number: 203,
+      },
+      fat: {
+        name: "Total lipid (fat)",
+        id: 1004,
+        amount: foodDetails.fat
+          ? foodDetails.fat.amount
+            ? foodDetails.fat.amount
+            : 0
+          : 0,
+        amountPerServing: foodDetails.fat
+          ? foodDetails.fat.amountPerServing
+            ? foodDetails.fat.amountPerServing
+            : 0
+          : 0,
+        unit: "g",
+        number: 204,
+      },
+      carbohydrates: {
+        name: "Carbohydrate, by difference",
+        id: 1005,
+        amount: foodDetails.carbohydrates
+          ? foodDetails.carbohydrates.amount
+            ? foodDetails.carbohydrates.amount
+            : 0
+          : 0,
+        amountPerServing: foodDetails.carbohydrates
+          ? foodDetails.carbohydrates.amountPerServing
+            ? foodDetails.carbohydrates.amountPerServing
+            : 0
+          : 0,
+        unit: "g",
+        number: 205,
+      },
+    });
   };
 
   const handleCustomFoodInputCheck = () => {
@@ -947,6 +1022,7 @@ export default function AppWrapper({ children }) {
   };
   const handleSaveToMyFoods = (user) => {
     setUpdating(true);
+    console.log("Food Description Submitted:", newFoodDescription);
     if (user.myFoods.length) {
       if (
         user.myFoods.some((food) => {
