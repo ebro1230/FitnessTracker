@@ -1608,6 +1608,13 @@ export default function AppWrapper({ children }) {
     setFatPerServing("");
     setCarbohydratesPerServing("");
     setFoodEntry(true);
+    setFoodInputError("");
+    setCaloriesInputError("");
+    setCarbohydrateInputError("");
+    setProteinInputError("");
+    setFatInputError("");
+    setUpdateServings("");
+    setFoodDetails([]);
   };
 
   const handleCloseSearchModal = () => {

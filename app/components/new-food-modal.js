@@ -38,7 +38,7 @@ export default function NewFoodModal({
         >
           <>
             <Modal.Header closeButton>
-              <Modal.Title className="food-details-header-text">
+              <Modal.Title className="custom-food-input-header-text">
                 <label style={{ marginRight: "1rem" }}>Food Name:</label>
                 <input
                   value={newFoodDescription}

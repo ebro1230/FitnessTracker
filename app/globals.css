@@ -244,6 +244,9 @@ tbody{
   /* font-size: clamp(8px, 1.2vw, 16px) !important; */
   margin: 0rem auto;
 }
+.custom-food-input-header-text{
+  width:50%;
+}
 .modal-title{
   font-size: clamp(8px, 1.2vw, 16px) !important; 
 }
