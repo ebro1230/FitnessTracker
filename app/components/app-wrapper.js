@@ -114,8 +114,7 @@ export default function AppWrapper({ children }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log("Food Details:");
-  console.log(foodDetails);
+
   const handleUserComparison = (user, newUser) => {
     if (
       (newUser.currentWeightKG && !user.currentWeightKG) ||
@@ -946,34 +945,52 @@ export default function AppWrapper({ children }) {
       setCarbohydratesPerServing("");
     }
   };
-  const handleSaveToMyFoods = () => {
+  const handleSaveToMyFoods = (user) => {
     setUpdating(true);
-    const formData = new FormData();
-    formData.append("foodDetails", JSON.stringify(foodDetails));
-    fetch(`/api/updateUser/${session.user.id}/customFood`, {
+    if (user.myFoods.length) {
+      if (
+        user.myFoods.some((food) => {
+          return food.description === foodDetails.description;
+        })
+      ) {
+        console.log("ERROR");
+      } else {
+        user.myFoods = user.myFoods.push(foodDetails);
+      }
+    } else {
+      user.myFoods = [foodDetails];
+    }
+    fetch(`/api/getUser/${session.user.id}`, {
       method: "PUT",
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
-      //body: JSON.stringify(body),
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 201) {
+          return response.json(); // Parse response if status is 201
+        } else if (response.status === 400) {
+          throw new Error("Adding to Meal Failed, Please Try Again"); // Handle 400 error
+        } else {
+          throw new Error(`Unexpected status: ${response.status}`);
+        }
+      }) // Parse JSON response
       .then((data) => {
-        console.log("Success:");
-        console.log(data);
         setInitialUser(data);
-        setUpdatedUser(data);
+        console.log("Saved to My Foods!");
         setUserChanged(false);
         setUpdating(false);
-        console.log(data);
-      })
+      }) // Handle data
       .catch((error) => {
         console.error("Error:", error);
+        setInitialUser(initialUser);
+        setUserChanged(false);
+        setUpdating(false);
+      }) // Handle errors
+      .finally(() => {
         setUpdating(false);
       });
-
-    console.log("Saved to My Foods!");
   };
 
   const handleInputChange = (e) => {
@@ -1009,11 +1026,13 @@ export default function AppWrapper({ children }) {
       }) // Parse JSON response
       .then((data) => {
         setInitialUser(data);
+        setUpdatedUser(data);
         setUserChanged(false);
       }) // Handle data
       .catch((error) => {
         console.error("Error:", error);
         setInitialUser(initialUser);
+        setUpdatedUser(initialUser);
         setUserChanged(false);
       }); // Handle errors
   };
@@ -1051,7 +1070,6 @@ export default function AppWrapper({ children }) {
     let carbohydrates = 0;
     let fat = 0;
     let calories = 0;
-    console.log(user);
     if (user.days.length) {
       user.days.forEach((day) => {
         protein = day.totals.protein ? protein + day.totals.protein : protein;
@@ -1091,7 +1109,7 @@ export default function AppWrapper({ children }) {
     }
   };
 
-  const handleUpdateDailyTotals = (user, index) => {
+  const handleUpdateDailyTotals = (user, index, customFood) => {
     let updatedDailyTotals = {
       calories: 0,
       protein: 0,
@@ -1277,10 +1295,14 @@ export default function AppWrapper({ children }) {
       ]);
     }
     handleAverageMacroCalculation(user);
-    setUpdatedUser(user);
+    if (!customFood) {
+      setUpdatedUser(user);
+    } else {
+      handleSaveToMyFoods(user);
+    }
   };
 
-  const handleUpdateMealTotals = (user, meal, index) => {
+  const handleUpdateMealTotals = (user, meal, index, customFood) => {
     let updatedMealTotals = {};
     let totalCalculatedCaloriesEaten = 0;
     updatedMealTotals[meal] = {
@@ -1340,7 +1362,7 @@ export default function AppWrapper({ children }) {
       updatedMealTotals[meal].foodItems = user.days[index][meal].foodItems;
     }
     user.days[index][meal] = updatedMealTotals[meal];
-    handleUpdateDailyTotals(user, index);
+    handleUpdateDailyTotals(user, index, customFood);
   };
 
   const handleDeleteFoodItem = (e) => {
@@ -1353,7 +1375,7 @@ export default function AppWrapper({ children }) {
     setUserChanged(true);
   };
 
-  const handleAddToMeal = () => {
+  const handleAddToMeal = (customFood) => {
     let user = structuredClone(updatedUser);
     //checks if the date already exists in the user object
     if (user.days.some((day) => day.date === selectedDateFormatted)) {
@@ -1556,7 +1578,7 @@ export default function AppWrapper({ children }) {
       );
       //adds the food item to the specific date and meal of the user
       user.days[index][currentMeal].foodItems.push(foodItem);
-      handleUpdateMealTotals(user, currentMeal, index);
+      handleUpdateMealTotals(user, currentMeal, index, customFood);
       setPreviousData(true);
       setIndexOfPreviousData(index);
       setUserChanged(true);
