@@ -1025,14 +1025,16 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
+        console.log("Success:");
+        console.log(data);
         setInitialUser(data);
-        setUpdatedUser(data);
+        //setUpdatedUser(data);
         setUserChanged(false);
       }) // Handle data
       .catch((error) => {
         console.error("Error:", error);
         setInitialUser(initialUser);
-        setUpdatedUser(initialUser);
+        //setUpdatedUser(initialUser);
         setUserChanged(false);
       }); // Handle errors
   };
