@@ -91,7 +91,7 @@ export default function NavBar() {
   //   formData.append("goalWeightLBS", goalWeightLBS);
   //   formData.append("heightImperial", heightImperial);
   //   formData.append("heightMetric", heightMetric);
-  //   console.log("USER UPDATED");
+
   // };
 
   // const handleFamilyNameChange = (e) => {
@@ -330,7 +330,7 @@ export default function NavBar() {
   //   }
 
   //   if (session && initialUser === "") {
-  //     console.log("FETCHING USER");
+
   //     fetchUser(session.user.id);
   //   } else if (session && initialUser != "") {
   //   } else if (status === "loading") {
@@ -340,11 +340,6 @@ export default function NavBar() {
   //     //signIn();
   //   }
   // }, [session]);
-
-  // console.log("NAVBAR SESSION");
-  // console.log(session);
-  // console.log("NAVBAR USER");
-  // console.log(initialUser);
 
   const {
     family_name,

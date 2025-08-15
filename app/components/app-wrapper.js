@@ -182,7 +182,6 @@ export default function AppWrapper({ children }) {
     setNewFoodDescription(e.target.value);
     setFoodID(e.target.value);
     setFoodInputError("");
-    console.log("Food Description Input Change:", e.target.value);
     setFoodDetails({
       description: e.target.value,
       brandName: newFoodBrandName,
@@ -1018,7 +1017,6 @@ export default function AppWrapper({ children }) {
   };
   const handleSaveToMyFoods = (user) => {
     setUpdating(true);
-    console.log("Food Description Submitted:", newFoodDescription);
     if (user.myFoods.length) {
       if (
         user.myFoods.some((food) => {
@@ -1027,11 +1025,9 @@ export default function AppWrapper({ children }) {
       ) {
         console.log("ERROR");
       } else {
-        console.log("added to existing my foods");
         user.myFoods.push(foodDetails);
       }
     } else {
-      console.log("new user.myfoods");
       user.myFoods = [foodDetails];
     }
     fetch(`/api/getUser/${session.user.id}`, {
@@ -1051,11 +1047,8 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
-        console.log("Success:");
-        console.log(data);
         setInitialUser(data);
         setUpdatedUser(data);
-        console.log("Saved to My Foods!");
         setUserChanged(false);
         setUpdating(false);
       }) // Handle data

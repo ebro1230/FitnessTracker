@@ -60,12 +60,13 @@ export async function PUT(req, { params }) {
         }
       } catch (error) {
         console.error("Error Updating Password, Please Try Again", error);
-        return NextResponseDefault.json({ error: error.message }, { status: 400 });
+        return NextResponseDefault.json(
+          { error: error.message },
+          { status: 400 }
+        );
       }
     }
     if (profilePicture) {
-      console.log("profilePicture");
-      console.log(profilePicture);
       try {
         const uploadedUrl = await uploadFileToS3(profilePicture);
         otherFields.profilePicture = uploadedUrl;
@@ -74,7 +75,10 @@ export async function PUT(req, { params }) {
           "Error Uploading Profile Picture, Please Restart the Application and Try Again",
           error
         );
-        return NextResponseDefault.json({ error: error.message }, { status: 400 });
+        return NextResponseDefault.json(
+          { error: error.message },
+          { status: 400 }
+        );
       }
     }
     family_name ? (otherFields.family_name = family_name) : null;
@@ -94,8 +98,6 @@ export async function PUT(req, { params }) {
     days ? (otherFields.days = days) : null;
     bmiKG ? (otherFields.bmiKG = bmiKG) : null;
     bmiLBS ? (otherFields.bmiLBS = bmiLBS) : null;
-
-    console.log(otherFields);
 
     const updatedUser = await User.findByIdAndUpdate(
       id, // The ID of the user to update

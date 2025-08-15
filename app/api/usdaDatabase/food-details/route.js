@@ -2,7 +2,7 @@ import { createRouter } from "next-connect";
 import { NextResponse } from "next/server";
 import bodyParser from "body-parser";
 import cors from "cors";
-const NextResponseDefault = NextResponse.default
+const NextResponseDefault = NextResponse.default;
 
 const handler = createRouter();
 
@@ -26,8 +26,6 @@ handler.post(async (req) => {
         return response.json();
       })
       .then((data) => {
-        console.log("RETURNED FOOD DETAILS");
-
         const calories = data.foodNutrients.find(
           (nutrient) => nutrient.nutrient.id === 1008
         );
@@ -101,7 +99,6 @@ handler.post(async (req) => {
             number: carbohydrates.nutrient.number,
           },
         };
-        console.log(foodDetails);
         return NextResponseDefault.json(foodDetails, { status: 200 });
       });
   });

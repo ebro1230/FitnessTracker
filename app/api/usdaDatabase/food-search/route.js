@@ -19,8 +19,6 @@ handler.post(async (req) => {
   return req.json().then(async (body) => {
     const search = body.search;
     const page = body.page;
-    console.log("PAGE");
-    console.log(page);
 
     return fetch(
       `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.API_KEY}&query=${search}*&pageSize=25&pageNumber=${page}&dataType=Branded&sortBy=score&sortOrder=asc`
@@ -29,8 +27,6 @@ handler.post(async (req) => {
         return response.json();
       })
       .then((data) => {
-        console.log("RETURNED DATA");
-        console.log(data);
         const foodData = {
           totalHits: data.totalHits,
           currentPage: data.currentPage,

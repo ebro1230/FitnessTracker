@@ -4,7 +4,6 @@ import clientPromise from "@/lib/mongo";
 import NextAuthModule from "next-auth";
 const NextAuth = NextAuthModule.default || NextAuthModule;
 
-
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
 import { connectToDatabase } from "@/lib/mongodb";
@@ -16,19 +15,15 @@ import credentialsProviderModule from "next-auth/providers/credentials";
 const GoogleProvider = googleProviderModule.default;
 const CredentialsProvider = credentialsProviderModule.default;
 
-console.log("GoogleProvider:", typeof GoogleProvider);
-console.log("CredentialsProvider:", typeof CredentialsProvider);
-console.log("NextAuth:", typeof NextAuth);
-
 const authOptions = {
   providers: [
-     GoogleProvider({
-       clientId: process.env.GOOGLE_CLIENT_ID,
-       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-       authorization: {
-         params: { scope: "openid email profile" }, // Default scope includes first & last name
-       },
-     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: { scope: "openid email profile" }, // Default scope includes first & last name
+      },
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
