@@ -109,6 +109,7 @@ const authOptions = {
   events: {
     async createUser(message) {
       // message.user is the freshly created user
+      console.log(message);
       await connectToDatabase();
       await User.updateOne(
         { _id: message.user.id },
