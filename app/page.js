@@ -436,8 +436,8 @@ export default function Home() {
             />
             <MyFoodDetailsModal
               isMyFoodDetailsModalOpen={isMyFoodDetailsModalOpen}
-              onMyFoodDetailsCloseModal={handleCloseMyFoodDetailsModal}
-              onCloseonCloseFoodEntryModal={handleCloseFoodEntryModal}
+              onCloseMyFoodDetailsModal={handleCloseMyFoodDetailsModal}
+              onCloseFoodEntryModal={handleCloseFoodEntryModal}
               foodDetails={foodDetails}
               updateServings={updateServings}
               onServingsInput={handleServingsInput}

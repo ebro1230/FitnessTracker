@@ -4,7 +4,6 @@ import LoadingIndicator from "@/app/components/loading-indicator";
 export default function MyFoodDetailsModal({
   isMyFoodDetailsModalOpen,
   onCloseMyFoodDetailsModal,
-
   onCloseFoodEntryModal,
   foodDetailsLoading,
   foodDetails,
