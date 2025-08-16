@@ -2911,7 +2911,10 @@ export default function AppWrapper({ children }) {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
-
+    console.log("SESSION:");
+    console.log(session);
+    console.log("STATUS:");
+    console.log(status);
     async function fetchUser(userId) {
       try {
         const res = await fetch(`/api/getUser/${userId}`);
@@ -2919,6 +2922,7 @@ export default function AppWrapper({ children }) {
           throw new Error("User not found");
         }
         const data = await res.json();
+        console.log("DATA:");
         console.log(data);
         setInitialUser(data);
         setUpdatedUser(data);
