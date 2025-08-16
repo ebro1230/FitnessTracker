@@ -3274,6 +3274,7 @@ export default function AppWrapper({ children }) {
     handleCloseMyFoodsModal,
     handleMyFoodChoice,
     handleCloseMyFoodDetailsModal,
+    isMyFoodDetailsModalOpen,
   };
 
   return (
