@@ -5,7 +5,7 @@ export default function MyFoodsModal({
   myFoods,
   customFoods,
   onCloseMyFoodsModal,
-  onFoodChoice,
+  onMyFoodChoice,
 }) {
   return (
     <Modal
@@ -26,10 +26,10 @@ export default function MyFoodsModal({
                 <thead>
                   <tr>
                     <th>Description</th>
-                    <th>Brand Name</th>
-                    <th>Brand Owner</th>
-                    <th>Serving Size</th>
-                    <th>Package Size</th>
+                    <th>Calories (kcal)</th>
+                    <th>Protein (g)</th>
+                    <th>Fat (g)</th>
+                    <th>Carbohydrates (g)</th>
                   </tr>
                 </thead>
                 <tbody className="scrollable-table-body">
@@ -38,27 +38,26 @@ export default function MyFoodsModal({
                       <tr
                         key={`${foodItem.fdcId} + ${index}`}
                         accessKey={foodItem.fdcId}
-                        onClick={(e) => onFoodChoice(e)}
+                        onClick={(e) => {
+                          onMyFoodChoice(e);
+                        }}
                       >
                         <td accessKey={foodItem.fdcId}>
                           {foodItem.description}
                         </td>
-                        <td accessKey={foodItem.fdcId}>{foodItem.brandName}</td>
                         <td accessKey={foodItem.fdcId}>
-                          {foodItem.brandOwner}
+                          {foodItem.calories.amountPerServing}
                         </td>
-                        {foodItem.householdServingFullText ? (
-                          <td accessKey={foodItem.fdcId}>
-                            {foodItem.householdServingFullText}{" "}
-                          </td>
-                        ) : (
-                          <td accessKey={foodItem.fdcId}>
-                            {foodItem.servingSize}
-                            {foodItem.servingSizeUnit}
-                          </td>
-                        )}
                         <td accessKey={foodItem.fdcId}>
-                          {foodItem.packageWeight}
+                          {foodItem.protein.amountPerServing}
+                        </td>
+
+                        <td accessKey={foodItem.fdcId}>
+                          {foodItem.fat.amountPerServing}
+                        </td>
+
+                        <td accessKey={foodItem.fdcId}>
+                          {foodItem.carbohydrates.amountPerServing}
                         </td>
                       </tr>
                     );

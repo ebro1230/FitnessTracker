@@ -25,6 +25,7 @@ import { useContext } from "react";
 import { UserContext } from "@/lib/user-context";
 import NewFoodModal from "./components/new-food-modal";
 import MyFoodsModal from "./components/my-foods-modal";
+import MyFoodDetailsModal from "@/app/components/my-food-details-modal";
 
 export default function Home() {
   const {
@@ -120,6 +121,9 @@ export default function Home() {
     handleMyFoodsModal,
     handleCloseMyFoodsModal,
     myFoods,
+    handleMyFoodChoice,
+    isMyFoodDetailsModalOpen,
+    handleCloseMyFoodDetailsModal,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -428,7 +432,19 @@ export default function Home() {
               myFoods={myFoods}
               customFoods={initialUser.myFoods ? initialUser.myFoods : []}
               onCloseMyFoodsModal={handleCloseMyFoodsModal}
-              onFoodChoice={handleFoodChoice}
+              onMyFoodChoice={handleMyFoodChoice}
+            />
+            <MyFoodDetailsModal
+              isMyFoodDetailsModalOpen={isMyFoodDetailsModalOpen}
+              onMyFoodDetailsCloseModal={handleCloseMyFoodDetailsModal}
+              onCloseonCloseFoodEntryModal={handleCloseFoodEntryModal}
+              foodDetails={foodDetails}
+              updateServings={updateServings}
+              onServingsInput={handleServingsInput}
+              onUpdateServings={handleUpdateServings}
+              inputError={inputError}
+              servings={servings}
+              onAddToMeal={handleAddToMeal}
             />
           </>
         ) : (
