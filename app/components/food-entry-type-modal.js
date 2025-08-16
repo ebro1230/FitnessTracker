@@ -7,6 +7,7 @@ export default function FoodEntryTypeModal({
   onFoodLookup,
   onCustomFoodEntry,
   customFoods,
+  onMyFoodsModal,
 }) {
   return (
     <Modal
@@ -27,7 +28,9 @@ export default function FoodEntryTypeModal({
               size="sm"
               className="modal-button"
               variant="primary"
-              onClick={() => {}}
+              onClick={() => {
+                onMyFoodsModal();
+              }}
             >
               My Foods
             </Button>

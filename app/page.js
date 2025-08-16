@@ -24,6 +24,7 @@ import { Router } from "lucide-react";
 import { useContext } from "react";
 import { UserContext } from "@/lib/user-context";
 import NewFoodModal from "./components/new-food-modal";
+import MyFoodsModal from "./components/my-foods-modal";
 
 export default function Home() {
   const {
@@ -116,6 +117,8 @@ export default function Home() {
     proteinInputError,
     fatInputError,
     carbohydrateInputError,
+    handleMyFoodsModal,
+    handleCloseMyFoodsModal,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -390,6 +393,8 @@ export default function Home() {
               onCloseFoodEntryModal={handleCloseFoodEntryModal}
               onCustomFoodEntry={handleCustomFoodEntry}
               onFoodLookup={handleFoodLookUp}
+              onMyFoodsModal={handleMyFoodsModal}
+              onCloseMyFoodsModal={handleCloseMyFoodsModal}
             />
             <NewFoodModal
               newFood={newFood}
@@ -417,6 +422,12 @@ export default function Home() {
               proteinInputError={proteinInputError}
               fatInputError={fatInputError}
               carbohydrateInputError={carbohydrateInputError}
+            />
+            <MyFoodsModal
+              myFoods={myFoods}
+              customFoods={initialUser.myFoods ? initialUser.myFoods : []}
+              onCloseMyFoodsModal={handleCloseMyFoodsModal}
+              onFoodChoice={handleFoodChoice}
             />
           </>
         ) : (
