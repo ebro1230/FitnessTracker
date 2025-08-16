@@ -2915,8 +2915,11 @@ export default function AppWrapper({ children }) {
     async function fetchUser(userId) {
       try {
         const res = await fetch(`/api/getUser/${userId}`);
-        if (!res.ok) throw new Error("User not found");
+        if (!res.ok) {
+          throw new Error("User not found");
+        }
         const data = await res.json();
+        console.log(data);
         setInitialUser(data);
         setUpdatedUser(data);
         setFamily_name(data.family_name);
