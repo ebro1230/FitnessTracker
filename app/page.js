@@ -119,6 +119,7 @@ export default function Home() {
     carbohydrateInputError,
     handleMyFoodsModal,
     handleCloseMyFoodsModal,
+    myFoods,
   } = useContext(UserContext);
 
   useEffect(() => {
