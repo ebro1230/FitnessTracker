@@ -83,13 +83,25 @@ const authOptions = {
     //   }
     //   return true;
     // },
-    async signIn({ account }) {
-      // If you want to allow all Google sign-ins
-      if (account?.provider === "google") {
-        return true;
+    async signIn({ user, account, profile }) {
+      // This runs before creating the user
+      // Add any extra info from Google profile directly to `user`
+      if (account.provider === "google" && profile) {
+        user.given_name = profile.given_name || "";
+        user.family_name = profile.family_name || "";
+        user.name = profile.name || "";
+        user.email = profile.email || "";
+        user.image = profile.picture || "";
       }
-      return true;
+      return true; // allow sign-in
     },
+    // async signIn({ account }) {
+    //   // If you want to allow all Google sign-ins
+    //   if (account?.provider === "google") {
+    //     return true;
+    //   }
+    //   return true;
+    // },
     async session({ session, token }) {
       if (token) {
         session.user.id = token.sub;
@@ -106,25 +118,25 @@ const authOptions = {
       return token;
     },
   },
-  events: {
-    async createUser(message) {
-      // message.user is the freshly created user
-      console.log(message);
-      await connectToDatabase();
-      await User.updateOne(
-        { _id: message.user.id },
-        {
-          $set: {
-            given_name: message.user.given_name || "",
-            family_name: message.user.family_name || "",
-            email: message.user.email,
-            name: message.user.name || "",
-            image: message.user.picture || "",
-          },
-        }
-      );
-    },
-  },
+  // events: {
+  //   async createUser({ user }) {
+  //     // message.user is the freshly created user
+  //     console.log(user);
+  //     await connectToDatabase();
+  //     await User.updateOne(
+  //       { _id: user.id },
+  //       {
+  //         $set: {
+  //           given_name: user.given_name || "",
+  //           family_name: user.family_name || "",
+  //           email: user.email,
+  //           name: user.name || "",
+  //           image: user.picture || "",
+  //         },
+  //       }
+  //     );
+  //   },
+  // },
 };
 
 let handler;
