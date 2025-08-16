@@ -59,26 +59,33 @@ const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
   callbacks: {
-    async signIn({ user, account, profile }) {
-      // Check if the Google account is linked to an existing account
-      if (account.provider === "google") {
-        await connectToDatabase();
-        const existingUser = await User.findOne({ email: profile.email }); // Replace with your DB logic
+    // async signIn({ user, account, profile }) {
+    //   // Check if the Google account is linked to an existing account
+    //   if (account.provider === "google") {
+    //     await connectToDatabase();
+    //     const existingUser = await User.findOne({ email: profile.email }); // Replace with your DB logic
 
-        if (!existingUser) {
-          const newUser = new User({
-            email: profile.email,
-            name: profile.name || "",
-            image: profile.picture || "",
-            given_name: profile.given_name || "",
-            family_name: profile.family_name || "",
-            // You can add any other fields you'd like to store
-          });
+    //     if (!existingUser) {
+    //       const newUser = new User({
+    //         email: profile.email,
+    //         name: profile.name || "",
+    //         image: profile.picture || "",
+    //         given_name: profile.given_name || "",
+    //         family_name: profile.family_name || "",
+    //         // You can add any other fields you'd like to store
+    //       });
 
-          // Save the new user in the database
-          await newUser.save();
-        }
-        // Return true to allow the sign-in process
+    //       // Save the new user in the database
+    //       await newUser.save();
+    //     }
+    //     // Return true to allow the sign-in process
+    //     return true;
+    //   }
+    //   return true;
+    // },
+    async signIn({ account }) {
+      // If you want to allow all Google sign-ins
+      if (account?.provider === "google") {
         return true;
       }
       return true;
@@ -97,6 +104,24 @@ const authOptions = {
         token.family_name = profile.family_name; // ✅ Store last name
       }
       return token;
+    },
+  },
+  events: {
+    async createUser(message) {
+      // message.user is the freshly created user
+      await connectToDatabase();
+      await User.updateOne(
+        { _id: message.user.id },
+        {
+          $set: {
+            given_name: message.user.given_name || "",
+            family_name: message.user.family_name || "",
+            email: message.user.email,
+            name: message.user.name || "",
+            image: message.user.picture || "",
+          },
+        }
+      );
     },
   },
 };
