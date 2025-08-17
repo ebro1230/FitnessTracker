@@ -424,7 +424,11 @@ export default function NavBar() {
             >
               <Offcanvas.Header closeButton closeVariant="white">
                 <div
-                  style={{ display: "flex", justifyContent: "space-evenly" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    width: userChanged ? "100%" : "auto",
+                  }}
                 >
                   <Offcanvas.Title>User Settings</Offcanvas.Title>
                   {userChanged ? (

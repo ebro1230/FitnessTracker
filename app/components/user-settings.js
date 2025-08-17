@@ -387,7 +387,7 @@ export default function UserSettings({
             </div>
           )}
         </Form.Group>
-        {userChanged ? (
+        {/* {userChanged ? (
           <Form.Group
             className="mb-3"
             controlId="formHeight"
@@ -400,7 +400,7 @@ export default function UserSettings({
               Update
             </Button>
           </Form.Group>
-        ) : null}
+        ) : null} */}
       </>
     </Form>
   );
