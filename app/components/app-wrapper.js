@@ -145,6 +145,7 @@ export default function AppWrapper({ children }) {
       setProfilePicture(
         initialUser.profilePicture ? initialUser.profilePicture : ""
       );
+      setPreview(null);
     }
   };
   const handleShow = () => {
