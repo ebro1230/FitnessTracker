@@ -71,8 +71,8 @@ export default function MyFoodsModal({
               <Button
                 size="sm"
                 className="modal-button"
-                variant="danger"
-                onClick={() => onCloseModal()}
+                variant="primary"
+                onClick={() => onCloseMyFoodsModal()}
               >
                 Back to Food Entry Type
               </Button>
