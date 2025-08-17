@@ -423,27 +423,40 @@ export default function NavBar() {
               className="bg-dark text-white"
             >
               <Offcanvas.Header closeButton closeVariant="white">
-                <Offcanvas.Title>User Settings</Offcanvas.Title>
-                {userChanged ? (
-                  <Form.Group
-                    className="mb-3"
-                    controlId="formHeight"
-                    style={{ display: "flex" }}
-                  >
-                    <Button
-                      variant="danger"
-                      onClick={() => handleCancelChanges()}
+                <div
+                  style={{ display: "flex", justifyContent: "space-evenly" }}
+                >
+                  <Offcanvas.Title>User Settings</Offcanvas.Title>
+                  {userChanged ? (
+                    <Form.Group
+                      controlId="formHeight"
+                      style={{ display: "flex" }}
                     >
-                      Cancel Changes
-                    </Button>
-                    <Button
-                      variant="success"
-                      onClick={() => handleUpdateUser()}
-                    >
-                      Update
-                    </Button>
-                  </Form.Group>
-                ) : null}
+                      <Button
+                        variant="danger"
+                        style={{
+                          fontSize: "clamp(8px, 1.2vw, 16px)",
+                          margin: "0rem 0.1rem",
+                          width: "fit-content",
+                        }}
+                        onClick={() => handleCancelChanges()}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="success"
+                        style={{
+                          fontSize: "clamp(8px, 1.2vw, 16px)",
+                          margin: "0rem 0.1rem",
+                          width: "fit-content",
+                        }}
+                        onClick={() => handleUpdateUser()}
+                      >
+                        Update
+                      </Button>
+                    </Form.Group>
+                  ) : null}
+                </div>
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <UserSettings
