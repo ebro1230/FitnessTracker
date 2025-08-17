@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { signOut } from "next-auth/react";
-import Button from "react-bootstrap/Button";
+import { Form, Button } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import UserSettings from "@/app/components/user-settings";
