@@ -120,6 +120,31 @@ export default function AppWrapper({ children }) {
     if (userChanged) {
       setUpdatedUser(initialUser);
       setUserChanged(false);
+      setFamily_name(initialUser.family_name);
+      setGiven_name(initialUser.given_name);
+      setAge(initialUser.age ? initialUser.age : "");
+      setEmail(initialUser.email ? initialUser.email : "");
+      setGoalWeightKG(initialUser.goalWeightKG ? initialUser.goalWeightKG : "");
+      setCurrentWeightKG(
+        initialUser.currentWeightKG ? initialUser.currentWeightKG : ""
+      );
+      setGoalWeightLBS(
+        initialUser.goalWeightLBS ? initialUser.goalWeightLBS : ""
+      );
+      setCurrentWeightLBS(
+        initialUser.currentWeightLBS ? initialUser.currentWeightLBS : ""
+      );
+      setPreference(initialUser.preference ? initialUser.preference : "Metric");
+      setGender(initialUser.gender ? initialUser.gender : "Male");
+      setHeightImperial(
+        initialUser.heightImperial[0]
+          ? [initialUser.heightImperial[0], initialUser.heightImperial[1]]
+          : ["", ""]
+      );
+      setHeightMetric(initialUser.heightMetric ? initialUser.heightMetric : "");
+      setProfilePicture(
+        initialUser.profilePicture ? initialUser.profilePicture : ""
+      );
     }
   };
   const handleShow = () => {
