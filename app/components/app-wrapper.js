@@ -115,8 +115,20 @@ export default function AppWrapper({ children }) {
 
   const { data: session, status } = useSession();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    if (userChanged) {
+      setUpdatedUser(initialUser);
+      setUserChanged(false);
+    }
+  };
+  const handleShow = () => {
+    setShow(true);
+    if (userChanged) {
+      setUpdatedUser(initialUser);
+      setUserChanged(false);
+    }
+  };
 
   const handleUserComparison = (user, newUser) => {
     if (
@@ -1083,9 +1095,6 @@ export default function AppWrapper({ children }) {
 
   const handleSaveChanges = (user) => {
     setIsLoading(true);
-    user ? console.log("user True") : console.log("user false");
-    console.log(user);
-    console.log(updatedUser);
     fetch(`/api/getUser/${session.user.id}`, {
       method: "PUT",
       headers: {
@@ -1375,12 +1384,10 @@ export default function AppWrapper({ children }) {
       ]);
     }
     handleAverageMacroCalculation(user);
-    console.log("Custom Food:", customFood);
+
     if (customFood === "My Foods") {
-      console.log("HandleSaveToMyFoods");
       handleSaveToMyFoods(user);
     } else if (customFood === "Close") {
-      console.log("Save Changes");
       handleSaveChanges(user);
     } else {
       setUpdatedUser(user);
@@ -2922,10 +2929,6 @@ export default function AppWrapper({ children }) {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
-    console.log("SESSION:");
-    console.log(session);
-    console.log("STATUS:");
-    console.log(status);
     async function fetchUser(userId) {
       try {
         const res = await fetch(`/api/getUser/${userId}`);
@@ -2933,8 +2936,6 @@ export default function AppWrapper({ children }) {
           throw new Error("User not found");
         }
         const data = await res.json();
-        console.log("DATA:");
-        console.log(data);
         setInitialUser(data);
         setUpdatedUser(data);
         setFamily_name(data.family_name);
