@@ -158,7 +158,7 @@ export default function MyFoodDetailsModal({
                       className="modal-button"
                       variant="primary"
                       onClick={() => {
-                        onAddToMeal(false);
+                        onAddToMeal("Close");
                         onCloseMyFoodDetailsModal();
                         onCloseMyFoodsModal();
                         onCloseFoodEntryModal();
@@ -171,7 +171,7 @@ export default function MyFoodDetailsModal({
                       className="modal-button"
                       variant="success"
                       onClick={() => {
-                        onAddToMeal(false);
+                        onAddToMeal();
                         onCloseMyFoodDetailsModal();
                       }}
                     >

@@ -1081,13 +1081,13 @@ export default function AppWrapper({ children }) {
     setFoodEntry(false);
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = (user) => {
     fetch(`/api/getUser/${session.user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedUser),
+      body: user ? JSON.stringify(user) : JSON.stringify(updatedUser),
     })
       .then((response) => {
         if (response.status === 201) {
@@ -1369,10 +1369,12 @@ export default function AppWrapper({ children }) {
       ]);
     }
     handleAverageMacroCalculation(user);
-    if (!customFood) {
-      setUpdatedUser(user);
-    } else {
+    if (customFood === "My Foods") {
       handleSaveToMyFoods(user);
+    } else if (customFood === "Close") {
+      handleSaveChanges(user);
+    } else {
+      setUpdatedUser(user);
     }
   };
 

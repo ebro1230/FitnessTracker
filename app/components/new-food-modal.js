@@ -195,7 +195,7 @@ export default function NewFoodModal({
                     variant="primary"
                     onClick={() => {
                       if (onCustomFoodInputCheck()) {
-                        onAddToMeal(false);
+                        onAddToMeal("Close");
                         onCloseNewFoodModal();
                         onCloseFoodEntryModal();
                       }
@@ -209,7 +209,7 @@ export default function NewFoodModal({
                     variant="success"
                     onClick={() => {
                       if (onCustomFoodInputCheck()) {
-                        onAddToMeal(true);
+                        onAddToMeal("My Foods");
                         // onSaveToMyFoods();
                         onCloseNewFoodModal();
                         onCloseFoodEntryModal();
