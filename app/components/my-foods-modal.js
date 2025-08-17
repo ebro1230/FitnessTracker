@@ -66,7 +66,18 @@ export default function MyFoodsModal({
               </Table>
             </div>
           </Modal.Body>
-          <Modal.Footer></Modal.Footer>
+          <Modal.Footer>
+            <div className="modal-button-div">
+              <Button
+                size="sm"
+                className="modal-button"
+                variant="danger"
+                onClick={() => onCloseModal()}
+              >
+                Back to Food Entry Type
+              </Button>
+            </div>
+          </Modal.Footer>
         </>
       ) : (
         <Modal.Body>

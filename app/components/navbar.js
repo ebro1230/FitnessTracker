@@ -426,7 +426,7 @@ export default function NavBar() {
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "space-evenly",
+                    justifyContent: "space-between",
                     width: userChanged ? "100%" : "auto",
                   }}
                 >
@@ -434,12 +434,12 @@ export default function NavBar() {
                   {userChanged ? (
                     <Form.Group
                       controlId="formHeight"
-                      style={{ display: "flex" }}
+                      style={{ display: "flex", width: "auto" }}
                     >
                       <Button
                         variant="danger"
                         style={{
-                          fontSize: "clamp(8px, 1.2vw, 16px)",
+                          // fontSize: "clamp(8px, 1.2vw, 16px)",
                           margin: "0rem 0.1rem",
                           width: "fit-content",
                         }}
@@ -450,7 +450,7 @@ export default function NavBar() {
                       <Button
                         variant="success"
                         style={{
-                          fontSize: "clamp(8px, 1.2vw, 16px)",
+                          // fontSize: "clamp(8px, 1.2vw, 16px)",
                           margin: "0rem 0.1rem",
                           width: "fit-content",
                         }}
