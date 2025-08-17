@@ -1082,6 +1082,7 @@ export default function AppWrapper({ children }) {
   };
 
   const handleSaveChanges = (user) => {
+    setIsLoading(true);
     user ? console.log("user True") : console.log("user false");
     console.log(user);
     console.log(updatedUser);
@@ -1103,14 +1104,16 @@ export default function AppWrapper({ children }) {
       }) // Parse JSON response
       .then((data) => {
         setInitialUser(data);
-        //setUpdatedUser(data);
+        setUpdatedUser(data);
         setUserChanged(false);
+        setIsLoading(false);
       }) // Handle data
       .catch((error) => {
         console.error("Error:", error);
         setInitialUser(initialUser);
-        //setUpdatedUser(initialUser);
+        setUpdatedUser(initialUser);
         setUserChanged(false);
+        setIsLoading(false);
       }); // Handle errors
   };
 
