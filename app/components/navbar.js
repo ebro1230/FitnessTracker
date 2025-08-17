@@ -424,6 +424,26 @@ export default function NavBar() {
             >
               <Offcanvas.Header closeButton closeVariant="white">
                 <Offcanvas.Title>User Settings</Offcanvas.Title>
+                {userChanged ? (
+                  <Form.Group
+                    className="mb-3"
+                    controlId="formHeight"
+                    style={{ display: "flex" }}
+                  >
+                    <Button
+                      variant="danger"
+                      onClick={() => handleCancelChanges()}
+                    >
+                      Cancel Changes
+                    </Button>
+                    <Button
+                      variant="success"
+                      onClick={() => handleUpdateUser()}
+                    >
+                      Update
+                    </Button>
+                  </Form.Group>
+                ) : null}
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <UserSettings
