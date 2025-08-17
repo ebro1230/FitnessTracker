@@ -1372,6 +1372,7 @@ export default function AppWrapper({ children }) {
       ]);
     }
     handleAverageMacroCalculation(user);
+    console.log("Custom Food:", customFood);
     if (customFood === "My Foods") {
       console.log("HandleSaveToMyFoods");
       handleSaveToMyFoods(user);
