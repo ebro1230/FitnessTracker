@@ -1082,6 +1082,9 @@ export default function AppWrapper({ children }) {
   };
 
   const handleSaveChanges = (user) => {
+    user ? console.log("user True") : console.log("user false");
+    console.log(user);
+    console.log(updatedUser);
     fetch(`/api/getUser/${session.user.id}`, {
       method: "PUT",
       headers: {
@@ -1370,8 +1373,10 @@ export default function AppWrapper({ children }) {
     }
     handleAverageMacroCalculation(user);
     if (customFood === "My Foods") {
+      console.log("HandleSaveToMyFoods");
       handleSaveToMyFoods(user);
     } else if (customFood === "Close") {
+      console.log("Save Changes");
       handleSaveChanges(user);
     } else {
       setUpdatedUser(user);
