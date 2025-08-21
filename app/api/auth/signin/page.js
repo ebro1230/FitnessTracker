@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProviders, signIn } from "next-auth/react";
+import { getProviders, signIn, useSession } from "next-auth/react";
 import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/navigation";
@@ -28,6 +28,7 @@ export default function SignIn() {
   const textCheck = /^[a-zA-Z]+$/;
   const ageCheck = /^(1[89]|[2-9][0-9])$/;
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -156,7 +157,10 @@ export default function SignIn() {
     } else {
       setIsLoading(false);
     }
-  }, [providers]);
+    if (status === "authenticated") {
+      router.replace("/"); // Redirect on successful login
+    }
+  }, [providers, status]);
 
   return (
     <div className="homepage-div">

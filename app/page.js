@@ -127,7 +127,10 @@ export default function Home() {
   } = useContext(UserContext);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    // if (status === "unauthenticated") {
+    //   signIn();
+    // }
+    if ((session && session.expires > new Date()) || isUnauthenticated) {
       signIn();
     }
   }, [session]);
