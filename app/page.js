@@ -139,16 +139,12 @@ export default function Home() {
     }
   }, [session]);
 
-  console.log("SESSION:");
-  console.log(session);
-  console.log("STATUS:");
-  console.log(status);
-  console.log(isUnauthenticated);
-
   return (
     <>
       <div className="homepage-div">
-        {(session && session.expires > new Date()) || isUnauthenticated ? (
+        {(session && session.expires > new Date()) ||
+        isUnauthenticated ||
+        (session === null && status === "unauthenticated") ? (
           <div style={{ display: "flex" }}>
             <Button
               variant="success"
