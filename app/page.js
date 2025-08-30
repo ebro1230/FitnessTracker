@@ -130,7 +130,11 @@ export default function Home() {
     // if (status === "unauthenticated") {
     //   signIn();
     // }
-    if ((session && session.expires > new Date()) || isUnauthenticated) {
+    if (
+      (session && session.expires > new Date()) ||
+      isUnauthenticated ||
+      (session === null && status === "unauthenticated")
+    ) {
       signIn();
     }
   }, [session]);
