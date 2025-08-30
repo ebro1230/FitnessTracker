@@ -135,6 +135,12 @@ export default function Home() {
     }
   }, [session]);
 
+  console.log("SESSION:");
+  console.log(session);
+  console.log("STATUS:");
+  console.log(status);
+  console.log(isUnauthenticated);
+
   return (
     <>
       <div className="homepage-div">
