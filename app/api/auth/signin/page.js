@@ -169,7 +169,7 @@ export default function SignIn() {
       ) : providers ? (
         <>
           <h1 style={{ color: "white", marginBottom: "2rem" }}>
-            Food Tracker App
+            Fitness Tracker
           </h1>
           <div style={{ display: "flex" }}>
             <button

@@ -9,9 +9,11 @@ import {
 
 export default function WeightChart({ userData }) {
   return (
-    <ResponsiveContainer width="100%" height={250}>
+    <ResponsiveContainer width="100%" height={300}>
+      {/* <h4 style={{ textAlign: "center", color: "#4e4e4e" }}>Weight vs. Time</h4> */}
       <LineChart
-        margin={{ top: 25, right: 50 }}
+        // margin={{ top: 25, right: 50 }}
+        margin={{ top: 40, right: 50, left: 50, bottom: 40 }}
         data={userData.days.map((day) => {
           return {
             day: day.date,
@@ -23,9 +25,42 @@ export default function WeightChart({ userData }) {
                 : day.goalWeightLBS,
           };
         })}
+        width="100%"
+        height="80%"
       >
-        <XAxis dataKey="day" />
-        <YAxis type="number" domain={[60, "dataMax + 10"]} />
+        <text
+          x="50%"
+          dx={28}
+          y={10}
+          fill="#4e4e4e"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={16}
+        >
+          Weight vs. Time
+        </text>
+        <XAxis
+          dataKey="day"
+          label={{
+            value: "Time",
+            position: "insideBottom",
+            offset: "-10",
+            style: { textAnchor: "middle" },
+          }}
+          padding={{ left: 30, right: 30 }}
+        />
+        <YAxis
+          type="number"
+          domain={["dataMin - 5", "dataMax + 5"]}
+          label={{
+            value:
+              userData.preference === "Metric" ? "Weight (kg)" : "Weight (lbs)",
+            angle: -90,
+            position: "insideLeft",
+            style: { textAnchor: "middle" }, // ensures centered text
+            //dy: 100, // adjust this number until it's visually centered
+          }}
+        />
         {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
         <Tooltip
           formatter={(value, name) => {

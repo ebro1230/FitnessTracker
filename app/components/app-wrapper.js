@@ -49,7 +49,9 @@ export default function AppWrapper({ children }) {
   const [indexOfPreviousData, setIndexOfPreviousData] = useState("");
   const [currentMeal, setCurrentMeal] = useState("");
   const [dailyMacros, setDailyMacros] = useState("");
+  const [dailyMacrosGrams, setDailyMacrosGrams] = useState("");
   const [averageMacros, setAverageMacros] = useState("");
+  const [averageMacrosGrams, setAverageMacrosGrams] = useState("");
   const [screenWidth, setScreenWidth] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
   const [currentWeight, setCurrentWeight] = useState("");
@@ -95,6 +97,7 @@ export default function AppWrapper({ children }) {
   const [myFoods, setMyFoods] = useState(false);
   const [isMyFoodDetailsModalOpen, setisMyFoodDetailsModalOpen] =
     useState(false);
+  const [tabActiveKey, setTabActiveKey] = useState("averageMacros");
 
   const numberCheck =
     /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/(?:\d+(?:\.\d*)?|\.\d+))?$/;
@@ -1162,6 +1165,8 @@ export default function AppWrapper({ children }) {
     ) {
       setPreviousData(false);
       setDailyMacros("");
+      setDailyMacrosGrams("");
+      setTabActiveKey("averageMacros");
     }
   };
 
@@ -1216,11 +1221,27 @@ export default function AppWrapper({ children }) {
             value: Number((((fat * 9) / calories) * 100).toFixed(2)),
           },
         ]);
+        setAverageMacrosGrams([
+          {
+            name: "Protein",
+            value: Number((protein / (user.days.length - 1)).toFixed(2)),
+          },
+          {
+            name: "Carbohydrates",
+            value: Number((carbohydrates / (user.days.length - 1)).toFixed(2)),
+          },
+          {
+            name: "Fat",
+            value: Number((fat / (user.days.length - 1)).toFixed(2)),
+          },
+        ]);
       } else {
         setAverageMacros("");
+        setAverageMacrosGrams("");
       }
     } else {
       setAverageMacros("");
+      setAverageMacrosGrams("");
     }
   };
 
@@ -1391,6 +1412,8 @@ export default function AppWrapper({ children }) {
     user.days[index].totals = updatedDailyTotals;
     if (!user.days[index].totals.calories) {
       setDailyMacros("");
+      setDailyMacrosGrams("");
+      setTabActiveKey("averageMacros");
     } else {
       setDailyMacros([
         {
@@ -1407,6 +1430,11 @@ export default function AppWrapper({ children }) {
             (user.days[index].totals.fatPercentage * 100).toFixed(2)
           ),
         },
+      ]);
+      setDailyMacrosGrams([
+        { name: "Protein", value: user.days[index].totals.protein },
+        { name: "Fat", value: user.days[index].totals.fat },
+        { name: "Carbohydrates", value: user.days[index].totals.carbohydrates },
       ]);
     }
     handleAverageMacroCalculation(user);
@@ -2938,6 +2966,10 @@ export default function AppWrapper({ children }) {
       });
   };
 
+  const onSetTabActiveKey = (e) => {
+    setTabActiveKey(e);
+  };
+
   useEffect(() => {
     //Tries to avoid hydration issues with server and react due to date creation
     if (selectedDate === "") {
@@ -3060,7 +3092,7 @@ export default function AppWrapper({ children }) {
               (day) => day.date === selectedDateFormatted
             );
             setIndexOfPreviousData(previousDataIndex);
-            if (updatedUser.days[previousDataIndex].totals.calories) {
+            if (data.days[previousDataIndex].totals.calories) {
               setDailyMacros([
                 {
                   name: "Protein",
@@ -3082,11 +3114,27 @@ export default function AppWrapper({ children }) {
                   ),
                 },
               ]);
+              setDailyMacrosGrams([
+                {
+                  name: "Protein",
+                  value: data.days[previousDataIndex].totals.protein,
+                },
+                {
+                  name: "Carbohydrate",
+                  value: data.days[previousDataIndex].totals.carbohydrates,
+                },
+                {
+                  name: "Fat",
+                  value: data.days[previousDataIndex].totals.fat,
+                },
+              ]);
             }
           } else {
             setPreviousData(false);
             setIndexOfPreviousData(-1);
             setDailyMacros("");
+            setDailyMacrosGrams("");
+            setTabActiveKey("averageMacros");
           }
         }
       } catch (error) {
@@ -3135,13 +3183,31 @@ export default function AppWrapper({ children }) {
                 ),
               },
             ]);
+            setDailyMacrosGrams([
+              {
+                name: "Protein",
+                value: updatedUser.days[previousDataIndex].totals.protein,
+              },
+              {
+                name: "Carbohydrate",
+                value: updatedUser.days[previousDataIndex].totals.carbohydrates,
+              },
+              {
+                name: "Fat",
+                value: updatedUser.days[previousDataIndex].totals.fat,
+              },
+            ]);
           } else {
             setDailyMacros("");
+            setDailyMacrosGrams("");
+            setTabActiveKey("averageMacros");
           }
         } else {
           setPreviousData(false);
           setIndexOfPreviousData(-1);
           setDailyMacros("");
+          setDailyMacrosGrams("");
+          setTabActiveKey("averageMacros");
         }
       }
     } else if (status === "loading") {
@@ -3151,11 +3217,15 @@ export default function AppWrapper({ children }) {
       //signIn();
     }
 
+    if (!dailyMacros && tabActiveKey === "dailyMacros") {
+      onSetTabActiveKey("averageMacros");
+    }
+
     window.addEventListener("resize", handleResize);
     handleResize(); // initial call
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [selectedDateFormatted, session]);
+  }, [selectedDateFormatted, session, tabActiveKey]);
 
   const contextValue = {
     session,
@@ -3320,6 +3390,10 @@ export default function AppWrapper({ children }) {
     handleMyFoodChoice,
     handleCloseMyFoodDetailsModal,
     isMyFoodDetailsModalOpen,
+    tabActiveKey,
+    onSetTabActiveKey,
+    averageMacrosGrams,
+    dailyMacrosGrams,
   };
 
   return (
