@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function DailyMacrosChart({
+export default function DailyMacrosGramsChart({
   dailyMacros,
   pieChartColors,
   screenWidth,
@@ -20,7 +20,7 @@ export default function DailyMacrosChart({
     midAngle,
     innerRadius,
     outerRadius,
-    percent,
+    value,
     index,
   }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -35,7 +35,7 @@ export default function DailyMacrosChart({
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
       >
-        {`${(percent * 100).toFixed(2)}%`}
+        {`${value}g`}
       </text>
     );
   };
@@ -51,7 +51,7 @@ export default function DailyMacrosChart({
           fontWeight="bold"
           fill="white"
         >
-          Daily Macros (%)
+          Daily Macros (g)
         </text> */}
         <Pie
           data={dailyMacros}
@@ -68,7 +68,7 @@ export default function DailyMacrosChart({
             <Cell key={`cell-${index}`} fill={pieChartColors[index]} />
           ))}
         </Pie>
-        <Tooltip formatter={(value) => `${(value / 100).toFixed(2)}%`} />
+        <Tooltip formatter={(value) => `${value}g`} />
         <Legend wrapperStyle={{ bottom: 0 }} />
       </PieChart>
     </ResponsiveContainer>

@@ -1,26 +1,31 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Col, Row, Button } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
-import Stack from "react-bootstrap/Stack";
+import { useEffect } from "react";
+import {
+  Col,
+  Row,
+  Button,
+  Tab,
+  Tabs,
+  Table,
+  Stack,
+  Nav,
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import LoadingIndicator from "@/app/components/loading-indicator";
 import Profile from "@/app/components/profile";
-import WeightChart from "@/app/components/weight-chart";
 import AverageMacrosChart from "@/app/components/average-macros-chart";
+import AverageMacrosGramsChart from "@/app/components/average-macros-grams-chart";
 import DailyMacrosChart from "@/app/components/daily-macros-chart";
+import DailyMacrosGramsChart from "./components/daily-macros-grams-chart";
 import DateChanger from "@/app/components/date-changer";
 import UpdateUserButtons from "@/app/components/update-user-buttons";
 import MealStack from "@/app/components/meal-stack";
 import SearchModal from "@/app/components/search-modal";
 import FoodDetailsModal from "@/app/components/food-details-modal";
 import FoodEntryTypeModal from "./components/food-entry-type-modal";
-import ProfileChangeButtons from "@/app/components/profile-change-buttons";
 import "@/app/react-datepicker.css"; // Import default styles
-import { addDays } from "date-fns";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { Router } from "lucide-react";
+import { signIn } from "next-auth/react";
 import { useContext } from "react";
 import { UserContext } from "@/lib/user-context";
 import NewFoodModal from "./components/new-food-modal";
@@ -124,6 +129,10 @@ export default function Home() {
     handleMyFoodChoice,
     isMyFoodDetailsModalOpen,
     handleCloseMyFoodDetailsModal,
+    tabActiveKey,
+    onSetTabActiveKey,
+    averageMacrosGrams,
+    dailyMacrosGrams,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -185,52 +194,290 @@ export default function Home() {
               {updatedUser.days.length ? (
                 <Row>
                   <Col>
-                    {/* <WeightChart userData={updatedUser} /> */}
                     {averageMacros ? (
                       <div
                         style={{
                           width: "100%",
-                          height:
-                            screenWidth <= 275
-                              ? 300
-                              : screenWidth <= 366
-                              ? screenWidth * 1
-                              : screenWidth <= 480
-                              ? screenWidth * 0.9
-                              : 400,
+                          display: "flex",
+                          justifyContent: "center",
                         }}
                       >
-                        <AverageMacrosChart
+                        <div
+                          style={{
+                            width:
+                              screenWidth <= 362
+                                ? "100%"
+                                : screenWidth <= 550
+                                ? "75%"
+                                : screenWidth <= 682
+                                ? "50%"
+                                : screenWidth <= 905
+                                ? "40% "
+                                : "30%",
+                          }}
+                        >
+                          <Tabs
+                            id="overarchingMacrosTabs"
+                            mountOnEnter // content is mounted only when tab is active
+                            unmountOnExit
+                            fill
+                            activeKey={tabActiveKey}
+                            onSelect={(e) => onSetTabActiveKey(e)}
+                          >
+                            <Tab
+                              eventKey="averageMacros"
+                              title="Average Macros"
+                            >
+                              <Tab.Container
+                                id="%orgAverageMacrosTabs"
+                                defaultActiveKey={"averageMacros%"}
+                                mountOnEnter // content is mounted only when tab is active
+                                unmountOnExit
+                                fill
+                              >
+                                <Col>
+                                  <Row
+                                    style={{
+                                      justifyContent: "center",
+                                      marginTop: "1rem",
+                                    }}
+                                  >
+                                    <Nav variant="pills" className="tabButtons">
+                                      <Nav.Item className="gOrPercentButtons">
+                                        <Nav.Link eventKey="averageMacros%">
+                                          %
+                                        </Nav.Link>
+                                      </Nav.Item>
+                                      <Nav.Item className="gOrPercentButtons">
+                                        <Nav.Link eventKey="averageMacrosg">
+                                          g
+                                        </Nav.Link>
+                                      </Nav.Item>
+                                    </Nav>
+                                  </Row>
+                                  <Row>
+                                    <Tab.Content>
+                                      <Tab.Pane
+                                        eventKey="averageMacros%"
+                                        title="%"
+                                      >
+                                        <div
+                                          style={{
+                                            width: "100%",
+                                            height:
+                                              screenWidth <= 100
+                                                ? 100
+                                                : screenWidth <= 300
+                                                ? 175
+                                                : screenWidth <= 350
+                                                ? 200
+                                                : screenWidth <= 400
+                                                ? 250
+                                                : 300,
+                                            marginBottom: "2rem",
+                                          }}
+                                        >
+                                          <AverageMacrosChart
+                                            averageMacros={averageMacros}
+                                            pieChartColors={pieChartColors}
+                                            screenWidth={screenWidth}
+                                          />
+                                        </div>
+                                      </Tab.Pane>
+                                      <Tab.Pane
+                                        eventKey="averageMacrosg"
+                                        title="g"
+                                      >
+                                        <div
+                                          style={{
+                                            width: "100%",
+                                            height:
+                                              screenWidth <= 100
+                                                ? 100
+                                                : screenWidth <= 300
+                                                ? 175
+                                                : screenWidth <= 350
+                                                ? 200
+                                                : screenWidth <= 400
+                                                ? 250
+                                                : 300,
+                                            marginBottom: "2rem",
+                                          }}
+                                        >
+                                          <AverageMacrosGramsChart
+                                            averageMacros={averageMacrosGrams}
+                                            pieChartColors={pieChartColors}
+                                            screenWidth={screenWidth}
+                                          />
+                                        </div>
+                                      </Tab.Pane>
+                                    </Tab.Content>
+                                  </Row>
+                                </Col>
+                              </Tab.Container>
+                              {/* <Tabs
+                                id="%orgAverageMacrosTabs"
+                                defaultActiveKey={"averageMacros%"}
+                                mountOnEnter // content is mounted only when tab is active
+                                unmountOnExit
+                                fill
+                              >
+                                <Tab eventKey="averageMacros%" title="%">
+                                  <div
+                                    style={{
+                                      width: "100%",
+                                      height:
+                                        screenWidth <= 275
+                                          ? 300
+                                          : screenWidth <= 366
+                                          ? screenWidth * 1
+                                          : screenWidth <= 480
+                                          ? screenWidth * 0.9
+                                          : 400,
+                                    }}
+                                  >
+                                    <AverageMacrosChart
+                                      averageMacros={averageMacros}
+                                      pieChartColors={pieChartColors}
+                                      screenWidth={screenWidth}
+                                    />
+                                  </div>
+                                </Tab>
+                                <Tab eventKey="averageMacrosg" title="g">
+                                  <div
+                                    style={{
+                                      width: "100%",
+                                      height:
+                                        screenWidth <= 275
+                                          ? 300
+                                          : screenWidth <= 366
+                                          ? screenWidth * 1
+                                          : screenWidth <= 480
+                                          ? screenWidth * 0.9
+                                          : 400,
+                                    }}
+                                  >
+                                    <AverageMacrosGramsChart
+                                      averageMacros={averageMacrosGrams}
+                                      pieChartColors={pieChartColors}
+                                      screenWidth={screenWidth}
+                                    />
+                                  </div>
+                                </Tab>
+                              </Tabs> */}
+                            </Tab>
+                            <Tab
+                              eventKey="dailyMacros"
+                              title="Daily Macros"
+                              disabled={!dailyMacros}
+                            >
+                              {dailyMacros ? (
+                                <Tab.Container
+                                  id="%orgDailyMacrosTabs"
+                                  defaultActiveKey={"dailyMacros%"}
+                                  mountOnEnter // content is mounted only when tab is active
+                                  unmountOnExit
+                                  fill
+                                >
+                                  <Col>
+                                    <Row
+                                      style={{
+                                        justifyContent: "center",
+                                        marginTop: "1rem",
+                                      }}
+                                    >
+                                      <Nav
+                                        variant="pills"
+                                        className="tabButtons"
+                                      >
+                                        <Nav.Item className="gOrPercentButtons">
+                                          <Nav.Link eventKey="dailyMacros%">
+                                            %
+                                          </Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item className="gOrPercentButtons">
+                                          <Nav.Link eventKey="dailyMacrosg">
+                                            g
+                                          </Nav.Link>
+                                        </Nav.Item>
+                                      </Nav>
+                                    </Row>
+                                    <Row>
+                                      <Tab.Content>
+                                        <Tab.Pane
+                                          eventKey="dailyMacros%"
+                                          title="%"
+                                        >
+                                          <div
+                                            style={{
+                                              width: "100%",
+                                              height:
+                                                screenWidth <= 100
+                                                  ? 100
+                                                  : screenWidth <= 300
+                                                  ? 175
+                                                  : screenWidth <= 350
+                                                  ? 200
+                                                  : screenWidth <= 400
+                                                  ? 250
+                                                  : 300,
+                                              marginBottom: "2rem",
+                                            }}
+                                          >
+                                            <DailyMacrosChart
+                                              dailyMacros={dailyMacros}
+                                              pieChartColors={pieChartColors}
+                                              screenWidth={screenWidth}
+                                            />
+                                          </div>
+                                        </Tab.Pane>
+                                        <Tab.Pane
+                                          eventKey="dailyMacrosg"
+                                          title="g"
+                                        >
+                                          <div
+                                            style={{
+                                              width: "100%",
+                                              height:
+                                                screenWidth <= 100
+                                                  ? 100
+                                                  : screenWidth <= 300
+                                                  ? 175
+                                                  : screenWidth <= 350
+                                                  ? 200
+                                                  : screenWidth <= 400
+                                                  ? 250
+                                                  : 300,
+                                              marginBottom: "2rem",
+                                            }}
+                                          >
+                                            <DailyMacrosGramsChart
+                                              dailyMacros={dailyMacrosGrams}
+                                              pieChartColors={pieChartColors}
+                                              screenWidth={screenWidth}
+                                            />
+                                          </div>
+                                        </Tab.Pane>
+                                      </Tab.Content>
+                                    </Row>
+                                  </Col>
+                                </Tab.Container>
+                              ) : null}
+                            </Tab>
+                          </Tabs>
+                        </div>
+                      </div>
+                    ) : /* <AverageMacrosChart
                           averageMacros={averageMacros}
                           pieChartColors={pieChartColors}
                           screenWidth={screenWidth}
                         />
-                      </div>
-                    ) : null}
+                      </div> */
+                    null}
                   </Col>
-                  {dailyMacros ? (
+                  {/* {dailyMacros ? (
                     <Col xs={12} sm={6}>
-                      {/* {averageMacros ? (
-                      <div
-                        style={{
-                          width: "100%",
-                          height:
-                            screenWidth <= 275
-                              ? 300
-                              : screenWidth <= 366
-                              ? screenWidth * 1
-                              : screenWidth <= 480
-                              ? screenWidth * 0.9
-                              : 400,
-                        }}
-                      >
-                        <AverageMacrosChart
-                          averageMacros={averageMacros}
-                          pieChartColors={pieChartColors}
-                          screenWidth={screenWidth}
-                        />
-                      </div>
-                    ) : null} */}
+           
 
                       <div
                         className="flex justify-center"
@@ -253,7 +500,7 @@ export default function Home() {
                         />
                       </div>
                     </Col>
-                  ) : null}
+                  ) : null} */}
                 </Row>
               ) : null}
             </div>

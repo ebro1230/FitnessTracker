@@ -151,7 +151,10 @@ export default function Profile({
         </Col>
         <Col xs={12} sm={6}>
           <Row>
-            <Col className="pic-col">
+            <Col
+              className="pic-col"
+              style={{ margin: "1rem 0rem", height: "100%" }}
+            >
               <WeightChart userData={userData} />
             </Col>
           </Row>

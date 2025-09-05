@@ -43,7 +43,7 @@ export default function AverageMacrosChart({
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
-        <text
+        {/* <text
           x="50%"
           y={50}
           textAnchor="middle"
@@ -51,8 +51,8 @@ export default function AverageMacrosChart({
           fontWeight="bold"
           fill="white"
         >
-          Average Macros
-        </text>
+          Average Macros (%)
+        </text> */}
         <Pie
           data={averageMacros}
           cx="50%"
@@ -62,13 +62,14 @@ export default function AverageMacrosChart({
           dataKey="value"
           label={renderCustomizedLabel}
           labelLine={false}
+          isAnimationActive={false}
         >
           {averageMacros.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={pieChartColors[index]} />
           ))}
         </Pie>
         <Tooltip formatter={(value) => `${value.toFixed(2)}%`} />
-        <Legend wrapperStyle={{ bottom: 50 }} />
+        <Legend wrapperStyle={{ bottom: 0 }} />
       </PieChart>
     </ResponsiveContainer>
   );
