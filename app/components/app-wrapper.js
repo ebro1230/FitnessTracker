@@ -120,6 +120,9 @@ export default function AppWrapper({ children }) {
 
   const { data: session, status } = useSession();
 
+  const handleCloseAfterUpdate = () => {
+    setShow(false);
+  };
   const handleClose = () => {
     setShow(false);
     if (userChanged) {
@@ -1093,8 +1096,6 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
-        console.log("PUT DATA:");
-        console.log(data);
         setInitialUser({ ...data });
         setUpdatedUser({ ...data });
         setFamily_name(data.family_name);
@@ -1290,8 +1291,6 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
-        console.log("PUT DATA:");
-        console.log(data);
         setInitialUser({ ...data });
         setUpdatedUser({ ...data });
         setFamily_name(data.family_name);
@@ -1450,8 +1449,6 @@ export default function AppWrapper({ children }) {
         setIsLoading(false);
       }); // Handle errors
   };
-  console.log("UPDATED USER:");
-  console.log(updatedUser);
 
   const handleCancelUserChanges = () => {
     setUserChanged(false);
@@ -2570,8 +2567,6 @@ export default function AppWrapper({ children }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("PUT DATA:");
-          console.log(data);
           setInitialUser({ ...data });
           setUpdatedUser({ ...data });
           setFamily_name(data.family_name);
@@ -2724,7 +2719,7 @@ export default function AppWrapper({ children }) {
             setSuccess(false);
           }, 1000);
           setUpdating(false);
-          handleClose();
+          handleCloseAfterUpdate();
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -3321,8 +3316,6 @@ export default function AppWrapper({ children }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("PUT DATA:");
-        console.log(data);
         setInitialUser({ ...data });
         setUpdatedUser({ ...data });
         setFamily_name(data.family_name);
@@ -3572,8 +3565,6 @@ export default function AppWrapper({ children }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("PUT DATA:");
-        console.log(data);
         setInitialUser({ ...data });
         setUpdatedUser({ ...data });
         setFamily_name(data.family_name);
@@ -3764,8 +3755,6 @@ export default function AppWrapper({ children }) {
           throw new Error("User not found");
         }
         const data = await res.json();
-        console.log("PUT DATA:");
-        console.log(data);
         setInitialUser({ ...data });
         setUpdatedUser({ ...data });
         setFamily_name(data.family_name);
@@ -4144,6 +4133,7 @@ export default function AppWrapper({ children }) {
     averageMacrosGrams,
     dailyMacrosGrams,
     success,
+    handleCloseAfterUpdate,
   };
 
   return (
@@ -4188,6 +4178,7 @@ export default function AppWrapper({ children }) {
         onClose={handleClose}
         status={status}
         onShow={handleShow}
+        onCloseAfterUpdate={handleCloseAfterUpdate}
       />
       {children}
     </UserContext.Provider>

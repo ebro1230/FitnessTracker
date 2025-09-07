@@ -30,8 +30,6 @@ export default function Profile({
   handleShow,
   screenWidth,
 }) {
-  console.log("PROFILE DATA:");
-  console.log(userData);
   return (
     <div className="profile-div">
       <Row

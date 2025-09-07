@@ -9,7 +9,6 @@ import {
   Table,
   Stack,
   Nav,
-  Modal,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -32,6 +31,7 @@ import { UserContext } from "@/lib/user-context";
 import NewFoodModal from "./components/new-food-modal";
 import MyFoodsModal from "./components/my-foods-modal";
 import MyFoodDetailsModal from "@/app/components/my-food-details-modal";
+import SuccessModal from "@/app/components/success-modal";
 
 export default function Home() {
   const {
@@ -151,9 +151,6 @@ export default function Home() {
       signIn();
     }
   }, [session, updatedUser, initialUser]);
-
-  console.log("UPDATED USER IN PAGE");
-  console.log(updatedUser);
 
   return (
     <>
@@ -609,28 +606,6 @@ export default function Home() {
                 </Table>
               ) : null}
             </div>
-            {/* {dailyMacros ? (
-              <div
-                className="flex justify-center"
-                style={{
-                  width: "100%",
-                  height:
-                    screenWidth <= 275
-                      ? 300
-                      : screenWidth <= 366
-                      ? screenWidth * 1
-                      : screenWidth <= 480
-                      ? screenWidth * 0.9
-                      : 400,
-                }}
-              >
-                <DailyMacrosChart
-                  dailyMacros={dailyMacros}
-                  pieChartColors={pieChartColors}
-                  screenWidth={screenWidth}
-                />
-              </div>
-            ) : null} */}
             <SearchModal
               searchModal={searchModal}
               onCloseSearchModal={handleCloseSearchModal}
@@ -712,25 +687,7 @@ export default function Home() {
               servings={servings}
               onAddToMeal={handleAddToMeal}
             />
-            <Modal show={success} centered>
-              <Modal.Body>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
-                  }}
-                >
-                  <h2 style={{ color: "white" }}>
-                    SUCCESS{" "}
-                    <i
-                      className="bi bi-check-lg"
-                      style={{ color: "green" }}
-                    ></i>
-                  </h2>
-                </div>
-              </Modal.Body>
-            </Modal>
+            <SuccessModal success={success} />
           </>
         ) : (
           <LoadingIndicator />
