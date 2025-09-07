@@ -516,6 +516,7 @@ export default function Home() {
                 selectedDate={selectedDate}
                 onDateChange={handleDateChange}
                 onIncreaseDate={handleIncreaseDate}
+                preference={preference}
               />
             </div>
             <div className="meal-div">

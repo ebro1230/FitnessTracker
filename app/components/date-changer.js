@@ -8,6 +8,7 @@ export default function DateChanger({
   selectedDate,
   onDateChange,
   onIncreaseDate,
+  preference,
 }) {
   return (
     <>
@@ -32,7 +33,7 @@ export default function DateChanger({
           showMonthDropdown
           showYearDropdown
           dropdownMode="select"
-          dateFormat="yyyy-MM-dd"
+          dateFormat={preference === "Metric" ? "yyyy-MM-dd" : "MM-dd-yyyy"}
           className="custom-input"
         />
       ) : null}
