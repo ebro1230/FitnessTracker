@@ -31,6 +31,7 @@ import { UserContext } from "@/lib/user-context";
 import NewFoodModal from "./components/new-food-modal";
 import MyFoodsModal from "./components/my-foods-modal";
 import MyFoodDetailsModal from "@/app/components/my-food-details-modal";
+import SuccessModal from "@/app/components/success-modal";
 
 export default function Home() {
   const {
@@ -133,6 +134,9 @@ export default function Home() {
     onSetTabActiveKey,
     averageMacrosGrams,
     dailyMacrosGrams,
+    handleShow,
+    success,
+    show,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -146,7 +150,7 @@ export default function Home() {
     ) {
       signIn();
     }
-  }, [session]);
+  }, [session, updatedUser, initialUser]);
 
   return (
     <>
@@ -189,6 +193,8 @@ export default function Home() {
               goalWeightLBS={goalWeightLBS}
               currentWeightKG={currentWeightKG}
               currentWeightLBS={currentWeightLBS}
+              handleShow={handleShow}
+              screenWidth={screenWidth}
             />
             <div style={{ width: "100%" }}>
               {updatedUser.days.length ? (
@@ -513,7 +519,7 @@ export default function Home() {
               />
             </div>
             <div className="meal-div">
-              {userChanged ? (
+              {userChanged && !show ? (
                 <UpdateUserButtons
                   onCancelChanges={handleCancelUserChanges}
                   onSaveChanges={handleSaveChanges}
@@ -600,28 +606,6 @@ export default function Home() {
                 </Table>
               ) : null}
             </div>
-            {/* {dailyMacros ? (
-              <div
-                className="flex justify-center"
-                style={{
-                  width: "100%",
-                  height:
-                    screenWidth <= 275
-                      ? 300
-                      : screenWidth <= 366
-                      ? screenWidth * 1
-                      : screenWidth <= 480
-                      ? screenWidth * 0.9
-                      : 400,
-                }}
-              >
-                <DailyMacrosChart
-                  dailyMacros={dailyMacros}
-                  pieChartColors={pieChartColors}
-                  screenWidth={screenWidth}
-                />
-              </div>
-            ) : null} */}
             <SearchModal
               searchModal={searchModal}
               onCloseSearchModal={handleCloseSearchModal}
@@ -703,6 +687,7 @@ export default function Home() {
               servings={servings}
               onAddToMeal={handleAddToMeal}
             />
+            <SuccessModal success={success} />
           </>
         ) : (
           <LoadingIndicator />

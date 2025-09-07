@@ -29,6 +29,7 @@ export default function AppWrapper({ children }) {
   const [heightImperial, setHeightImperial] = useState(["", ""]);
   const [userChanged, setUserChanged] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [americanDate, setAmericanDate] = useState("");
 
   const [search, setSearch] = useState("");
   const [currentSearch, setCurrentSearch] = useState("");
@@ -98,6 +99,7 @@ export default function AppWrapper({ children }) {
   const [isMyFoodDetailsModalOpen, setisMyFoodDetailsModalOpen] =
     useState(false);
   const [tabActiveKey, setTabActiveKey] = useState("averageMacros");
+  const [success, setSuccess] = useState(false);
 
   const numberCheck =
     /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/(?:\d+(?:\.\d*)?|\.\d+))?$/;
@@ -118,6 +120,9 @@ export default function AppWrapper({ children }) {
 
   const { data: session, status } = useSession();
 
+  const handleCloseAfterUpdate = () => {
+    setShow(false);
+  };
   const handleClose = () => {
     setShow(false);
     if (userChanged) {
@@ -1091,9 +1096,154 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
-        setInitialUser(data);
-        setUpdatedUser(data);
+        setInitialUser({ ...data });
+        setUpdatedUser({ ...data });
+        setFamily_name(data.family_name);
+        setGiven_name(data.given_name);
+        setAge(data.age ? data.age : "");
+        setEmail(data.email ? data.email : "");
+        setGoalWeightKG(data.goalWeightKG ? data.goalWeightKG : "");
+        setCurrentWeightKG(data.currentWeightKG ? data.currentWeightKG : "");
+        setGoalWeightLBS(data.goalWeightLBS ? data.goalWeightLBS : "");
+        setCurrentWeightLBS(data.currentWeightLBS ? data.currentWeightLBS : "");
+        setPreference(data.preference ? data.preference : "Metric");
+        setGender(data.gender ? data.gender : "Male");
+        setHeightImperial(
+          data.heightImperial[0]
+            ? [data.heightImperial[0], data.heightImperial[1]]
+            : ["", ""]
+        );
+        setHeightMetric(data.heightMetric ? data.heightMetric : "");
+        if (
+          data.heightMetric &&
+          data.heightImperial[0] &&
+          data.currentWeightLBS &&
+          data.currentWeightKG &&
+          (data.heightImperial[1] === 0 || data.heightImperial[1])
+        ) {
+          setBMIKG(
+            data.bmiKG
+              ? typeof data.bmiKG === "number"
+                ? Number(data.bmiKG)
+                : "TBD"
+              : Number(data.currentWeightKG) /
+                  (Number(data.heightMetric) / 100) ** 2
+          );
+          setBMILBS(
+            data.bmiLBS
+              ? typeof data.bmiLBS === "number"
+                ? data.bmiLBS
+                : "TBD"
+              : (Number(data.currentWeightLBS) * 703) /
+                  Math.pow(
+                    Number(data.heightImperial[0]) * 12 +
+                      Number(data.heightImperial[1]),
+                    2
+                  )
+          );
+        }
+        setWeightLossPerWeekKG(
+          data.weightLossPerWeekKG ? data.weightLossPerWeekKG : 0
+        );
+        setWeightLossPerWeekLBS(
+          data.weightLossPerWeekLBS ? data.weightLossPerWeekLBS : 0
+        );
+        setActivityLevel(data.activityLevel ? data.activityLevel : 1.2);
+        setDailyCalorieGoal(
+          data.dailyCalorieGoal
+            ? data.dailyCalorieGoal
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Male" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age +
+                  5) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Female" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age -
+                  161) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : "TBD"
+        );
+
+        setProfilePicture(data.profilePicture ? data.profilePicture : "");
+        if (data.days.length) {
+          if (!averageMacros) {
+            handleAverageMacroCalculation(data);
+          }
+          if (data.days.some((day) => day.date === selectedDateFormatted)) {
+            setPreviousData(true);
+            const previousDataIndex = data.days.findIndex(
+              (day) => day.date === selectedDateFormatted
+            );
+            setIndexOfPreviousData(previousDataIndex);
+            if (data.days[previousDataIndex].totals.calories) {
+              setDailyMacros([
+                {
+                  name: "Protein",
+                  value:
+                    data.days[previousDataIndex].totals.proteinPercentage * 100,
+                },
+                {
+                  name: "Carbohydrate",
+                  value:
+                    data.days[previousDataIndex].totals.carbohydratePercentage *
+                    100,
+                },
+                {
+                  name: "Fat",
+                  value: Number(
+                    (
+                      data.days[previousDataIndex].totals.fatPercentage * 100
+                    ).toFixed(2)
+                  ),
+                },
+              ]);
+              setDailyMacrosGrams([
+                {
+                  name: "Protein",
+                  value: data.days[previousDataIndex].totals.protein,
+                },
+                {
+                  name: "Carbohydrate",
+                  value: data.days[previousDataIndex].totals.carbohydrates,
+                },
+                {
+                  name: "Fat",
+                  value: data.days[previousDataIndex].totals.fat,
+                },
+              ]);
+            }
+          } else {
+            setPreviousData(false);
+            setIndexOfPreviousData(-1);
+            setDailyMacros("");
+            setDailyMacrosGrams("");
+            setTabActiveKey("averageMacros");
+          }
+        }
         setUserChanged(false);
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 1000);
         setUpdating(false);
       }) // Handle data
       .catch((error) => {
@@ -1141,9 +1291,154 @@ export default function AppWrapper({ children }) {
         }
       }) // Parse JSON response
       .then((data) => {
-        setInitialUser(data);
-        setUpdatedUser(data);
+        setInitialUser({ ...data });
+        setUpdatedUser({ ...data });
+        setFamily_name(data.family_name);
+        setGiven_name(data.given_name);
+        setAge(data.age ? data.age : "");
+        setEmail(data.email ? data.email : "");
+        setGoalWeightKG(data.goalWeightKG ? data.goalWeightKG : "");
+        setCurrentWeightKG(data.currentWeightKG ? data.currentWeightKG : "");
+        setGoalWeightLBS(data.goalWeightLBS ? data.goalWeightLBS : "");
+        setCurrentWeightLBS(data.currentWeightLBS ? data.currentWeightLBS : "");
+        setPreference(data.preference ? data.preference : "Metric");
+        setGender(data.gender ? data.gender : "Male");
+        setHeightImperial(
+          data.heightImperial[0]
+            ? [data.heightImperial[0], data.heightImperial[1]]
+            : ["", ""]
+        );
+        setHeightMetric(data.heightMetric ? data.heightMetric : "");
+        if (
+          data.heightMetric &&
+          data.heightImperial[0] &&
+          data.currentWeightLBS &&
+          data.currentWeightKG &&
+          (data.heightImperial[1] === 0 || data.heightImperial[1])
+        ) {
+          setBMIKG(
+            data.bmiKG
+              ? typeof data.bmiKG === "number"
+                ? Number(data.bmiKG)
+                : "TBD"
+              : Number(data.currentWeightKG) /
+                  (Number(data.heightMetric) / 100) ** 2
+          );
+          setBMILBS(
+            data.bmiLBS
+              ? typeof data.bmiLBS === "number"
+                ? data.bmiLBS
+                : "TBD"
+              : (Number(data.currentWeightLBS) * 703) /
+                  Math.pow(
+                    Number(data.heightImperial[0]) * 12 +
+                      Number(data.heightImperial[1]),
+                    2
+                  )
+          );
+        }
+        setWeightLossPerWeekKG(
+          data.weightLossPerWeekKG ? data.weightLossPerWeekKG : 0
+        );
+        setWeightLossPerWeekLBS(
+          data.weightLossPerWeekLBS ? data.weightLossPerWeekLBS : 0
+        );
+        setActivityLevel(data.activityLevel ? data.activityLevel : 1.2);
+        setDailyCalorieGoal(
+          data.dailyCalorieGoal
+            ? data.dailyCalorieGoal
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Male" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age +
+                  5) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Female" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age -
+                  161) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : "TBD"
+        );
+
+        setProfilePicture(data.profilePicture ? data.profilePicture : "");
+        if (data.days.length) {
+          if (!averageMacros) {
+            handleAverageMacroCalculation(data);
+          }
+          if (data.days.some((day) => day.date === selectedDateFormatted)) {
+            setPreviousData(true);
+            const previousDataIndex = data.days.findIndex(
+              (day) => day.date === selectedDateFormatted
+            );
+            setIndexOfPreviousData(previousDataIndex);
+            if (data.days[previousDataIndex].totals.calories) {
+              setDailyMacros([
+                {
+                  name: "Protein",
+                  value:
+                    data.days[previousDataIndex].totals.proteinPercentage * 100,
+                },
+                {
+                  name: "Carbohydrate",
+                  value:
+                    data.days[previousDataIndex].totals.carbohydratePercentage *
+                    100,
+                },
+                {
+                  name: "Fat",
+                  value: Number(
+                    (
+                      data.days[previousDataIndex].totals.fatPercentage * 100
+                    ).toFixed(2)
+                  ),
+                },
+              ]);
+              setDailyMacrosGrams([
+                {
+                  name: "Protein",
+                  value: data.days[previousDataIndex].totals.protein,
+                },
+                {
+                  name: "Carbohydrate",
+                  value: data.days[previousDataIndex].totals.carbohydrates,
+                },
+                {
+                  name: "Fat",
+                  value: data.days[previousDataIndex].totals.fat,
+                },
+              ]);
+            }
+          } else {
+            setPreviousData(false);
+            setIndexOfPreviousData(-1);
+            setDailyMacros("");
+            setDailyMacrosGrams("");
+            setTabActiveKey("averageMacros");
+          }
+        }
         setUserChanged(false);
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 1000);
         setIsLoading(false);
       }) // Handle data
       .catch((error) => {
@@ -1599,12 +1894,18 @@ export default function AppWrapper({ children }) {
       setSearch("");
       setCurrentSearch("");
       setUpdateServings("");
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 1000);
       setIsModalOpen(false);
+
       setServings(1);
     } else {
       //creates a blank day for the user for the new date
       user.days.push({
         date: selectedDateFormatted,
+        americanDate: americanDate,
         weightKG: user.currentWeightKG,
         goalWeightKG: user.goalWeightKG,
         weightLBS: user.currentWeightLBS,
@@ -1732,17 +2033,25 @@ export default function AppWrapper({ children }) {
       setSearch("");
       setCurrentSearch("");
       setUpdateServings("");
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 1000);
       setIsModalOpen(false);
       setServings(1);
     }
   };
-
   const handleFormatDate = (date) => {
     setSelectedDateFormatted(
       `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
         2,
         "0"
       )}-${String(date.getDate()).padStart(2, "0")}`
+    );
+    setAmericanDate(
+      `${String(date.getMonth() + 1).padStart(2, "0")}-${String(
+        date.getDate()
+      ).padStart(2, "0")}-${date.getFullYear()}`
     );
   };
 
@@ -1773,6 +2082,8 @@ export default function AppWrapper({ children }) {
         //setUpdateServings("");
         setInputError("");
       }
+    } else if (updateServings === "") {
+      setServings(1);
     } else {
       setInputError("Please Enter A Valid Number");
       setServings(1);
@@ -1936,7 +2247,7 @@ export default function AppWrapper({ children }) {
     setBMIKG(
       initialUser.bmiKG
         ? typeof initialUser.bmiKG === "number"
-          ? initialUser.bmiKG
+          ? Number(initialUser.bmiKG)
           : "TBD"
         : initialUser.currentWeightKG && initialUser.heightMetric
         ? Number(initialUser.currentWeightKG) /
@@ -2165,6 +2476,7 @@ export default function AppWrapper({ children }) {
         //creates a blank day for the user for the new date
         days.push({
           date: selectedDateFormatted,
+          americanDate: americanDate,
           weightKG: Number(currentWeightKG),
           goalWeightKG: Number(goalWeightKG),
           weightLBS: Number(currentWeightLBS),
@@ -2255,10 +2567,159 @@ export default function AppWrapper({ children }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          setInitialUser(data);
-          setUpdatedUser(data);
+          setInitialUser({ ...data });
+          setUpdatedUser({ ...data });
+          setFamily_name(data.family_name);
+          setGiven_name(data.given_name);
+          setAge(data.age ? data.age : "");
+          setEmail(data.email ? data.email : "");
+          setGoalWeightKG(data.goalWeightKG ? data.goalWeightKG : "");
+          setCurrentWeightKG(data.currentWeightKG ? data.currentWeightKG : "");
+          setGoalWeightLBS(data.goalWeightLBS ? data.goalWeightLBS : "");
+          setCurrentWeightLBS(
+            data.currentWeightLBS ? data.currentWeightLBS : ""
+          );
+          setPreference(data.preference ? data.preference : "Metric");
+          setGender(data.gender ? data.gender : "Male");
+          setHeightImperial(
+            data.heightImperial[0]
+              ? [data.heightImperial[0], data.heightImperial[1]]
+              : ["", ""]
+          );
+          setHeightMetric(data.heightMetric ? data.heightMetric : "");
+          if (
+            data.heightMetric &&
+            data.heightImperial[0] &&
+            data.currentWeightLBS &&
+            data.currentWeightKG &&
+            (data.heightImperial[1] === 0 || data.heightImperial[1])
+          ) {
+            setBMIKG(
+              data.bmiKG
+                ? typeof data.bmiKG === "number"
+                  ? Number(data.bmiKG)
+                  : "TBD"
+                : Number(data.currentWeightKG) /
+                    (Number(data.heightMetric) / 100) ** 2
+            );
+            setBMILBS(
+              data.bmiLBS
+                ? typeof data.bmiLBS === "number"
+                  ? data.bmiLBS
+                  : "TBD"
+                : (Number(data.currentWeightLBS) * 703) /
+                    Math.pow(
+                      Number(data.heightImperial[0]) * 12 +
+                        Number(data.heightImperial[1]),
+                      2
+                    )
+            );
+          }
+          setWeightLossPerWeekKG(
+            data.weightLossPerWeekKG ? data.weightLossPerWeekKG : 0
+          );
+          setWeightLossPerWeekLBS(
+            data.weightLossPerWeekLBS ? data.weightLossPerWeekLBS : 0
+          );
+          setActivityLevel(data.activityLevel ? data.activityLevel : 1.2);
+          setDailyCalorieGoal(
+            data.dailyCalorieGoal
+              ? data.dailyCalorieGoal
+              : data.weightLossPerWeekLBS &&
+                data.gender === "Male" &&
+                data.currentWeightKG &&
+                data.heightMetric &&
+                data.age &&
+                data.activityLevel
+              ? Number(
+                  (10 * data.currentWeightKG +
+                    6.25 * data.heightMetric -
+                    5 * data.age +
+                    5) *
+                    data.activityLevel -
+                    (data.weightLossPerWeekLBS * 3500) / 7
+                )
+              : data.weightLossPerWeekLBS &&
+                data.gender === "Female" &&
+                data.currentWeightKG &&
+                data.heightMetric &&
+                data.age &&
+                data.activityLevel
+              ? Number(
+                  (10 * data.currentWeightKG +
+                    6.25 * data.heightMetric -
+                    5 * data.age -
+                    161) *
+                    data.activityLevel -
+                    (data.weightLossPerWeekLBS * 3500) / 7
+                )
+              : "TBD"
+          );
+
+          setProfilePicture(data.profilePicture ? data.profilePicture : "");
+          if (data.days.length) {
+            if (!averageMacros) {
+              handleAverageMacroCalculation(data);
+            }
+            if (data.days.some((day) => day.date === selectedDateFormatted)) {
+              setPreviousData(true);
+              const previousDataIndex = data.days.findIndex(
+                (day) => day.date === selectedDateFormatted
+              );
+              setIndexOfPreviousData(previousDataIndex);
+              if (data.days[previousDataIndex].totals.calories) {
+                setDailyMacros([
+                  {
+                    name: "Protein",
+                    value:
+                      data.days[previousDataIndex].totals.proteinPercentage *
+                      100,
+                  },
+                  {
+                    name: "Carbohydrate",
+                    value:
+                      data.days[previousDataIndex].totals
+                        .carbohydratePercentage * 100,
+                  },
+                  {
+                    name: "Fat",
+                    value: Number(
+                      (
+                        data.days[previousDataIndex].totals.fatPercentage * 100
+                      ).toFixed(2)
+                    ),
+                  },
+                ]);
+                setDailyMacrosGrams([
+                  {
+                    name: "Protein",
+                    value: data.days[previousDataIndex].totals.protein,
+                  },
+                  {
+                    name: "Carbohydrate",
+                    value: data.days[previousDataIndex].totals.carbohydrates,
+                  },
+                  {
+                    name: "Fat",
+                    value: data.days[previousDataIndex].totals.fat,
+                  },
+                ]);
+              }
+            } else {
+              setPreviousData(false);
+              setIndexOfPreviousData(-1);
+              setDailyMacros("");
+              setDailyMacrosGrams("");
+              setTabActiveKey("averageMacros");
+            }
+          }
           setUserChanged(false);
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 1000);
           setUpdating(false);
+          handleCloseAfterUpdate();
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -2372,7 +2833,7 @@ export default function AppWrapper({ children }) {
     if (e.target.value === "Imperial" && currentWeightError) {
       setCurrentWeightError("Please enter a weight between 70lbs & 400lbs");
     }
-    if (e.target.value === "Metric" && goalWeightErro) {
+    if (e.target.value === "Metric" && goalWeightError) {
       setGoalWeightError("Please enter a weight between 32kg & 181kg");
     }
     if (e.target.value === "Imperial" && goalWeightError) {
@@ -2507,7 +2968,8 @@ export default function AppWrapper({ children }) {
       setCurrentWeightKG(Number((e.target.value / 2.2).toFixed(2)));
       if (heightMetric) {
         setBMIKG(
-          Number(e.target.value / 2.2) / (Number(heightMetric) / 100) ** 2
+          Number(Number(e.target.value) / 2.2) /
+            (Number(heightMetric) / 100) ** 2
         );
         setBMILBS(
           (Number(e.target.value) * 703) /
@@ -2607,18 +3069,16 @@ export default function AppWrapper({ children }) {
     if (currentWeightKG) {
       setBMIKG(Number(currentWeightKG) / (Number(e.target.value) / 100) ** 2);
       setBMILBS(
-        data.bmiLBS
-          ? data.bmiLBS
-          : (Number(currentWeightLBS) * 703) /
-              Math.pow(
-                Math.floor(Number(e.target.value) / 30.48) * 12 +
-                  Math.floor(
-                    12 *
-                      (Number(e.target.value) / 30.48 -
-                        Math.floor(Number(e.target.value) / 30.48))
-                  ),
-                2
-              )
+        (Number(currentWeightLBS) * 703) /
+          Math.pow(
+            Math.floor(Number(e.target.value) / 30.48) * 12 +
+              Math.floor(
+                12 *
+                  (Number(e.target.value) / 30.48 -
+                    Math.floor(Number(e.target.value) / 30.48))
+              ),
+            2
+          )
       );
     } else {
       setBMIKG("TBD");
@@ -2653,7 +3113,7 @@ export default function AppWrapper({ children }) {
       setHeightMetric(Math.round(Number(e.target.value * 12 * 2.54)));
       if (currentWeightKG) {
         setBMIKG(
-          (currentWeightKG /
+          (Number(currentWeightKG) /
             Math.round(Number(e.target.value * 12 * 2.54)) /
             100) **
             2
@@ -2677,7 +3137,7 @@ export default function AppWrapper({ children }) {
       );
       if (currentWeightKG) {
         setBMIKG(
-          (currentWeightKG /
+          (Number(currentWeightKG) /
             Math.round(
               Number((e.target.value * 12 + heightImperial[1]) * 2.54)
             ) /
@@ -2717,12 +3177,12 @@ export default function AppWrapper({ children }) {
         Number(heightImperial[0]),
         Number(e.target.value),
       ];
-      newUser.heightMetric = Math.round(
-        Number((e.target.value + heightImperial[0] * 12) * 2.54)
-      );
+      const feet2Inches = Number(heightImperial[0]) * 12;
+      const totalInches = Number(e.target.value) + feet2Inches;
+      newUser.heightMetric = Math.round(Number(totalInches * 2.54));
     } else {
       newUser.heightImperial = ["", e.target.value];
-      newUser.heightMetric = Math.round(Number(e.target.value * 2.54));
+      newUser.heightMetric = Math.round(Number(e.target.value) * 2.54);
     }
     handleUserComparison(initialUser, newUser);
     if (heightImperial.length === 0) {
@@ -2730,7 +3190,9 @@ export default function AppWrapper({ children }) {
       setHeightMetric(Math.round(Number(e.target.value * 2.54)));
       if (currentWeightKG) {
         setBMIKG(
-          (currentWeightKG / Math.round(Number(e.target.value * 2.54)) / 100) **
+          (Number(currentWeightKG) /
+            Math.round(Number(e.target.value * 2.54)) /
+            100) **
             2
         );
         setBMILBS(
@@ -2747,11 +3209,15 @@ export default function AppWrapper({ children }) {
         )
       );
       setHeightMetric(
-        Math.round(Number((e.target.value + heightImperial[0] * 12) * 2.54))
+        Math.round(
+          Number(
+            (Number(heightImperial[0]) * 12 + Number(e.target.value)) * 2.54
+          )
+        )
       );
       if (currentWeightKG) {
         setBMIKG(
-          (currentWeightKG /
+          (Number(currentWeightKG) /
             Math.round(
               Number((e.target.value + heightImperial[0] * 12) * 2.54)
             ) /
@@ -2850,8 +3316,153 @@ export default function AppWrapper({ children }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setInitialUser(data);
-        setUpdatedUser(data);
+        setInitialUser({ ...data });
+        setUpdatedUser({ ...data });
+        setFamily_name(data.family_name);
+        setGiven_name(data.given_name);
+        setAge(data.age ? data.age : "");
+        setEmail(data.email ? data.email : "");
+        setGoalWeightKG(data.goalWeightKG ? data.goalWeightKG : "");
+        setCurrentWeightKG(data.currentWeightKG ? data.currentWeightKG : "");
+        setGoalWeightLBS(data.goalWeightLBS ? data.goalWeightLBS : "");
+        setCurrentWeightLBS(data.currentWeightLBS ? data.currentWeightLBS : "");
+        setPreference(data.preference ? data.preference : "Metric");
+        setGender(data.gender ? data.gender : "Male");
+        setHeightImperial(
+          data.heightImperial[0]
+            ? [data.heightImperial[0], data.heightImperial[1]]
+            : ["", ""]
+        );
+        setHeightMetric(data.heightMetric ? data.heightMetric : "");
+        if (
+          data.heightMetric &&
+          data.heightImperial[0] &&
+          data.currentWeightLBS &&
+          data.currentWeightKG &&
+          (data.heightImperial[1] === 0 || data.heightImperial[1])
+        ) {
+          setBMIKG(
+            data.bmiKG
+              ? typeof data.bmiKG === "number"
+                ? Number(data.bmiKG)
+                : "TBD"
+              : Number(data.currentWeightKG) /
+                  (Number(data.heightMetric) / 100) ** 2
+          );
+          setBMILBS(
+            data.bmiLBS
+              ? typeof data.bmiLBS === "number"
+                ? data.bmiLBS
+                : "TBD"
+              : (Number(data.currentWeightLBS) * 703) /
+                  Math.pow(
+                    Number(data.heightImperial[0]) * 12 +
+                      Number(data.heightImperial[1]),
+                    2
+                  )
+          );
+        }
+        setWeightLossPerWeekKG(
+          data.weightLossPerWeekKG ? data.weightLossPerWeekKG : 0
+        );
+        setWeightLossPerWeekLBS(
+          data.weightLossPerWeekLBS ? data.weightLossPerWeekLBS : 0
+        );
+        setActivityLevel(data.activityLevel ? data.activityLevel : 1.2);
+        setDailyCalorieGoal(
+          data.dailyCalorieGoal
+            ? data.dailyCalorieGoal
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Male" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age +
+                  5) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Female" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age -
+                  161) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : "TBD"
+        );
+
+        setProfilePicture(data.profilePicture ? data.profilePicture : "");
+        if (data.days.length) {
+          if (!averageMacros) {
+            handleAverageMacroCalculation(data);
+          }
+          if (data.days.some((day) => day.date === selectedDateFormatted)) {
+            setPreviousData(true);
+            const previousDataIndex = data.days.findIndex(
+              (day) => day.date === selectedDateFormatted
+            );
+            setIndexOfPreviousData(previousDataIndex);
+            if (data.days[previousDataIndex].totals.calories) {
+              setDailyMacros([
+                {
+                  name: "Protein",
+                  value:
+                    data.days[previousDataIndex].totals.proteinPercentage * 100,
+                },
+                {
+                  name: "Carbohydrate",
+                  value:
+                    data.days[previousDataIndex].totals.carbohydratePercentage *
+                    100,
+                },
+                {
+                  name: "Fat",
+                  value: Number(
+                    (
+                      data.days[previousDataIndex].totals.fatPercentage * 100
+                    ).toFixed(2)
+                  ),
+                },
+              ]);
+              setDailyMacrosGrams([
+                {
+                  name: "Protein",
+                  value: data.days[previousDataIndex].totals.protein,
+                },
+                {
+                  name: "Carbohydrate",
+                  value: data.days[previousDataIndex].totals.carbohydrates,
+                },
+                {
+                  name: "Fat",
+                  value: data.days[previousDataIndex].totals.fat,
+                },
+              ]);
+            }
+          } else {
+            setPreviousData(false);
+            setIndexOfPreviousData(-1);
+            setDailyMacros("");
+            setDailyMacrosGrams("");
+            setTabActiveKey("averageMacros");
+          }
+        }
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 1000);
         setActivityLevelChanged(false);
         setUpdating(false);
       })
@@ -2954,48 +3565,8 @@ export default function AppWrapper({ children }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setInitialUser(data);
-        setUpdatedUser(data);
-        setWeightLossPerWeekChanged(false);
-        setUpdating(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Failed to Save Weight Loss Per Week Goal");
-        setUpdating(false);
-      });
-  };
-
-  const onSetTabActiveKey = (e) => {
-    setTabActiveKey(e);
-  };
-
-  useEffect(() => {
-    //Tries to avoid hydration issues with server and react due to date creation
-    if (selectedDate === "") {
-      const date = new Date();
-      setSelectedDate(date);
-      setSelectedDateFormatted(
-        `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-          2,
-          "0"
-        )}-${String(date.getDate()).padStart(2, "0")}`
-      );
-    }
-
-    //calculates screen size changes so that the outer radius of the pie chart can be updated accordingly
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
-    async function fetchUser(userId) {
-      try {
-        const res = await fetch(`/api/getUser/${userId}`);
-        if (!res.ok) {
-          throw new Error("User not found");
-        }
-        const data = await res.json();
-        setInitialUser(data);
-        setUpdatedUser(data);
+        setInitialUser({ ...data });
+        setUpdatedUser({ ...data });
         setFamily_name(data.family_name);
         setGiven_name(data.given_name);
         setAge(data.age ? data.age : "");
@@ -3022,7 +3593,197 @@ export default function AppWrapper({ children }) {
           setBMIKG(
             data.bmiKG
               ? typeof data.bmiKG === "number"
-                ? data.bmiKG
+                ? Number(data.bmiKG)
+                : "TBD"
+              : Number(data.currentWeightKG) /
+                  (Number(data.heightMetric) / 100) ** 2
+          );
+          setBMILBS(
+            data.bmiLBS
+              ? typeof data.bmiLBS === "number"
+                ? data.bmiLBS
+                : "TBD"
+              : (Number(data.currentWeightLBS) * 703) /
+                  Math.pow(
+                    Number(data.heightImperial[0]) * 12 +
+                      Number(data.heightImperial[1]),
+                    2
+                  )
+          );
+        }
+        setWeightLossPerWeekKG(
+          data.weightLossPerWeekKG ? data.weightLossPerWeekKG : 0
+        );
+        setWeightLossPerWeekLBS(
+          data.weightLossPerWeekLBS ? data.weightLossPerWeekLBS : 0
+        );
+        setActivityLevel(data.activityLevel ? data.activityLevel : 1.2);
+        setDailyCalorieGoal(
+          data.dailyCalorieGoal
+            ? data.dailyCalorieGoal
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Male" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age +
+                  5) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : data.weightLossPerWeekLBS &&
+              data.gender === "Female" &&
+              data.currentWeightKG &&
+              data.heightMetric &&
+              data.age &&
+              data.activityLevel
+            ? Number(
+                (10 * data.currentWeightKG +
+                  6.25 * data.heightMetric -
+                  5 * data.age -
+                  161) *
+                  data.activityLevel -
+                  (data.weightLossPerWeekLBS * 3500) / 7
+              )
+            : "TBD"
+        );
+
+        setProfilePicture(data.profilePicture ? data.profilePicture : "");
+        if (data.days.length) {
+          if (!averageMacros) {
+            handleAverageMacroCalculation(data);
+          }
+          if (data.days.some((day) => day.date === selectedDateFormatted)) {
+            setPreviousData(true);
+            const previousDataIndex = data.days.findIndex(
+              (day) => day.date === selectedDateFormatted
+            );
+            setIndexOfPreviousData(previousDataIndex);
+            if (data.days[previousDataIndex].totals.calories) {
+              setDailyMacros([
+                {
+                  name: "Protein",
+                  value:
+                    data.days[previousDataIndex].totals.proteinPercentage * 100,
+                },
+                {
+                  name: "Carbohydrate",
+                  value:
+                    data.days[previousDataIndex].totals.carbohydratePercentage *
+                    100,
+                },
+                {
+                  name: "Fat",
+                  value: Number(
+                    (
+                      data.days[previousDataIndex].totals.fatPercentage * 100
+                    ).toFixed(2)
+                  ),
+                },
+              ]);
+              setDailyMacrosGrams([
+                {
+                  name: "Protein",
+                  value: data.days[previousDataIndex].totals.protein,
+                },
+                {
+                  name: "Carbohydrate",
+                  value: data.days[previousDataIndex].totals.carbohydrates,
+                },
+                {
+                  name: "Fat",
+                  value: data.days[previousDataIndex].totals.fat,
+                },
+              ]);
+            }
+          } else {
+            setPreviousData(false);
+            setIndexOfPreviousData(-1);
+            setDailyMacros("");
+            setDailyMacrosGrams("");
+            setTabActiveKey("averageMacros");
+          }
+        }
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 1000);
+        setWeightLossPerWeekChanged(false);
+        setUpdating(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Failed to Save Weight Loss Per Week Goal");
+        setUpdating(false);
+      });
+  };
+
+  const onSetTabActiveKey = (e) => {
+    setTabActiveKey(e);
+  };
+
+  useEffect(() => {
+    //Tries to avoid hydration issues with server and react due to date creation
+    if (selectedDate === "") {
+      const date = new Date();
+      setSelectedDate(date);
+      setSelectedDateFormatted(
+        `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+          2,
+          "0"
+        )}-${String(date.getDate()).padStart(2, "0")}`
+      );
+      setAmericanDate(
+        `${String(date.getMonth() + 1).padStart(2, "0")}-${String(
+          date.getDate()
+        ).padStart(2, "0")}-${date.getFullYear()}`
+      );
+    }
+
+    //calculates screen size changes so that the outer radius of the pie chart can be updated accordingly
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    async function fetchUser(userId) {
+      try {
+        const res = await fetch(`/api/getUser/${userId}`);
+        if (!res.ok) {
+          throw new Error("User not found");
+        }
+        const data = await res.json();
+        setInitialUser({ ...data });
+        setUpdatedUser({ ...data });
+        setFamily_name(data.family_name);
+        setGiven_name(data.given_name);
+        setAge(data.age ? data.age : "");
+        setEmail(data.email ? data.email : "");
+        setGoalWeightKG(data.goalWeightKG ? data.goalWeightKG : "");
+        setCurrentWeightKG(data.currentWeightKG ? data.currentWeightKG : "");
+        setGoalWeightLBS(data.goalWeightLBS ? data.goalWeightLBS : "");
+        setCurrentWeightLBS(data.currentWeightLBS ? data.currentWeightLBS : "");
+        setPreference(data.preference ? data.preference : "Metric");
+        setGender(data.gender ? data.gender : "Male");
+        setHeightImperial(
+          data.heightImperial[0]
+            ? [data.heightImperial[0], data.heightImperial[1]]
+            : ["", ""]
+        );
+        setHeightMetric(data.heightMetric ? data.heightMetric : "");
+        if (
+          data.heightMetric &&
+          data.heightImperial[0] &&
+          data.currentWeightLBS &&
+          data.currentWeightKG &&
+          (data.heightImperial[1] === 0 || data.heightImperial[1])
+        ) {
+          setBMIKG(
+            data.bmiKG
+              ? typeof data.bmiKG === "number"
+                ? Number(data.bmiKG)
                 : "TBD"
               : Number(data.currentWeightKG) /
                   (Number(data.heightMetric) / 100) ** 2
@@ -3225,7 +3986,7 @@ export default function AppWrapper({ children }) {
     handleResize(); // initial call
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [selectedDateFormatted, session, tabActiveKey]);
+  }, [selectedDateFormatted, session, tabActiveKey, initialUser, updatedUser]);
 
   const contextValue = {
     session,
@@ -3239,7 +4000,6 @@ export default function AppWrapper({ children }) {
     password,
     newPassword,
     confirmNewPassword,
-    preference,
     profilePicture,
     preview,
     age,
@@ -3307,53 +4067,31 @@ export default function AppWrapper({ children }) {
     profilePictureError,
     gender,
     handleGenderChange,
-
     isUnauthenticated,
     isLoading,
-    updatedUser,
     preference,
-    averageMacros,
     pieChartColors,
-    screenWidth,
     handleReduceDate,
-    selectedDate,
     handleDateChange,
     handleIncreaseDate,
-    handleCancelChanges,
     handleSaveChanges,
-    previousData,
-    indexOfPreviousData,
     handleDeleteFoodItem,
     handleAddFoodItem,
-    dailyMacros,
-    searchModal,
     handleCloseSearchModal,
-    search,
     handleInputChange,
     handleSearch,
-    results,
     handlePageChange,
     handleClearSearch,
-    searchLoading,
     handleFoodChoice,
-    isModalOpen,
     handleCloseModal,
-    foodDetailsLoading,
-    foodDetails,
-    updateServings,
     handleServingsInput,
     handleUpdateServings,
-    inputError,
-    servings,
     handleAddToMeal,
     handleAverageMacroCalculation,
     handleUpdateDailyTotals,
     handleUpdateMealTotals,
     handleFormatDate,
     handleCancelUserChanges,
-    weightLossPerWeekKG,
-    weightLossPerWeekLBS,
-    handleWeightLossPerWeekChange,
     handleWeightLossPerWeekCancel,
     handleWeightLossPerWeekSave,
     handleActivityLevelChange,
@@ -3394,6 +4132,8 @@ export default function AppWrapper({ children }) {
     onSetTabActiveKey,
     averageMacrosGrams,
     dailyMacrosGrams,
+    success,
+    handleCloseAfterUpdate,
   };
 
   return (
@@ -3438,6 +4178,7 @@ export default function AppWrapper({ children }) {
         onClose={handleClose}
         status={status}
         onShow={handleShow}
+        onCloseAfterUpdate={handleCloseAfterUpdate}
       />
       {children}
     </UserContext.Provider>

@@ -41,6 +41,7 @@ export default function MyFoodsModal({
                         onClick={(e) => {
                           onMyFoodChoice(e);
                         }}
+                        className="clickable-table"
                       >
                         <td accessKey={foodItem.fdcId}>
                           {foodItem.description}

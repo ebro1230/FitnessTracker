@@ -77,6 +77,7 @@ export default function SearchModal({
                         key={`${foodItem.fdcId} + ${index}`}
                         accessKey={foodItem.fdcId}
                         onClick={(e) => onFoodChoice(e)}
+                        className="clickable-table"
                       >
                         <td accessKey={foodItem.fdcId}>
                           {foodItem.description}

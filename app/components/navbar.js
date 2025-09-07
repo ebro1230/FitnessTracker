@@ -407,10 +407,18 @@ export default function NavBar() {
           <Nav className="ms-auto">
             {status === "authenticated" ? (
               <>
-                <Button variant="danger" onClick={() => signOut()}>
+                <Button
+                  variant="danger"
+                  onClick={() => signOut()}
+                  style={{ marginTop: "0.5rem" }}
+                >
                   Sign Out
                 </Button>
-                <Button onClick={handleShow} disabled={!initialUser.email}>
+                <Button
+                  onClick={handleShow}
+                  disabled={!initialUser.email}
+                  style={{ marginLeft: "1rem", marginTop: "0.5rem" }}
+                >
                   <i className="bi bi-gear-fill"></i>
                 </Button>
               </>
