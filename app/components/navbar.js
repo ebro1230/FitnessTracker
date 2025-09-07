@@ -392,6 +392,7 @@ export default function NavBar() {
     passwordError,
     emailError,
     profilePictureError,
+    onCloseAfterUpdate,
   } = useContext(UserContext);
 
   return (
@@ -419,7 +420,7 @@ export default function NavBar() {
                   disabled={!initialUser.email}
                   style={{ marginLeft: "1rem", marginTop: "0.5rem" }}
                 >
-                  <i className="bi bi-gear-fill"></i>
+                  Manage Profile <i className="bi bi-gear-fill"></i>
                 </Button>
               </>
             ) : null}
