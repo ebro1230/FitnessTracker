@@ -34,21 +34,6 @@ export default function MyFoodDetailsModal({
                 <Modal.Title className="food-details-header-text">
                   {foodDetails.description}
                 </Modal.Title>
-                <div className="servings-input-div">
-                  <input
-                    value={updateServings}
-                    placeholder="# of Servings"
-                    onChange={(e) => {
-                      onServingsInput(e);
-                    }}
-                    className="number-of-servings-input"
-                  />
-                  {inputError.length ? (
-                    <p className="number-of-servings-input-error">
-                      {inputError}
-                    </p>
-                  ) : null}
-                </div>
               </Modal.Header>
               <Modal.Body>
                 <Table
@@ -136,6 +121,28 @@ export default function MyFoodDetailsModal({
                     </tr>
                   </tbody>
                 </Table>
+                <div className="servings-input-div">
+                  <label
+                    for="servings"
+                    style={{ color: "white", marginRight: "1rem" }}
+                  >
+                    Servings:
+                  </label>
+                  <input
+                    id="servings"
+                    value={updateServings}
+                    placeholder="# of Servings"
+                    onChange={(e) => {
+                      onServingsInput(e);
+                    }}
+                    className="number-of-servings-input"
+                  />
+                  {inputError.length ? (
+                    <p className="number-of-servings-input-error">
+                      {inputError}
+                    </p>
+                  ) : null}
+                </div>
               </Modal.Body>
               <Modal.Footer>
                 <div className="modal-footer-div">

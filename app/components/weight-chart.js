@@ -7,16 +7,40 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function WeightChart({ userData }) {
+export default function WeightChart({ userData, screenWidth }) {
+  const americanDates = userData.days.map((day) => {
+    let modifiedDate = day.date.slice(5);
+    let year = day.date.slice(0, 4);
+    modifiedDate = modifiedDate + "-" + year;
+    return modifiedDate;
+  });
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer
+      width={
+        screenWidth <= 550
+          ? "100%"
+          : screenWidth <= 627
+          ? "80%"
+          : screenWidth <= 850
+          ? "70%"
+          : screenWidth <= 1200
+          ? "60%"
+          : "50%"
+      }
+      height={300}
+    >
       {/* <h4 style={{ textAlign: "center", color: "#4e4e4e" }}>Weight vs. Time</h4> */}
       <LineChart
         // margin={{ top: 25, right: 50 }}
         margin={{ top: 40, right: 50, left: 50, bottom: 40 }}
-        data={userData.days.map((day) => {
+        data={userData.days.map((day, index) => {
           return {
-            day: day.date,
+            day:
+              userData.preference === "Metric"
+                ? day.date
+                : day.americanDate
+                ? day.americanDate
+                : americanDates[index],
             weight:
               userData.preference === "Metric" ? day.weightKG : day.weightLBS,
             goalWeight:

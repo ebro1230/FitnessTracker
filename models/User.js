@@ -29,6 +29,7 @@ const UserSchema = new mongoose.Schema(
     days: [
       {
         date: { type: String },
+        americanDate: { type: String },
         weightKG: { type: Number },
         weightLBS: { type: Number },
         goalWeightKG: { type: Number },

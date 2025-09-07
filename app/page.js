@@ -9,6 +9,7 @@ import {
   Table,
   Stack,
   Nav,
+  Modal,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -133,6 +134,9 @@ export default function Home() {
     onSetTabActiveKey,
     averageMacrosGrams,
     dailyMacrosGrams,
+    handleShow,
+    success,
+    show,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -146,7 +150,10 @@ export default function Home() {
     ) {
       signIn();
     }
-  }, [session]);
+  }, [session, updatedUser, initialUser]);
+
+  console.log("UPDATED USER IN PAGE");
+  console.log(updatedUser);
 
   return (
     <>
@@ -189,6 +196,8 @@ export default function Home() {
               goalWeightLBS={goalWeightLBS}
               currentWeightKG={currentWeightKG}
               currentWeightLBS={currentWeightLBS}
+              handleShow={handleShow}
+              screenWidth={screenWidth}
             />
             <div style={{ width: "100%" }}>
               {updatedUser.days.length ? (
@@ -513,7 +522,7 @@ export default function Home() {
               />
             </div>
             <div className="meal-div">
-              {userChanged ? (
+              {userChanged && !show ? (
                 <UpdateUserButtons
                   onCancelChanges={handleCancelUserChanges}
                   onSaveChanges={handleSaveChanges}
@@ -703,6 +712,25 @@ export default function Home() {
               servings={servings}
               onAddToMeal={handleAddToMeal}
             />
+            <Modal show={success} centered>
+              <Modal.Body>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  <h2 style={{ color: "white" }}>
+                    SUCCESS{" "}
+                    <i
+                      className="bi bi-check-lg"
+                      style={{ color: "green" }}
+                    ></i>
+                  </h2>
+                </div>
+              </Modal.Body>
+            </Modal>
           </>
         ) : (
           <LoadingIndicator />
