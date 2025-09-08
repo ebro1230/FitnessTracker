@@ -80,7 +80,14 @@ export default function Profile({
         </Col>
       </Row>
       <Row style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-        <Col style={{ display: "flex", justifyContent: "center" }}>
+        <Col
+          xs={12}
+          sm={6}
+          style={{
+            display: "flex",
+            justifyContent: screenWidth <= 576 ? "center" : "flex-end",
+          }}
+        >
           <Table
             striped
             bordered
@@ -161,6 +168,15 @@ export default function Profile({
               </tr>
             </tbody>
           </Table>
+        </Col>
+        <Col
+          xs={12}
+          sm={6}
+          style={{
+            display: "flex",
+            justifyContent: screenWidth <= 576 ? "center" : "flex-start",
+          }}
+        >
           <Table
             striped
             bordered
@@ -236,7 +252,12 @@ export default function Profile({
                         name="Weight Loss Per Week (kg)"
                         onChange={(e) => onWeightLossPerWeekChange(e)}
                         value={weightLossPerWeekKG}
-                        style={{ textAlign: "center" }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: "clamp(8px, 1.2vw, 16px)",
+                          paddingTop: "0rem",
+                          paddingBottom: "0rem",
+                        }}
                       >
                         <option value={0}>{0}</option>
                         <option value={0.1}>{0.1}</option>
@@ -255,7 +276,12 @@ export default function Profile({
                         name="Weight Loss Per Week (lbs)"
                         onChange={(e) => onWeightLossPerWeekChange(e)}
                         value={weightLossPerWeekLBS}
-                        style={{ textAlign: "center" }}
+                        style={{
+                          textAlign: "center",
+                          fontSize: "clamp(8px, 1.2vw, 16px)",
+                          paddingTop: "0rem",
+                          paddingBottom: "0rem",
+                        }}
                       >
                         <option value={0}>{0}</option>
                         <option value={0.25}>{0.25}</option>
@@ -299,7 +325,12 @@ export default function Profile({
                       name="Activity Level"
                       onChange={(e) => onActivityLevelChange(e)}
                       value={activityLevel}
-                      style={{ textAlign: "center" }}
+                      style={{
+                        textAlign: "center",
+                        fontSize: "clamp(8px, 1.2vw, 16px)",
+                        paddingTop: "0rem",
+                        paddingBottom: "0rem",
+                      }}
                     >
                       <option value={1.2}>
                         {"Sedentary"}
