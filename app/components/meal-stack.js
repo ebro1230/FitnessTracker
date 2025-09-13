@@ -9,8 +9,6 @@ export default function MealStack({
   onDeleteFoodItem,
   onAddFoodItem,
 }) {
-  console.log("MEAL STACK USER DATA");
-  console.log(userData);
   return (
     <>
       <Stack direction="horizontal" gap={3}>

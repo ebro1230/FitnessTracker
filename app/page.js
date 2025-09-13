@@ -155,7 +155,7 @@ export default function Home() {
   return (
     <>
       <div className="homepage-div">
-        {(session && session.expires > new Date()) ||
+        {/* {(session && session.expires > new Date()) ||
         isUnauthenticated ||
         (session === null && status === "unauthenticated") ? (
           <div style={{ display: "flex" }}>
@@ -168,7 +168,8 @@ export default function Home() {
               Sign In
             </Button>
           </div>
-        ) : isLoading || updating ? (
+        ) :  */}
+        {isLoading || updating ? (
           <LoadingIndicator />
         ) : updatedUser.email ? (
           <>
@@ -233,6 +234,7 @@ export default function Home() {
                             <Tab
                               eventKey="averageMacros"
                               title="Average Macros"
+                              className="%orgAverageMacrosTabs"
                             >
                               <Tab.Container
                                 id="%orgAverageMacrosTabs"
@@ -249,13 +251,19 @@ export default function Home() {
                                     }}
                                   >
                                     <Nav variant="pills" className="tabButtons">
-                                      <Nav.Item className="gOrPercentButtons">
-                                        <Nav.Link eventKey="averageMacros%">
+                                      <Nav.Item className="gOrPercentButtons-div">
+                                        <Nav.Link
+                                          className="gOrPercentButtons"
+                                          eventKey="averageMacros%"
+                                        >
                                           %
                                         </Nav.Link>
                                       </Nav.Item>
-                                      <Nav.Item className="gOrPercentButtons">
-                                        <Nav.Link eventKey="averageMacrosg">
+                                      <Nav.Item className="gOrPercentButtons-div">
+                                        <Nav.Link
+                                          className="gOrPercentButtons"
+                                          eventKey="averageMacrosg"
+                                        >
                                           g
                                         </Nav.Link>
                                       </Nav.Item>
@@ -321,56 +329,6 @@ export default function Home() {
                                   </Row>
                                 </Col>
                               </Tab.Container>
-                              {/* <Tabs
-                                id="%orgAverageMacrosTabs"
-                                defaultActiveKey={"averageMacros%"}
-                                mountOnEnter // content is mounted only when tab is active
-                                unmountOnExit
-                                fill
-                              >
-                                <Tab eventKey="averageMacros%" title="%">
-                                  <div
-                                    style={{
-                                      width: "100%",
-                                      height:
-                                        screenWidth <= 275
-                                          ? 300
-                                          : screenWidth <= 366
-                                          ? screenWidth * 1
-                                          : screenWidth <= 480
-                                          ? screenWidth * 0.9
-                                          : 400,
-                                    }}
-                                  >
-                                    <AverageMacrosChart
-                                      averageMacros={averageMacros}
-                                      pieChartColors={pieChartColors}
-                                      screenWidth={screenWidth}
-                                    />
-                                  </div>
-                                </Tab>
-                                <Tab eventKey="averageMacrosg" title="g">
-                                  <div
-                                    style={{
-                                      width: "100%",
-                                      height:
-                                        screenWidth <= 275
-                                          ? 300
-                                          : screenWidth <= 366
-                                          ? screenWidth * 1
-                                          : screenWidth <= 480
-                                          ? screenWidth * 0.9
-                                          : 400,
-                                    }}
-                                  >
-                                    <AverageMacrosGramsChart
-                                      averageMacros={averageMacrosGrams}
-                                      pieChartColors={pieChartColors}
-                                      screenWidth={screenWidth}
-                                    />
-                                  </div>
-                                </Tab>
-                              </Tabs> */}
                             </Tab>
                             <Tab
                               eventKey="dailyMacros"
@@ -396,13 +354,19 @@ export default function Home() {
                                         variant="pills"
                                         className="tabButtons"
                                       >
-                                        <Nav.Item className="gOrPercentButtons">
-                                          <Nav.Link eventKey="dailyMacros%">
+                                        <Nav.Item className="gOrPercentButtons-div">
+                                          <Nav.Link
+                                            className="gOrPercentButtons"
+                                            eventKey="dailyMacros%"
+                                          >
                                             %
                                           </Nav.Link>
                                         </Nav.Item>
-                                        <Nav.Item className="gOrPercentButtons">
-                                          <Nav.Link eventKey="dailyMacrosg">
+                                        <Nav.Item className="gOrPercentButtons-div">
+                                          <Nav.Link
+                                            className="gOrPercentButtons"
+                                            eventKey="dailyMacrosg"
+                                          >
                                             g
                                           </Nav.Link>
                                         </Nav.Item>
@@ -473,51 +437,21 @@ export default function Home() {
                           </Tabs>
                         </div>
                       </div>
-                    ) : /* <AverageMacrosChart
-                          averageMacros={averageMacros}
-                          pieChartColors={pieChartColors}
-                          screenWidth={screenWidth}
-                        />
-                      </div> */
-                    null}
+                    ) : null}
                   </Col>
-                  {/* {dailyMacros ? (
-                    <Col xs={12} sm={6}>
-           
-
-                      <div
-                        className="flex justify-center"
-                        style={{
-                          width: "100%",
-                          height:
-                            screenWidth <= 275
-                              ? 300
-                              : screenWidth <= 366
-                              ? screenWidth * 1
-                              : screenWidth <= 480
-                              ? screenWidth * 0.9
-                              : 400,
-                        }}
-                      >
-                        <DailyMacrosChart
-                          dailyMacros={dailyMacros}
-                          pieChartColors={pieChartColors}
-                          screenWidth={screenWidth}
-                        />
-                      </div>
-                    </Col>
-                  ) : null} */}
                 </Row>
               ) : null}
             </div>
             <div className="date-select-div">
-              <DateChanger
-                onReduceDate={handleReduceDate}
-                selectedDate={selectedDate}
-                onDateChange={handleDateChange}
-                onIncreaseDate={handleIncreaseDate}
-                preference={preference}
-              />
+              {selectedDate ? (
+                <DateChanger
+                  onReduceDate={handleReduceDate}
+                  selectedDate={selectedDate}
+                  onDateChange={handleDateChange}
+                  onIncreaseDate={handleIncreaseDate}
+                  preference={preference}
+                />
+              ) : null}
             </div>
             <div className="meal-div">
               {userChanged && !show ? (

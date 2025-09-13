@@ -376,11 +376,23 @@ tbody{
   opacity: 8%;
 }
 
-.gOrPercentButtons{
+.gOrPercentButtons-div{
   width: 25%;
   text-align: center;
-  border: 1px solid blue;
-  border-radius: 8px;
+
+}
+.gOrPercentButtons{
+  color: black !important;
+  background: #595959 !important
+}
+.gOrPercentButtons.active{
+  color: black !important;
+  background: rgb(255, 255, 255) !important;
+}
+
+.gOrPercentButtons:hover{
+    background-color: #2a2a2a;     /* slightly lighter on hover */
+  color: #fff;  
 }
 .tabButtons{
   display: flex;
@@ -395,10 +407,10 @@ tbody{
   pointer-events: none;
 } */
 .nav-link.active {
-  background-color: #e9ecef; /* same as btn disabled bg */
-  color: #6c757d;           /* same as btn disabled text */
+  background-color: white; /* same as btn disabled bg */
+  color: black;           /* same as btn disabled text */
   cursor: not-allowed;
-  opacity: 0.65;
+  /* opacity: 0.65; */
   pointer-events: none;
 }
 
@@ -409,7 +421,7 @@ tbody{
 
 /* Inactive tab */
 .nav-tabs .nav-link {
-  color: #bbb;                  /* light gray text */
+  color: black;                  /* light gray text */
   background-color: #1a1a1a;     /* very dark gray bg */
   border: 1px solid #333;
   margin-right: 4px;
@@ -432,7 +444,7 @@ tbody{
 .nav-tabs .nav-link.disabled {
   color: #555;                   /* darker gray text */
   background-color: #111;        /* almost black */
-  border: 1px solid #222;
+  border: 1px solid white;
   cursor: not-allowed;
   opacity: 0.6;
 }

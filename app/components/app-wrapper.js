@@ -3975,7 +3975,7 @@ export default function AppWrapper({ children }) {
       setIsLoading(true);
       setIsUnauthenticated(false);
     } else if (status === "unauthenticated") {
-      //signIn();
+      setIsUnauthenticated(true);
     }
 
     if (!dailyMacros && tabActiveKey === "dailyMacros") {
@@ -4135,6 +4135,9 @@ export default function AppWrapper({ children }) {
     success,
     handleCloseAfterUpdate,
   };
+
+  console.log("SESSION: ", session);
+  console.log("STATUS: ", status);
 
   return (
     <UserContext.Provider value={contextValue}>
