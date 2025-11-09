@@ -92,7 +92,6 @@ const authOptions = {
         user.name = profile.name || "";
         user.email = profile.email || "";
         user.image = profile.picture || "";
-        user.myFoods = [];
       }
       return true; // allow sign-in
     },
